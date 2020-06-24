@@ -1,0 +1,12 @@
+.home-center-button {
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.home-center-button > * > .btn {
+    width: 50vh;
+}
+
+.home-map-container {
+    height: 100vh;
+}

@@ -1,24 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
+import SBNavbar from './components/navbar'
+import Home from './pages/home'
+import AllSpots from './pages/allSpots';
+import MapView from './pages/mapView';
+import Spot from './pages/spot'
+import Footer from './components/footer';
+import AddSpot from './pages/addSpot';
+import { Switch, Route } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <SBNavbar/>
+      <Switch>
+        <Route path="/home">
+          <Home />
+        </Route>
+        <Route path="/map">
+          <MapView/>
+        </Route>
+        <Route path="/spot">
+          <Spot/>
+        </Route>
+        <Route path="/addSpot">
+          <AddSpot/>
+        </Route>
+        <Route path="/allSpots">
+          <AllSpots/>
+        </Route>
+      </Switch>
+      <Footer/>
     </div>
   );
 }

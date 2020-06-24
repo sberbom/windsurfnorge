@@ -1,0 +1,13 @@
+.sbnavbar {
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    transition-duration: 1s;
+    color: white !important;
+    position: fixed !important;
+    top: 0px;
+    z-index: 1020;
+    width: 100vw;
+}
+
+.navbar-brand {
+    color: white;
+}

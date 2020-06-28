@@ -5,7 +5,7 @@ import { googleKey } from '../api';
 import AddSpotForm from '../components/addSpotForm';
 import Header from '../components/header';
 import Map from '../components/map';
-import { storage } from '../firebase';
+import { db, storage } from '../firebase';
 import '../styles/addSpot.css';
 import '../styles/spot.css';
 
@@ -14,7 +14,7 @@ class AddSpot extends React.Component {
     constructor(props){
         super(props)
         this.addSpotFormContainerRef = React.createRef()
-        this.mapRef = React.createRef()
+        this.nameRef = React.createRef()
         this.aboutRef = React.createRef()
         this.approachRef = React.createRef()
         this.facebookPageRef = React.createRef()
@@ -36,7 +36,6 @@ class AddSpot extends React.Component {
 
     handleImageAsFile = (e) => {
         const image = e.target.files[0]
-        console.log(image)
         this.setState({imageAsFile: image})
     }
 
@@ -60,15 +59,15 @@ class AddSpot extends React.Component {
         this.setState({latLng: {lat: lat, lng: lng}})
       }
 
-    isUrl(str) {
-        var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-            '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-        return !!pattern.test(str);
-    }
+    // isUrl(str) {
+    //     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    //         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    //         '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    //         '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    //         '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    //         '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    //     return !!pattern.test(str);
+    // }
 
     handleFirebaseUpload = e => {
         e.preventDefault();
@@ -86,19 +85,27 @@ class AddSpot extends React.Component {
             storage.ref('images').child(this.state.imageAsFile.name).getDownloadURL()
             .then(fireBaseUrl => {
                 this.setState( {imageAsUrl: {...this.state.imageAsUrl, imgUrl: fireBaseUrl}})
-                //Må legge til fireBseUrl som lenke til bilde i DB
+                db.collection('spots').doc(this.nameRef.current.value).update({
+                    img: fireBaseUrl
+                })
+                .catch(() => console.log('Error adding image to spot'))
             })
             })
         }
 
     onSubmit = (e) => {
-        console.log("clicked")
-        console.log(this.aboutRef.current.value)
-        console.log(this.approachRef.current.value)
-        console.log(this.facebookPageRef.current.value)
-        console.log(this.isUrl(this.facebookPageRef.current.value))
-        console.log(this.state.imageAsUrl)
-        this.handleFirebaseUpload(e)
+        db.collection('spots').doc(this.nameRef.current.value).set({
+            name: this.nameRef.current.value,
+            about: this.aboutRef.current.value,
+            approach: this.approachRef.current.value,
+            facebook: this.facebookPageRef.current.value,
+            latLng: this.state.latLng,
+        })
+        .then(() => console.log("Added spot"))
+        .catch((error) => console.log('Error adding spot', error))
+        if(this.state.imageAsFile !== ''){
+            this.handleFirebaseUpload(e)
+        }
     }
 
     render(){
@@ -114,6 +121,7 @@ class AddSpot extends React.Component {
                     <div className="addSpot-spotInfo" ref= {this.addSpotFormContainerRef}>
                         <AddSpotForm 
                             onSubmit={this.onSubmit} 
+                            nameRef={this.nameRef}
                             aboutRef={this.aboutRef}
                             approachRef={this.approachRef}
                             facebookPageRef = {this.facebookPageRef}

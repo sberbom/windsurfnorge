@@ -16,9 +16,14 @@ function AddSpotForm(props) {
     return (
         <div className="spotInfo-container">
             <Form>
+                <h2>Navn</h2>
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Spottens navn</Form.Label>
+                    <Form.Control as="textarea" rows="1" ref={props.nameRef} />
+                </Form.Group>
                 <h2>Beskrivelse</h2>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Her kan man gjeren skrive litt om spotten</Form.Label>
+                    <Form.Label>Her kan man skrive litt om spotten</Form.Label>
                     <Form.Control as="textarea" rows="4" ref={props.aboutRef} />
                 </Form.Group>
                 <h2>Annkomst</h2>

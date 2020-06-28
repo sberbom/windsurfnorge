@@ -1,11 +1,11 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
-import {withRouter,Link} from 'react-router-dom';
-import Header from '../components/header';
-import Title from '../components/title';
+import { Button } from 'react-bootstrap';
+import { Link, withRouter } from 'react-router-dom';
 import CardList from '../components/cardList';
-import Map from '../components/map'
-import '../styles/home.css'
+import Header from '../components/header';
+import Map from '../components/map';
+import Title from '../components/title';
+import '../styles/home.css';
 
 function Home(props) {
     return(

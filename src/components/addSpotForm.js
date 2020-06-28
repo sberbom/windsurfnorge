@@ -1,6 +1,6 @@
 import React from 'react';
-import {Form, Button} from 'react-bootstrap'
-import '../styles/addSpotForm.css'
+import { Button, Form } from 'react-bootstrap';
+import '../styles/addSpotForm.css';
 
 function AddSpotForm(props) {
     return (
@@ -15,6 +15,10 @@ function AddSpotForm(props) {
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Hvordan kommer man seg til spotten? Parkering?</Form.Label>
                     <Form.Control as="textarea" rows="3" ref={props.approachRef} />
+                </Form.Group>
+                <h2>Addresse</h2>
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Control as="textarea" rows="1" placeholder={props.address} readOnly/>
                 </Form.Group>
                 <h2>Facebook</h2>
                 <Form.Group controlId="exampleForm.ControlTextarea1">

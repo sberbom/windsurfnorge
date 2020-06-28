@@ -16,14 +16,13 @@ class SBNavbar extends React.Component {
         document.addEventListener("scroll", () => {
             const backgroundcolor = window.scrollY < 100 ? {backgroundColor: "rgba(0, 0, 0, 0)"} : {backgroundColor: "rgba(0, 0, 0, 0.7)"}
             this.setState({ navBackground: backgroundcolor });
-            console.log(window.location.pathname)
         });
       }
     
     render() {
         return(
             <Navbar expand="lg" className="sbnavbar" style={this.state.navBackground}>
-                <Link to="/home"><Navbar.Brand style={{color: "white"}} href="#home">Windsurf Norge</Navbar.Brand></Link>
+                <Navbar.Brand style={{color: "white"}} href="#home">Windsurf Norge</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">

@@ -6,21 +6,12 @@
     min-height: 60vh;
 }
 
-.spot-map-container {
-    width: 45%;
-}
-
 .spot-spotInfo-container {
     width: 45%;
 }
 
-.spot-map-container * {
-    height: 100%;
-
-}
-
 .spot-map-container * .map {
     width: 45vw !important;
-    height: 70%;
+    height: 70% !important;
 }
 

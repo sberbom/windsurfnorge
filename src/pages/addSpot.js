@@ -1,10 +1,13 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-import Header from '../components/header'
-import Map from '../components/map'
+import Geocode from "react-geocode";
+import { withRouter } from 'react-router-dom';
+import { googleKey } from '../api';
 import AddSpotForm from '../components/addSpotForm';
-import '../styles/addSpot.css'
-import '../styles/spot.css'
+import Header from '../components/header';
+import Map from '../components/map';
+import '../styles/addSpot.css';
+import '../styles/spot.css';
+
 
 class AddSpot extends React.Component {
     constructor(props){
@@ -17,8 +20,11 @@ class AddSpot extends React.Component {
         this.posRef = React.createRef()
         this.state = {
             height: 0,
-            pos: null
+            pos: null,
+            latLng : {lat: 61.123456, lng: 8.707806},
+            address: 'Dra markøren på kartet for å velge addresse'
         }
+        Geocode.setApiKey(googleKey);
     }
 
     componentDidMount() {
@@ -26,14 +32,25 @@ class AddSpot extends React.Component {
         this.setState({height: this.addSpotFormContainerRef.current.clientHeight})
     }
 
-    onDragEnd = (t, map, coord) => {
-        const { latLng } = coord;
+    getAddress = (lat, lng) => {
+        Geocode.fromLatLng(lat, lng).then(
+            response => {
+              const address = response.results[0].formatted_address;
+              this.setState({address: address})
+            },
+            error => {
+              console.error(error);
+            }
+          );
+    }
+
+    dragEnd = (t, map, coord) => {
+        const {latLng} = coord; 
         const lat = latLng.lat();
         const lng = latLng.lng();
-        console.log(t)
-        console.log(map)
-        console.log(coord)
-    }
+        this.getAddress(lat, lng);
+        this.setState({latLng: {lat: lat, lng: lng}})
+      }
 
     isUrl(str) {
         var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -62,14 +79,15 @@ class AddSpot extends React.Component {
                 />
                 <div className="spot-container">
                     <div className="spot-map-container">
-                        <Map />
+                        <Map draggable={true} onDragEnd={this.dragEnd} latLng={this.state.latLng}/>
                     </div>
                     <div className="addSpot-spotInfo" ref= {this.addSpotFormContainerRef}>
                         <AddSpotForm 
-                            onSubmit={this.onSubmit} 
+                            // onSubmit={this.onSubmit} 
                             aboutRef={this.aboutRef}
                             approachRef={this.approachRef}
                             facebookPageRef = {this.facebookPageRef}
+                            address = {this.state.address}
                         />
                     </div>
                 </div>

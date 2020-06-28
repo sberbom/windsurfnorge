@@ -3,7 +3,6 @@ import SBCard from './card'
 import '../styles/cardList.css'
 
 function CardList(props) {
-    console.log(window.screen.width)
     let spots = []
     for (var i = 0; i<props.cards; i++) {
         spots.push(

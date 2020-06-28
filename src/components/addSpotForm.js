@@ -3,16 +3,6 @@ import { Button, Form } from 'react-bootstrap';
 import '../styles/addSpotForm.css';
 
 function AddSpotForm(props) {
-    // const allInputs = {imgUrl: ''}
-    // const [imageAsFile, setImageAsFile] = useState('')
-    // const [imageAsUrl, setImageAsUrl] = useState(allInputs)
-
-    // const handleImageAsFile = (e) => {
-    //     const image = e.target.files[0]
-    //     console.log(image)
-    //     setImageAsFile(imageFile => (image))
-    // }
-
     return (
         <div className="spotInfo-container">
             <Form>

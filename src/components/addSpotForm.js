@@ -45,7 +45,7 @@ function AddSpotForm(props) {
                     <Form.Label>Finnes det en facebook side hvor du kan snakke med andre som surfer på denne spotten?</Form.Label>
                     <Form.Control as="textarea" rows="1" ref={props.facebookPageRef}/>
                 </Form.Group>
-                <Button variant="primary" /*type="submit"*/ onClick={props.onSubmit} >
+                <Button variant="primary" type="submit" onClick={props.onSubmit} >
                     Legg til spot
                 </Button>
             </Form>

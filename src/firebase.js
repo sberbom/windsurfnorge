@@ -1,9 +1,10 @@
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import * as firebase from 'firebase/app';
-import firebaseApi from './keys';
-
 // Add the Firebase products that you want to use
 import 'firebase/firestore';
+import 'firebase/storage';
+import { firebaseApi } from './api';
+
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -21,4 +22,5 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore();
-export const auth = firebase.auth();
+// export const auth = firebase.auth();
+export const storage = firebase.storage();

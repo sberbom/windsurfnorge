@@ -5,6 +5,7 @@ import { googleKey } from '../api';
 import AddSpotForm from '../components/addSpotForm';
 import Header from '../components/header';
 import Map from '../components/map';
+import { storage } from '../firebase';
 import '../styles/addSpot.css';
 import '../styles/spot.css';
 
@@ -17,12 +18,13 @@ class AddSpot extends React.Component {
         this.aboutRef = React.createRef()
         this.approachRef = React.createRef()
         this.facebookPageRef = React.createRef()
-        this.posRef = React.createRef()
         this.state = {
             height: 0,
             pos: null,
             latLng : {lat: 61.123456, lng: 8.707806},
-            address: 'Dra markøren på kartet for å velge addresse'
+            address: 'Dra markøren på kartet for å velge addresse',
+            imageAsFile: '',
+            imageAsUrl: {imageUrl: ''}
         }
         Geocode.setApiKey(googleKey);
     }
@@ -30,6 +32,12 @@ class AddSpot extends React.Component {
     componentDidMount() {
         console.log(this.addSpotFormContainerRef.current.clientHeight)
         this.setState({height: this.addSpotFormContainerRef.current.clientHeight})
+    }
+
+    handleImageAsFile = (e) => {
+        const image = e.target.files[0]
+        console.log(image)
+        this.setState({imageAsFile: image})
     }
 
     getAddress = (lat, lng) => {
@@ -62,13 +70,35 @@ class AddSpot extends React.Component {
         return !!pattern.test(str);
     }
 
-    onSubmit = () => {
+    handleFirebaseUpload = e => {
+        e.preventDefault();
+        console.log('start of uplaod')
+        if(this.state.imageAsFile === '') {
+            console.error(`not an image, the image file is a ${typeof(this.state.imageAsFile)}`)
+          }
+        const uploadTask = storage.ref(`/images/${this.state.imageAsFile.name}`).put(this.state.imageAsFile)
+        uploadTask.on('state_changed', 
+        (snapShot) => {
+            console.log(snapShot)
+            }, (err) => {
+            console.log(err)
+            }, () => {
+            storage.ref('images').child(this.state.imageAsFile.name).getDownloadURL()
+            .then(fireBaseUrl => {
+                this.setState( {imageAsUrl: {...this.state.imageAsUrl, imgUrl: fireBaseUrl}})
+                //Må legge til fireBseUrl som lenke til bilde i DB
+            })
+            })
+        }
+
+    onSubmit = (e) => {
         console.log("clicked")
         console.log(this.aboutRef.current.value)
         console.log(this.approachRef.current.value)
         console.log(this.facebookPageRef.current.value)
         console.log(this.isUrl(this.facebookPageRef.current.value))
-        console.log(this.posRef.current.props)
+        console.log(this.state.imageAsUrl)
+        this.handleFirebaseUpload(e)
     }
 
     render(){
@@ -83,11 +113,12 @@ class AddSpot extends React.Component {
                     </div>
                     <div className="addSpot-spotInfo" ref= {this.addSpotFormContainerRef}>
                         <AddSpotForm 
-                            // onSubmit={this.onSubmit} 
+                            onSubmit={this.onSubmit} 
                             aboutRef={this.aboutRef}
                             approachRef={this.approachRef}
                             facebookPageRef = {this.facebookPageRef}
                             address = {this.state.address}
+                            handleImageAsFile={this.handleImageAsFile}
                         />
                     </div>
                 </div>

@@ -93,18 +93,28 @@ class AddSpot extends React.Component {
             })
         }
 
+    checkValid = () => {
+        if (this.nameRef.current.value === '' || this.state.latLng === {lat: 61.123456, lng: 8.707806}) {
+            window.alert('Legg til navn og dra markøren til spottents posisjon');
+            return false
+        }
+        return true
+    }
+
     onSubmit = (e) => {
-        db.collection('spots').doc(this.nameRef.current.value).set({
-            name: this.nameRef.current.value,
-            about: this.aboutRef.current.value,
-            approach: this.approachRef.current.value,
-            facebook: this.facebookPageRef.current.value,
-            latLng: this.state.latLng,
-        })
-        .then(() => console.log("Added spot"))
-        .catch((error) => console.log('Error adding spot', error))
-        if(this.state.imageAsFile !== ''){
-            this.handleFirebaseUpload(e)
+        if(this.checkValid()){
+            db.collection('spots').doc(this.nameRef.current.value).set({
+                name: this.nameRef.current.value,
+                about: this.aboutRef.current.value,
+                approach: this.approachRef.current.value,
+                facebook: this.facebookPageRef.current.value,
+                latLng: this.state.latLng,
+            })
+            .then(() => console.log("Added spot"))
+            .catch((error) => console.log('Error adding spot', error))
+            if(this.state.imageAsFile !== ''){
+                this.handleFirebaseUpload(e)
+            }
         }
     }
 

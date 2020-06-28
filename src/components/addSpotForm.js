@@ -33,7 +33,7 @@ function AddSpotForm(props) {
                 <h2>Bilde</h2>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Vi støtter kun opplastning av ett bilde</Form.Label>
-                    <input  type='file' onChange={props.handleImageAsFile}/>
+                    <input className='fileUploade' accept="image/*" type='file' onChange={props.handleImageAsFile}/>
                 </Form.Group>
                 <h2>Facebook</h2>
                 <Form.Group controlId="exampleForm.ControlTextarea1">

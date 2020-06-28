@@ -1,12 +1,8 @@
-/* .spot-container > div >  * > .map  {
-    width: 45% !important;
-    height: 550px !important;
-}
-
-.spot-container > div:first-child {
-    height: 100px;
-} */
 
 .addSpot-spotInfo {
     width: 45%;
+}
+
+.fileUploade {
+    display: block;
 }

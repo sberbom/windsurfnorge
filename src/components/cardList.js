@@ -1,23 +1,30 @@
-import React from 'react';
-import SBCard from './card'
-import '../styles/cardList.css'
+import React, { useEffect, useState } from 'react';
+import * as dbService from '../db-service';
+import '../styles/cardList.css';
+import SBCard from './card';
 
-function CardList(props) {
-    let spots = []
-    for (var i = 0; i<props.cards; i++) {
-        spots.push(
-            <SBCard
-                key={i}
-                title="Spot navn"
-                text="Her kan man legge inn den første informasjonen om spotten og hvordan den kommer til å se ut. Håper det blir kult!"
-                button="Se mer"
-            />
-        )
-    }
+function CardList() {
+    const [spots, setSpots] = useState([])
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            const allSpots = await dbService.getAllSpots();
+            setSpots(allSpots);
+        }
+        fetchData();
+    }, [])
+
     return(
         <div className="cardList-container">
             <div className="cardList">
-                {spots}
+                {spots.map((spot, i) => 
+                    <SBCard
+                        key={i}
+                        title={spot.name}
+                        text={spot.about}
+                        button="Se mer"
+                    />
+                )}
             </div>
         </div>
     )

@@ -6,36 +6,37 @@ function AddSpotForm(props) {
     return (
         <div className="spotInfo-container">
             <Form>
-                <h2>Navn</h2>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Spottens navn</Form.Label>
-                    <Form.Control as="textarea" rows="1" ref={props.nameRef} />
+                    <Form.Label>Navn</Form.Label>
+                    <Form.Control as="textarea" rows="1" ref={props.nameRef}/>
                 </Form.Group>
-                <h2>Beskrivelse</h2>
+
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Her kan man skrive litt om spotten</Form.Label>
+                    <Form.Label>Beskrivelse</Form.Label>
                     <Form.Control as="textarea" rows="4" ref={props.aboutRef} />
                 </Form.Group>
-                <h2>Annkomst</h2>
+
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Hvordan kommer man seg til spotten? Parkering?</Form.Label>
+                    <Form.Label>Annkomst</Form.Label>
                     <Form.Control as="textarea" rows="3" ref={props.approachRef} />
                 </Form.Group>
-                <h2>Addresse</h2>
+
                 <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Addresse</Form.Label>
                     <Form.Control as="textarea" rows="1" placeholder={props.address} readOnly/>
                 </Form.Group>
-                <h2>Bilde</h2>
+
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Vi støtter kun opplastning av ett bilde</Form.Label>
+                    <Form.Label>Bilde</Form.Label>
                     <input className='fileUploade' accept="image/*" type='file' onChange={props.handleImageAsFile}/>
                 </Form.Group>
-                <h2>Facebook</h2>
+
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Finnes det en facebook side hvor du kan snakke med andre som surfer på denne spotten?</Form.Label>
+                    <Form.Label>Facbook side</Form.Label>
                     <Form.Control as="textarea" rows="1" ref={props.facebookPageRef}/>
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={props.onSubmit} >
+                
+                <Button variant="primary" type='submit' onClick={props.onSubmit} >
                     Legg til spot
                 </Button>
             </Form>

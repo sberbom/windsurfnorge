@@ -1,13 +1,12 @@
 import React from 'react';
-import Geocode from "react-geocode";
 import { withRouter } from 'react-router-dom';
-import { googleKey } from '../api';
 import AddSpotForm from '../components/addSpotForm';
 import Header from '../components/header';
 import Map from '../components/map';
-import { db, storage } from '../firebase';
+import * as dbService from '../db-service';
 import '../styles/addSpot.css';
 import '../styles/spot.css';
+import { getAddress } from '../utils';
 
 
 class AddSpot extends React.Component {
@@ -26,62 +25,26 @@ class AddSpot extends React.Component {
             imageAsFile: '',
             imageAsUrl: {imageUrl: ''}
         }
-        Geocode.setApiKey(googleKey);
     }
 
     componentDidMount() {
-        console.log(this.addSpotFormContainerRef.current.clientHeight)
         this.setState({height: this.addSpotFormContainerRef.current.clientHeight})
     }
 
     handleImageAsFile = (e) => {
         const image = e.target.files[0]
         this.setState({imageAsFile: image})
-    }
+    } 
 
-    getAddress = (lat, lng) => {
-        Geocode.fromLatLng(lat, lng).then(
-            response => {
-              const address = response.results[0].formatted_address;
-              this.setState({address: address})
-            },
-            error => {
-              console.error(error);
-            }
-          );
-    }
-
-    dragEnd = (t, map, coord) => {
+    dragEnd = async (t, map, coord) => {
         const {latLng} = coord; 
         const lat = latLng.lat();
         const lng = latLng.lng();
-        this.getAddress(lat, lng);
+        const address = await getAddress(lat, lng)
+        this.setState({address: address});
         this.setState({latLng: {lat: lat, lng: lng}})
       }
 
-    handleFirebaseUpload = e => {
-        e.preventDefault();
-        console.log('start of uplaod')
-        if(this.state.imageAsFile === '') {
-            console.error(`not an image, the image file is a ${typeof(this.state.imageAsFile)}`)
-          }
-        const uploadTask = storage.ref(`/images/${this.state.imageAsFile.name}`).put(this.state.imageAsFile)
-        uploadTask.on('state_changed', 
-        (snapShot) => {
-            console.log(snapShot)
-            }, (err) => {
-            console.log(err)
-            }, () => {
-            storage.ref('images').child(this.state.imageAsFile.name).getDownloadURL()
-            .then(fireBaseUrl => {
-                this.setState( {imageAsUrl: {...this.state.imageAsUrl, imgUrl: fireBaseUrl}})
-                db.collection('spots').doc(this.nameRef.current.value).update({
-                    img: fireBaseUrl
-                })
-                .catch(() => console.log('Error adding image to spot'))
-            })
-            })
-        }
 
     checkValid = () => {
         if (this.nameRef.current.value === '' || this.state.latLng === {lat: 61.123456, lng: 8.707806}) {
@@ -91,20 +54,18 @@ class AddSpot extends React.Component {
         return true
     }
 
-    onSubmit = (e) => {
+    onSubmit = (event) => {
+        const spot = {
+            name: this.nameRef.current.value,
+            about: this.aboutRef.current.value,
+            approach: this.approachRef.current.value,
+            facebook: this.facebookPageRef.current.value,
+            latLng: this.state.latLng,
+            imageAsFile: this.state.imageAsFile,
+            imageAsUrl: this.state.imageAsUrl,
+        }
         if(this.checkValid()){
-            db.collection('spots').doc(this.nameRef.current.value).set({
-                name: this.nameRef.current.value,
-                about: this.aboutRef.current.value,
-                approach: this.approachRef.current.value,
-                facebook: this.facebookPageRef.current.value,
-                latLng: this.state.latLng,
-            })
-            .then(() => console.log("Added spot"))
-            .catch((error) => console.log('Error adding spot', error))
-            if(this.state.imageAsFile !== ''){
-                this.handleFirebaseUpload(e)
-            }
+            dbService.addSpot(event, spot)
         }
     }
 

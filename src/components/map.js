@@ -1,6 +1,6 @@
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 import React from "react";
-import { googleKey } from '../api';
+import { googleKey } from '../keys';
 import '../styles/map.css';
 
 const SBMap = (props) => {

@@ -1,5 +1,5 @@
 import Geocode from "react-geocode";
-import { googleKey } from './api';
+import { googleKey } from './keys';
 
 
 Geocode.setApiKey(googleKey);

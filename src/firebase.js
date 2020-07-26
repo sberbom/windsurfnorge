@@ -3,12 +3,12 @@ import * as firebase from 'firebase/app';
 // Add the Firebase products that you want to use
 import 'firebase/firestore';
 import 'firebase/storage';
-import { firebaseApi } from './api';
+import { firebaseKey } from './keys';
 
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
-    apiKey: firebaseApi,
+    apiKey: firebaseKey,
     authDomain: "windsurfnorge.firebaseapp.com",
     databaseURL: "https://windsurfnorge.firebaseio.com",
     projectId: "windsurfnorge",

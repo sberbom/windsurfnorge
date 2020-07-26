@@ -5,3 +5,11 @@
 .errorMessage {
     color: red;
 }
+
+.logInImg {
+    height: 3rem;
+}
+
+.logInImg:hover {
+    cursor: pointer;
+}

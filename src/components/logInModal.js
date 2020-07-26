@@ -1,8 +1,9 @@
-import React,  {useState, useEffect} from 'react';
+import React,  {useState} from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {signIn} from '../utils'
+import {signIn, signInWithGoogle} from '../utils'
 import { useHistory } from "react-router-dom";
+import signInWithGoogleButton from '../images/signInWithGoogle.png'
 import '../styles/logIn.css';
 
 const LogInModal = (props) => {
@@ -18,8 +19,19 @@ const LogInModal = (props) => {
             if(user) {
                 props.onHide();
                 history.push('/')
+            }else {
+                setErrorMessage('Kunne ikke logge in')
             }
-            setErrorMessage('Kunne ikke logge in')
+        }catch(error) {
+            console.log(error)
+        } 
+    }
+
+    const onSignInWithGoogle = async () => {
+        try{
+            props.onHide();
+            await signInWithGoogle();
+            history.push('/')
         }catch(error) {
             console.log(error)
         } 
@@ -50,6 +62,7 @@ const LogInModal = (props) => {
                 </Form.Group>
 
                 {errorMessage && <p className='errorMessage'>{errorMessage}</p>}
+                <img src={signInWithGoogleButton} alt='sign in with google' onClick={onSignInWithGoogle} className='logInImg'/>
                 {/* <Button variant="primary" className='hidden' type="submit">Logg inn</Button>             */}
             </Form>
         </Modal.Body>

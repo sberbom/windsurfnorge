@@ -1,5 +1,5 @@
 import Geocode from "react-geocode";
-import {auth } from './firebase'
+import {auth, googleAuthProvider } from './firebase'
 import { googleKey } from './keys';
 
 
@@ -21,6 +21,11 @@ export const signIn = async (email, password) => {
     }catch(error) {
         console.log('kunne ikke logg inn', error)
     }
+}
+
+export const signInWithGoogle = async () => {
+    const result  = await auth.signInWithPopup(googleAuthProvider);
+    console.log(result)
 }
 
 export const signOut = async (props) => {

@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app';
 // Add the Firebase products that you want to use
 import 'firebase/firestore';
 import 'firebase/storage';
+import 'firebase/auth'
 import { firebaseKey } from './keys';
 
 
@@ -22,5 +23,5 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore();
-// export const auth = firebase.auth();
+export const auth = firebase.auth();
 export const storage = firebase.storage();

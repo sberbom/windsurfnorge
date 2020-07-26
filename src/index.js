@@ -8,13 +8,13 @@ import * as serviceWorker from './serviceWorker';
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
      <ScrollToTop>
        <App />
       </ScrollToTop>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode> 
   ,
   document.getElementById('root')
 );

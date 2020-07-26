@@ -9,33 +9,36 @@ import AddSpot from './pages/addSpot';
 import { Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import UserProvider from './providers/userProvider';
 
 
 function App() {
   return (
     <div>
-      <SBNavbar/>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/home">
-          <Home />
-        </Route>
-        <Route path="/map">
-          <MapView/>
-        </Route>
-        <Route path="/spot">
-          <Spot/>
-        </Route>
-        <Route path="/addSpot">
-          <AddSpot/>
-        </Route>
-        <Route path="/allSpots">
-          <AllSpots/>
-        </Route>
-      </Switch>
-      <Footer/>
+      <UserProvider>
+        <SBNavbar/>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route path="/map">
+            <MapView/>
+          </Route>
+          <Route path="/spot">
+            <Spot/>
+          </Route>
+          <Route path="/addSpot">
+            <AddSpot/>
+          </Route>
+          <Route path="/allSpots">
+            <AllSpots/>
+          </Route>
+        </Switch>
+        <Footer/>
+      </UserProvider>
     </div>
   );
 }

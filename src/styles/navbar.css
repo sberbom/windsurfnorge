@@ -11,3 +11,8 @@
 .navbar-brand {
     color: white;
 }
+
+.link-text:hover {
+    cursor: pointer;
+    margin: auto;
+}

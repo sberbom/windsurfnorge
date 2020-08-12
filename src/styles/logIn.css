@@ -8,8 +8,15 @@
 
 .logInImg {
     height: 3rem;
+    align-self: start;
+    padding-top: 0.3rem;
 }
 
 .logInImg:hover {
     cursor: pointer;
+}
+
+.externalLogInContainer{
+    display: flex;
+    flex-direction: column;
 }

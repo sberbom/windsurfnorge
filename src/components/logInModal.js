@@ -1,9 +1,10 @@
 import React,  {useState} from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {signIn, signInWithGoogle} from '../utils'
+import {signIn, signInWithGoogle, signInWithFacebook} from '../utils'
 import { useHistory } from "react-router-dom";
 import signInWithGoogleButton from '../images/signInWithGoogle.png'
+import continueWithFacebookButton from '../images/continuteWithFacebook.png'
 import '../styles/logIn.css';
 
 const LogInModal = (props) => {
@@ -37,6 +38,16 @@ const LogInModal = (props) => {
         } 
     }
 
+    const onSignInWithFacebook = async () => {
+        try{
+            props.onHide();
+            await signInWithFacebook();
+            history.push('/')
+        }catch(error) {
+            console.log(error)
+        } 
+    }
+
     return(
         <Modal
             {...props}
@@ -62,7 +73,12 @@ const LogInModal = (props) => {
                 </Form.Group>
 
                 {errorMessage && <p className='errorMessage'>{errorMessage}</p>}
-                <img src={signInWithGoogleButton} alt='sign in with google' onClick={onSignInWithGoogle} className='logInImg'/>
+
+                <div className='externalLogInContainer'>
+                    <img src={signInWithGoogleButton} alt='sign in with google' onClick={onSignInWithGoogle} className='logInImg'/>
+                    <img src={continueWithFacebookButton} alt='continue with facebook' onClick={onSignInWithFacebook} className='logInImg'/>
+                </div>
+                
                 {/* <Button variant="primary" className='hidden' type="submit">Logg inn</Button>             */}
             </Form>
         </Modal.Body>

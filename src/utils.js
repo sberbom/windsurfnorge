@@ -1,5 +1,5 @@
 import Geocode from "react-geocode";
-import {auth, googleAuthProvider } from './firebase'
+import {auth, googleAuthProvider, facebookAuthProvider } from './firebase'
 import { googleKey } from './keys';
 
 
@@ -10,7 +10,7 @@ export const getAddress = async (lat, lng) => {
         const fetchedData = await Geocode.fromLatLng(lat, lng)
         return fetchedData.results[0].formatted_address
     }catch(error){
-        console.log('Klarte ikke hente adresse', error)
+        console.error('Klarte ikke hente adresse', error)
     }
 }
 
@@ -19,19 +19,30 @@ export const signIn = async (email, password) => {
         const user = await auth.signInWithEmailAndPassword(email, password)
         return user
     }catch(error) {
-        console.log('kunne ikke logg inn', error)
+        console.error('kunne ikke logg inn', error)
     }
 }
 
 export const signInWithGoogle = async () => {
-    const result  = await auth.signInWithPopup(googleAuthProvider);
-    console.log(result)
+    try{
+        await auth.signInWithPopup(googleAuthProvider);
+    }catch(error) {
+        console.error('kunne ikke logg inn med google', error)
+    }
+}
+
+export const signInWithFacebook = async () => {
+    try{
+        await auth.signInWithPopup(facebookAuthProvider);
+    }catch(error){
+        console.error('kunne ikke logge inn med facebook', error)
+    }
 }
 
 export const signOut = async (props) => {
     try {
         await auth.signOut();
     }catch(error) {
-        console.log('kunne ikke logg ut', error)
+        console.error('kunne ikke logg ut', error)
     }
 }

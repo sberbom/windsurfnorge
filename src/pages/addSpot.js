@@ -36,13 +36,14 @@ class AddSpot extends React.Component {
         this.setState({imageAsFile: image})
     } 
 
-    dragEnd = async (t, map, coord) => {
-        const {latLng} = coord; 
-        const lat = latLng.lat();
-        const lng = latLng.lng();
-        const address = await getAddress(lat, lng)
-        this.setState({address: address});
-        this.setState({latLng: {lat: lat, lng: lng}})
+    dragEnd = async (pos) => {
+        console.log(pos)
+        // const {latLng} = coord; 
+        // const lat = latLng.lat();
+        // const lng = latLng.lng();
+        // const address = await getAddress(lat, lng)
+        // this.setState({address: address});
+        // this.setState({latLng: {lat: lat, lng: lng}})
       }
 
 

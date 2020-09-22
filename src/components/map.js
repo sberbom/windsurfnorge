@@ -1,20 +1,19 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import mapboxgl from 'mapbox-gl';
 import '../styles/map.css';
 import { mapboxAccessToken } from "../keys";
 
-const SBMap = ({spots}) => {
+const SBMap = ({spots, draggable, onDragEnd}) => {
 
   const mapRef = "mapRef"
 
-  console.log(spots)
-
   useEffect(() => {
     mapboxgl.accessToken = mapboxAccessToken;
+    const mapCenter = [8.707806, 61.123456]
     const map = new mapboxgl.Map({
       container: mapRef,
       style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-      center: [8.707806, 61.123456], // starting position [lng, lat]
+      center: mapCenter, // starting position [lng, lat]
       zoom:  5// starting zoom
     });
 
@@ -26,8 +25,17 @@ const SBMap = ({spots}) => {
         .addTo(map); // add the marker to the map
       })
     }
+
+    if(draggable){
+      const draggableMarker = new mapboxgl.Marker({draggable: true})
+      .setLngLat(mapCenter)
+      .addTo(map)
+
+      draggableMarker.on('dragend', () => onDragEnd(draggableMarker.getLngLat()))
+    }
+
   
-  }, [spots])
+  }, [spots, draggable])
 
   return <div className="map" id={mapRef}/>;
 }

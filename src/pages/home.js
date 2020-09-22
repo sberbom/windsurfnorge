@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import * as dbService from '../db-service';
 import { Button } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import CardList from '../components/cardList';
@@ -7,7 +8,17 @@ import Map from '../components/map';
 import Title from '../components/title';
 import '../styles/home.css';
 
-function Home(props) {
+function Home() {
+    const [spots, setSpots] = useState([])
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            const allSpots = await dbService.getAllSpots();
+            setSpots(allSpots);
+        }
+        fetchData();
+    }, [])
+
     return(
         <div>
             <Header
@@ -17,13 +28,13 @@ function Home(props) {
             />
             <Title title="Populære steder å windsurfe" />
             <CardList
-                cards={4}
+                spots={spots}
             />
             <div className="home-center-button">
                 <Link to="/allSpots"><Button>Se alle steder å windsurfe</Button></Link>
             </div>
             <div className="home-map-container">
-                <Map/>
+                <Map spots={spots}/>
             </div>
         </div>
     )

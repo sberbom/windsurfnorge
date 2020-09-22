@@ -10,8 +10,11 @@
     width: 45%;
 }
 
-.spot-map-container * .map {
-    width: 45vw !important;
-    height: 70% !important;
+.spot-map-container {
+    width: 45%;
+    margin-bottom: 2rem;
 }
 
+.map {
+    border-radius: 10px;
+}

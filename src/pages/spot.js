@@ -5,7 +5,7 @@ import Map from '../components/map'
 import SpotInfo from '../components/spotInfo'
 import '../styles/spot.css'
 
-function Spot(props) {
+function Spot() {
     return(
         <div>
             <Header

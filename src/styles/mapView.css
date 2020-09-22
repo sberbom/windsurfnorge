@@ -1,6 +1,11 @@
-.mapView-container > * > .map {
+/* .mapView-container > * > .map {
     height: calc(100% - 56px) !important;
     margin-top: 56px;
+} */
+
+.mapView-container {
+    margin-top: 56px;
+    height: 100vh;
 }
 
 .mapView-nav-background {

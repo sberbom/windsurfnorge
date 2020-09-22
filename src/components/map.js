@@ -1,31 +1,35 @@
-import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
-import React from "react";
-import { googleKey } from '../keys';
+import React, {useEffect} from "react";
+import mapboxgl from 'mapbox-gl';
 import '../styles/map.css';
+import { mapboxAccessToken } from "../keys";
 
-const SBMap = (props) => {
+const SBMap = ({spots}) => {
+
+  const mapRef = "mapRef"
+
+  console.log(spots)
+
+  useEffect(() => {
+    mapboxgl.accessToken = mapboxAccessToken;
+    const map = new mapboxgl.Map({
+      container: mapRef,
+      style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+      center: [8.707806, 61.123456], // starting position [lng, lat]
+      zoom:  5// starting zoom
+    });
+
+    if(spots){
+      spots.forEach((spot) => {
+        new mapboxgl.Marker()
+        .setLngLat([spot.latLng.lng, spot.latLng.lat])
+        .setPopup(new mapboxgl.Popup({closeButton: false}).setHTML(`<a href='/spot'>${spot.name}</a>`))
+        .addTo(map); // add the marker to the map
+      })
+    }
   
-  const center = {lat: 61.123456, lng: 8.707806}
+  }, [spots])
 
-  return (
-      <Map
-        className="map"
-        google={props.google}
-        zoom={6}
-        initialCenter={center}
-      >
-      {props.draggable && 
-        <Marker 
-          title="Location"
-          id={1}
-          position={props.latLng}
-          draggable={true}
-          onDragend ={(t, map, coord) => props.onDragEnd(t, map, coord)}
-        />
-      }
-      </Map>
-  );
+  return <div className="map" id={mapRef}/>;
 }
-export default GoogleApiWrapper({
-  apiKey: googleKey
-})(SBMap);
+
+export default SBMap;

@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import * as dbService from '../db-service';
+import React from 'react';
 import '../styles/cardList.css';
-import SBCard from './card';
+import Card from './card';
 
-function CardList() {
-    const [spots, setSpots] = useState([])
+function CardList({spots}) {
     
-    useEffect(() => {
-        const fetchData = async () => {
-            const allSpots = await dbService.getAllSpots();
-            setSpots(allSpots);
-        }
-        fetchData();
-    }, [])
-
     return(
         <div className="cardList-container">
             <div className="cardList">
                 {spots.map((spot, i) => 
-                    <SBCard
+                    <Card
                         key={i}
                         title={spot.name}
                         text={spot.about}

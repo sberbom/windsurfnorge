@@ -26,10 +26,10 @@ function AddSpotForm(props) {
                     <Form.Control as="textarea" rows="1" placeholder={props.address} readOnly/>
                 </Form.Group>
 
-                <Form.Group controlId="exampleForm.ControlTextarea1">
+                {/* <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Bilde</Form.Label>
                     <input className='fileUploade' accept="image/*" type='file' onChange={props.handleImageAsFile}/>
-                </Form.Group>
+                </Form.Group> */}
 
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Facbook side</Form.Label>

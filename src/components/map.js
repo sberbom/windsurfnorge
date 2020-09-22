@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import mapboxgl from 'mapbox-gl';
 import '../styles/map.css';
 import { mapboxAccessToken } from "../keys";

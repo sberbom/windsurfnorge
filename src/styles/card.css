@@ -1,3 +1,17 @@
 .card {
     margin-bottom: 2rem;
+    height: 400px;
+}
+
+.card-title {
+    height: 10%;
+}
+
+.card-text {
+    height: calc(70% - 1.75rem);
+    overflow: hidden;
+}
+
+.card-body > a {
+    height: 20%;
 }

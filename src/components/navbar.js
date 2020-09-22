@@ -25,7 +25,7 @@ const SBNavbar = () =>  {
     return(
         <div>
             <Navbar expand="lg" className="sbnavbar" style={navBackground}>
-                <Navbar.Brand style={{color: "white"}} href="#home">Windsurf Norge</Navbar.Brand>
+                <Navbar.Brand style={{color: "white"}}><Link to='home' className='navbar-brand' style={{color: "white"}}>Windsurf Norge</Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">

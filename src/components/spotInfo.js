@@ -1,15 +1,15 @@
 import React from 'react';
 import '../styles/spotInfo.css'
 
-function SpotInfo(props) {
+function SpotInfo({spot}) {
     return(
         <div className="spotInfo-container">
             <h2>Beskrivelse</h2>
-            <p>Her kan man gjeren skrive litt om spotten</p>
+            <p>{spot.about}</p>
             <h2>Annokmst</h2>
-            <p>Hvordan kommer man seg til spotten? Parkering?</p>
+            <p>{spot.approach}</p>
             <h2>Facebook</h2>
-            <p>Finnes det en facebook side hvor du kan snakke med andre som surfer på denne spotten</p>
+            <p>{spot.facebook}</p>
         </div>
     )
 }

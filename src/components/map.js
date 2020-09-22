@@ -3,18 +3,25 @@ import mapboxgl from 'mapbox-gl';
 import '../styles/map.css';
 import { mapboxAccessToken } from "../keys";
 
-const SBMap = ({spots, draggable, onDragEnd}) => {
+const SBMap = ({spots, spot, draggable, onDragEnd}) => {
 
   const mapRef = "mapRef"
 
   useEffect(() => {
     mapboxgl.accessToken = mapboxAccessToken;
-    const mapCenter = [8.707806, 61.123456]
+    let mapCenter = [8.707806, 61.123456]
+    let startZoom = 5;
+
+    if(spot) {
+      mapCenter = [spot.latLng.lng, spot.latLng.lat]
+      startZoom = 11;
+    }
+
     const map = new mapboxgl.Map({
       container: mapRef,
       style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
       center: mapCenter, // starting position [lng, lat]
-      zoom:  5// starting zoom
+      zoom:  startZoom// starting zoom
     });
 
     if(spots){
@@ -24,6 +31,12 @@ const SBMap = ({spots, draggable, onDragEnd}) => {
         .setPopup(new mapboxgl.Popup({closeButton: false}).setHTML(`<a href='/spot'>${spot.name}</a>`))
         .addTo(map); // add the marker to the map
       })
+    }
+
+    if(spot){
+      new mapboxgl.Marker()
+        .setLngLat([spot.latLng.lng, spot.latLng.lat])
+        .addTo(map);
     }
 
     if(draggable){

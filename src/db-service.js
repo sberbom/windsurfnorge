@@ -7,6 +7,15 @@ export const getAllSpots = async () => {
     return spots;
 }
 
+export const getSpot = async (spotName) => {
+    const spotRef = await db.collection('spots').doc(spotName);
+    const fetchedSpot = await spotRef.get();
+    if(!fetchedSpot.exists) {
+        console.error("Could not find spot");
+    }
+    return fetchedSpot.data();
+}
+
 const uploadImage = (event, spot) => {
     event.preventDefault();
     console.log('start of uplaod')

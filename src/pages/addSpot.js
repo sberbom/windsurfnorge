@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import AddSpotForm from '../components/addSpotForm';
 import Header from '../components/header';
@@ -7,6 +7,11 @@ import * as dbService from '../db-service';
 import '../styles/addSpot.css';
 import '../styles/spot.css';
 import { getAddress } from '../utils';
+import {mapCenter} from '../components/map'
+import LogInModal from '../components/logInModal'
+import {UserContext} from '../providers/userProvider';
+import { useHistory } from "react-router-dom";
+
 
 
 function AddSpot() {
@@ -18,6 +23,12 @@ function AddSpot() {
 
     const [latLng, setLatLng] = useState(null);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
+
+    const [showLogInModal, setShowLogInModal] = useState(false);
+    const user = useContext(UserContext)
+
+    const history = useHistory()
+
     // const [imageAsFile, setImageAsFile] = useState('');
     // const [imageAsUrl, setImageAsUrl] = useState({imageUrl: ''});
 
@@ -25,6 +36,13 @@ function AddSpot() {
     //     const image = e.target.files[0]
     //     setImageAsFile({imageAsFile: image})
     // } 
+
+    useEffect(() => {
+        if(user == null){
+            setShowLogInModal(true);
+        }
+        console.log(user)
+    }, [user] )
 
     const dragEnd = async (pos) => {
         const address = await getAddress(pos.lat, pos.lng)
@@ -34,25 +52,27 @@ function AddSpot() {
 
 
     const checkValid = () => {
-        if (nameRef.current.value === '' || latLng === {lat: 61.123456, lng: 8.707806}) {
+        if (nameRef.current.value === '' || latLng === mapCenter) {
             window.alert('Legg til navn og dra markøren til spottents posisjon');
             return false
         }
         return true
     }
 
-    const onSubmit = (event) => {
+    const onSubmit = () => {
         const spot = {
             name: nameRef.current.value,
             about: aboutRef.current.value,
             approach: approachRef.current.value,
             facebook: facebookPageRef.current.value,
             latLng: latLng,
+            user: user,
             // imageAsFile: imageAsFile,
             // imageAsUrl: imageAsUrl,
         }
         if(checkValid()){
-            dbService.addSpot(event, spot)
+            dbService.addSpot(spot)
+            history.push('/')
         }
     }
 
@@ -77,6 +97,7 @@ function AddSpot() {
                     />
                 </div>
             </div>
+            <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
         </div>
     )
     

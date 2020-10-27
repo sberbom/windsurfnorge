@@ -32,7 +32,7 @@ const SBNavbar = () =>  {
                         <Link to="/home" className="nav-link" style={{color: "white"}} >Hjem</Link>
                         <Link to="/map" className="nav-link" style={{color: "white"}}>Kart</Link>
                         <Link to="/allSpots" className="nav-link" style={{color: "white"}}>Steder å windsurfe</Link>
-                        <Link to="/addSpot" className="nav-link" style={{color: "white"}}>Legg til</Link>
+                        <Link to="/addSpot" className="nav-link" style={{color: "white"}}>Legg til spot</Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className='justify-content-end'>

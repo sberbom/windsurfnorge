@@ -3,6 +3,8 @@ import mapboxgl from 'mapbox-gl';
 import '../styles/map.css';
 import { mapboxAccessToken } from "../keys";
 
+export const  mapCenter = [8.707806, 61.123456]
+
 const SBMap = ({spots, spot, draggable, onDragEnd}) => {
 
   const mapRef = "mapRef"

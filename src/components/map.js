@@ -30,7 +30,7 @@ const SBMap = ({spots, spot, draggable, onDragEnd}) => {
       spots.forEach((spot) => {
         new mapboxgl.Marker()
         .setLngLat([spot.latLng.lng, spot.latLng.lat])
-        .setPopup(new mapboxgl.Popup({closeButton: false}).setHTML(`<a href='/spot'>${spot.name}</a>`))
+        .setPopup(new mapboxgl.Popup({closeButton: false}).setHTML(`<a href='/spot?spotName=${spot.name}'>${spot.name}</a>`))
         .addTo(map); // add the marker to the map
       })
     }

@@ -1,6 +1,6 @@
 .card {
-    margin-bottom: 2rem;
     height: 400px;
+    margin: auto;
 }
 
 .card-title {
@@ -14,4 +14,8 @@
 
 .card-body > a {
     height: 20%;
+}
+
+.card-container {
+    margin: auto;
 }

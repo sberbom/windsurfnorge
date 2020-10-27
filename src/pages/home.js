@@ -6,6 +6,7 @@ import CardList from '../components/cardList';
 import Header from '../components/header';
 import Map from '../components/map';
 import Title from '../components/title';
+import CardCarousel from '../components/cardCarousel'
 import '../styles/home.css';
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
         const fetchData = async () => {
             const allSpots = await dbService.getAllSpots();
             setSpots(allSpots);
+            console.log(allSpots)
         }
         fetchData();
     }, [])
@@ -27,7 +29,7 @@ function Home() {
                 link="/allSpots"
             />
             <Title title="Populære steder å windsurfe" />
-            <CardList
+            <CardCarousel
                 spots={spots}
             />
             <div className="home-center-button">

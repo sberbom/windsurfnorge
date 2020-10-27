@@ -3,8 +3,16 @@
     margin: 0 auto;
 }
 
-.cardList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.cardList{
+    margin: 10px 0;
+    display:grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    justify-items: center;
+    margin: 0 5%;
+    padding-bottom: 10vh;
+}
+
+.cardList > * > .card {
+    margin-bottom: 2rem;
 }

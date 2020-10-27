@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import * as dbService from '../db-service';
 import { Button } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
-import CardList from '../components/cardList';
 import Header from '../components/header';
 import Map from '../components/map';
 import Title from '../components/title';

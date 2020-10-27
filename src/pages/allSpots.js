@@ -6,8 +6,9 @@ import {withRouter} from 'react-router-dom'
 import * as dbService from '../db-service';
 import '../styles/allSpots.css'
 
-function AllSpots(props) {
+function AllSpots() {
     const [spots, setSpots] = useState([]);
+    const [searchWord, setSearchWord] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,10 +23,11 @@ function AllSpots(props) {
             <Header
                 title="Steder å windsurfe"
             />
-            <Sortbar/>
+            <Sortbar
+                onSearchWordChange={setSearchWord}
+            />
             <CardList 
-                cards = {20}
-                spots={spots}
+                spots={spots.filter(spot => spot.name.toLowerCase().includes(searchWord.toLowerCase()))}
             />
         </div>
     )

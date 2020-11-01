@@ -11,15 +11,15 @@ import {mapCenter} from '../components/map'
 import LogInModal from '../components/logInModal'
 import {UserContext} from '../providers/userProvider';
 import { useHistory } from "react-router-dom";
+import queryString from 'query-string'
 
 
 
 function AddSpot() {
-    const addSpotFormContainerRef = React.createRef()
-    const nameRef = React.createRef()
-    const aboutRef = React.createRef()
-    const approachRef = React.createRef()
-    const facebookPageRef = React.createRef()
+    const [spotName, setSpotName] = useState("")
+    const [aboutSpot, setAboutSpot] = useState("")
+    const [approachSpot, setApproachSpot] = useState("")
+    const [facbookPageSpot, setFacebookPageSpot] = useState("")
 
     const [latLng, setLatLng] = useState(null);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
@@ -27,21 +27,35 @@ function AddSpot() {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const user = useContext(UserContext)
 
+    const [isLoading, setIsLoading] = useState(true)
+    const [isEdit, setIsEdit] = useState(false)
+
+    useEffect(() => {
+        const fetchSpot = async () => {
+            const spotName = queryString.parse(window.location.search).spotName
+            const edit = queryString.parse(window.location.search).edit
+            if(edit) {
+                setIsEdit(true)
+                const spot = await dbService.getSpot(spotName);
+                setSpotName(spot.name);
+                setAboutSpot(spot.about);
+                setApproachSpot(spot.approach);
+                setFacebookPageSpot(spot.facebook)
+                setLatLng(spot.latLng)
+                const address = await getAddress(spot.latLng.lat, spot.latLng.lng)
+                setAddress(address)
+            }
+            setIsLoading(false)
+        }
+        fetchSpot();
+    }, [])
+
     const history = useHistory()
-
-    // const [imageAsFile, setImageAsFile] = useState('');
-    // const [imageAsUrl, setImageAsUrl] = useState({imageUrl: ''});
-
-    // const handleImageAsFile = (e) => {
-    //     const image = e.target.files[0]
-    //     setImageAsFile({imageAsFile: image})
-    // } 
 
     useEffect(() => {
         if(user == null){
             setShowLogInModal(true);
         }
-        console.log(user)
     }, [user] )
 
     const dragEnd = async (pos) => {
@@ -52,7 +66,7 @@ function AddSpot() {
 
 
     const checkValid = () => {
-        if (nameRef.current.value === '' || latLng === mapCenter) {
+        if (spotName === '' || latLng === mapCenter) {
             window.alert('Legg til navn og dra markøren til spottents posisjon');
             return false
         }
@@ -61,14 +75,12 @@ function AddSpot() {
 
     const onSubmit = () => {
         const spot = {
-            name: nameRef.current.value,
-            about: aboutRef.current.value,
-            approach: approachRef.current.value,
-            facebook: facebookPageRef.current.value,
+            name: spotName,
+            about: aboutSpot,
+            approach: approachSpot,
+            facebook: facbookPageSpot,
             latLng: latLng,
             user: user,
-            // imageAsFile: imageAsFile,
-            // imageAsUrl: imageAsUrl,
         }
         if(checkValid()){
             dbService.addSpot(spot)
@@ -79,25 +91,33 @@ function AddSpot() {
     return(
         <div>
             <Header
-                title="Legg til spot"
+                title={isEdit ? "Endre spot" : "Legg til spot"}
             />
-            <div className="spot-container">
-                <div className="spot-map-container">
-                    <Map draggable={true} onDragEnd={dragEnd}/>
-                </div>
-                <div className="addSpot-spotInfo" ref= {addSpotFormContainerRef}>
-                    <AddSpotForm 
-                        onSubmit={onSubmit} 
-                        nameRef={nameRef}
-                        aboutRef={aboutRef}
-                        approachRef={approachRef}
-                        facebookPageRef = {facebookPageRef}
-                        address = {address}
-                        // handleImageAsFile={handleImageAsFile}
-                    />
-                </div>
-            </div>
-            <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
+            {!isLoading &&
+                <> 
+                    <div className="spot-container">
+                        <div className="spot-map-container">
+                            <Map draggable={true} onDragEnd={dragEnd} markerPos={latLng}/>
+                        </div>
+                        <div className="addSpot-spotInfo">
+                            <AddSpotForm 
+                                onSubmit={onSubmit} 
+                                onNameChange={setSpotName}
+                                onAboutChange={setAboutSpot}
+                                onApproachChange={setApproachSpot}
+                                onFacebookPageChange = {setFacebookPageSpot}
+                                address = {address}
+                                name= {spotName}
+                                about = {aboutSpot}
+                                approach = {approachSpot}
+                                facebook = {facbookPageSpot}
+                                isEdit ={isEdit}
+                            />
+                        </div>
+                    </div>
+                    <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
+                </>
+            }
         </div>
     )
     

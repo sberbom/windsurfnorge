@@ -7,7 +7,6 @@ import 'firebase/auth'
 import { firebaseKey } from './keys';
 
 
-// TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
     apiKey: firebaseKey,
     authDomain: "windsurfnorge.firebaseapp.com",

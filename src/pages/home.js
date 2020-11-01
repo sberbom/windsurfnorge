@@ -15,7 +15,6 @@ function Home() {
         const fetchData = async () => {
             const allSpots = await dbService.getAllSpots();
             setSpots(allSpots);
-            console.log(allSpots)
         }
         fetchData();
     }, [])

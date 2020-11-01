@@ -5,7 +5,7 @@ import { mapboxAccessToken } from "../keys";
 
 export const  mapCenter = [8.707806, 61.123456]
 
-const SBMap = ({spots, spot, draggable, onDragEnd}) => {
+const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}) => {
 
   const mapRef = "mapRef"
 
@@ -42,8 +42,9 @@ const SBMap = ({spots, spot, draggable, onDragEnd}) => {
     }
 
     if(draggable){
+      const pos = markerPos ? markerPos : mapCenter
       const draggableMarker = new mapboxgl.Marker({draggable: true})
-      .setLngLat(mapCenter)
+      .setLngLat(pos)
       .addTo(map)
 
       draggableMarker.on('dragend', () => onDragEnd(draggableMarker.getLngLat()))

@@ -18,3 +18,18 @@
 .map {
     border-radius: 10px;
 }
+
+@media only screen and (max-width: 700px) {
+    .spot-container{
+        flex-direction: column-reverse;
+    }
+
+    .spot-spotInfo-container {
+        width: 100%;
+    }
+
+    .spot-map-container {
+        width: 100%;
+        height: 60vh;
+    }
+}

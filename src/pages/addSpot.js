@@ -20,6 +20,8 @@ function AddSpot() {
     const [aboutSpot, setAboutSpot] = useState("")
     const [approachSpot, setApproachSpot] = useState("")
     const [facbookPageSpot, setFacebookPageSpot] = useState("")
+    const [timeStamp, setTimeStamp] = useState(new Date())
+    const [views, setViews] = useState(0);
 
     const [latLng, setLatLng] = useState(null);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
@@ -42,8 +44,10 @@ function AddSpot() {
                 setApproachSpot(spot.approach);
                 setFacebookPageSpot(spot.facebook)
                 setLatLng(spot.latLng)
+                setTimeStamp(spot.timeStamp)
+                setViews(spot.views)
                 const address = await getAddress(spot.latLng.lat, spot.latLng.lng)
-                setAddress(address)
+                setAddress(address);
             }
             setIsLoading(false)
         }
@@ -81,6 +85,8 @@ function AddSpot() {
             facebook: facbookPageSpot,
             latLng: latLng,
             user: user,
+            timeStamp: timeStamp,
+            views: views
         }
         if(checkValid()){
             dbService.addSpot(spot)

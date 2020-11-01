@@ -8,6 +8,7 @@ import '../styles/allSpots.css'
 
 function AllSpots() {
     const [spots, setSpots] = useState([]);
+    const [sortBy, setSortBy] = useState("Alphabetical")
     const [searchWord, setSearchWord] = useState("");
 
     useEffect(() => {
@@ -18,6 +19,20 @@ function AllSpots() {
         fetchData();
     }, [])
 
+    const sort = (spotsToSort, sortMethod) => {
+        let spots = spotsToSort;
+        if(sortMethod === "Alphabetical") {
+            spots = spots.sort();
+        }
+        if(sortMethod === "Newest") {
+            spots = spots.sort((spot1, spot2) => spot2.timeStamp - spot1.timeStamp);
+        }
+        if(sortMethod === "Most popular") {
+            spots = spots.sort((spot1, spot2) => spot2.views - spot1.views);
+        }
+        return spots
+    }
+
     return(
         <div className="allSpots-container">
             <Header
@@ -25,9 +40,10 @@ function AllSpots() {
             />
             <Sortbar
                 onSearchWordChange={setSearchWord}
+                onSortbyChange={setSortBy}
             />
             <CardList 
-                spots={spots.filter(spot => spot.name.toLowerCase().includes(searchWord.toLowerCase()))}
+                spots={sort(spots.filter(spot => spot.name.toLowerCase().includes(searchWord.toLowerCase())), sortBy)}
             />
         </div>
     )

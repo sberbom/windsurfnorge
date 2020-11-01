@@ -2,15 +2,15 @@ import React from 'react';
 import {DropdownButton, InputGroup, FormControl, Button, Dropdown} from 'react-bootstrap'
 import '../styles/sortbar.css'
 
-const Sortbar = ({onSearchWordChange}) => {
+const Sortbar = ({onSearchWordChange, onSortbyChange}) => {
 
 
     return(
         <div className="sortbar-container">
             <DropdownButton id="dropdown-basic-button" title="Sorter etter">
-                <Dropdown.Item href="#/action-1">Nyeste</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Alfabetisk</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Mestpopulære</Dropdown.Item>
+                <Dropdown.Item onClick={() => onSortbyChange("Newest")}>Nyeste</Dropdown.Item>
+                <Dropdown.Item onClick={() => onSortbyChange("Alphabetical")}>Alfabetisk</Dropdown.Item>
+                <Dropdown.Item onClick={() => onSortbyChange("Most popular")}>Mestpopulære</Dropdown.Item>
             </DropdownButton>
             <InputGroup className="mb-3 searchfield">
                 <FormControl

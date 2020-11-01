@@ -24,6 +24,8 @@ export const addSpot = async (spot) => {
             approach: spot.approach,
             facebook: spot.facebook,
             latLng: spot.latLng,
+            timeStamp: spot.timeStamp,
+            views: spot.views,
         })
     }catch(error) {
         console.log('Error adding spot', error)

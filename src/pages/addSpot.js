@@ -12,6 +12,7 @@ import LogInModal from '../components/logInModal'
 import {UserContext} from '../providers/userProvider';
 import { useHistory } from "react-router-dom";
 import queryString from 'query-string'
+import EmailVerificationModal from '../components/emailVerificationModal'
 
 
 
@@ -27,6 +28,7 @@ function AddSpot() {
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
 
     const [showLogInModal, setShowLogInModal] = useState(false);
+    const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
     const user = useContext(UserContext)
 
     const [isLoading, setIsLoading] = useState(true)
@@ -57,8 +59,12 @@ function AddSpot() {
     const history = useHistory()
 
     useEffect(() => {
+        console.log(user)
         if(user == null){
             setShowLogInModal(true);
+        }
+        if(user && !user.emailVerified){
+            setShowEmailVerificationModal(true);
         }
     }, [user] )
 
@@ -122,6 +128,7 @@ function AddSpot() {
                         </div>
                     </div>
                     <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
+                    <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
                 </>
             }
         </div>

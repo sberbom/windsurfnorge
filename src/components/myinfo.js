@@ -22,7 +22,7 @@ const MyInfo = ({user}) => {
 
     useEffect(() => {
         if(user) {
-            setUsername(user.displayName)
+            user.displayName && setUsername(user.displayName)
             setEmail(user.email)
         }  
     }, [user])
@@ -36,10 +36,10 @@ const MyInfo = ({user}) => {
             if (user.displayName !== username) {
                 updateUsername(user, username)
             }
+            history.push("/")
         }
         catch(error){
             setErrorMessage("Noe gikk galt, vennligst prøv igjen.")
-
         }
     }
 
@@ -57,12 +57,10 @@ const MyInfo = ({user}) => {
                     alert("Passordene må være like")
                 }
             }
+            history.push("/")
         }
         catch(error){
             setErrorMessage("Noe gikk galt, vennligst prøv igjen.")
-        }
-        finally{
-            setShowPasswordModal(false)
         }
     }
 
@@ -92,7 +90,7 @@ const MyInfo = ({user}) => {
             <Button className="myinfo-button" onClick={onSignOut}>Logg ut</Button>
 
 
-            <ReAuthenticateModal show={showPasswordModal} onHide={() => setShowPasswordModal(false)} onPasswordChange={setPassword} onSubmit={onReAuthenticateSubmit}/>
+            <ReAuthenticateModal show={showPasswordModal} password={password} onHide={() => setShowPasswordModal(false)} onPasswordChange={setPassword} onSubmit={onReAuthenticateSubmit}/>
         </div>
     )
 }

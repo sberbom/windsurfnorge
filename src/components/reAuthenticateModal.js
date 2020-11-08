@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
+import Input from './input'
 import '../styles/logIn.css';
 
 const ReAuthenticateModal = (props) => {
@@ -17,12 +18,7 @@ const ReAuthenticateModal = (props) => {
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <Form className='logInForm'>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Passord</Form.Label>
-                    <Form.Control type="password" placeholder="Passord" onChange={(event) => props.onPasswordChange(event.target.value)}/>
-                </Form.Group>
-            </Form>
+            <Input title={"Nytt passord:"} value={props.password} onChange={props.onPasswordChange} type={"password"} />
         </Modal.Body>
         <Modal.Footer>
             <Button variant="primary" onClick={props.onSubmit}>Lagre</Button>

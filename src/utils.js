@@ -51,6 +51,7 @@ export const signOut = async (props) => {
 export const registerUser = async (email, password) => {
     try{
         const user = await auth.createUserWithEmailAndPassword(email, password);
+        sendEmailVerification(user.user)
         return user;
     }
     catch(error){
@@ -117,6 +118,15 @@ export const reAuthenticateUser = async(user, password) => {
         console.error("Could not re-authenticate user", error)
     }
 }
+
+export const sendEmailVerification = (user) => {
+    try{
+        user.sendEmailVerification()
+    }
+    catch(error){
+        console.error("Could not send veification email", error)
+    }
+} 
 
 export const validatePassword = (password1, password2) => {
     return(password1 === password2)

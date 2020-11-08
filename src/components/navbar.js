@@ -36,7 +36,7 @@ const SBNavbar = () =>  {
                 <Navbar.Collapse className='justify-content-end'>
                     <Nav>
                         {user ? 
-                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user.email}</Link>
+                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user.displayName? user.displayName : user.email}</Link>
                             :                        
                             <div onClick={() => setShowLogInModal(true)} className="nav-link link-text" style={{color: "white"}}>Logg inn</div>
                     }

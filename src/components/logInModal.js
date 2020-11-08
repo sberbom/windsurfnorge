@@ -48,6 +48,12 @@ const LogInModal = (props) => {
         } 
     }
 
+    const onRegistrer = () => {
+        props.onHide();
+        history.push('/register')
+    
+    }
+
     return(
         <Modal
             {...props}
@@ -83,7 +89,8 @@ const LogInModal = (props) => {
             </Form>
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="primary" onClick={onSignIn}>Logg inn</Button>            
+            <Button variant="primary" onClick={onSignIn}>Logg inn</Button>
+            <Button variant="primary" onClick={onRegistrer}>Registrer</Button>            
             <Button onClick={props.onHide}>Avbryt</Button>
         </Modal.Footer>
         </Modal>

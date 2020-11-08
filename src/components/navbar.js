@@ -1,14 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom'
-import SignOutModal from './signOutModal'
 import LogInModal from './logInModal'
 import '../styles/navbar.css'
 import {UserContext} from '../providers/userProvider';
 
 const SBNavbar = () =>  {
     const [navBackground, setNavBackground] = useState({backgroundColor: "rgba(0, 0, 0, 0)"})
-    const [showSignOutModal, setShowSignOutModal] = useState(false)
     const [showLogInModal, setShowLogInModal] = useState(false);
     const user = useContext(UserContext)
 
@@ -38,14 +36,13 @@ const SBNavbar = () =>  {
                 <Navbar.Collapse className='justify-content-end'>
                     <Nav>
                         {user ? 
-                            <div onClick={() => setShowSignOutModal(true)} className="nav-link link-text" style={{color: "white"}}>{user.email}</div>
+                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user.email}</Link>
                             :                        
                             <div onClick={() => setShowLogInModal(true)} className="nav-link link-text" style={{color: "white"}}>Logg inn</div>
                     }
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <SignOutModal show={showSignOutModal} onHide={() => setShowSignOutModal(false)}/>
             <LogInModal show={showLogInModal} onHide={() => setShowLogInModal(false)}/>
         </div>
     )

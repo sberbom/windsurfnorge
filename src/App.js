@@ -6,6 +6,8 @@ import MapView from './pages/mapView';
 import Spot from './pages/spot'
 import Footer from './components/footer';
 import AddSpot from './pages/addSpot';
+import MyPage from './pages/mypage'
+import Register from './pages/register'
 import { Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -35,6 +37,12 @@ function App() {
           </Route>
           <Route path="/allSpots">
             <AllSpots/>
+          </Route>
+          <Route path="/myPage">
+            <MyPage/>
+          </Route>
+          <Route path="/register">
+            <Register/>
           </Route>
         </Switch>
         <Footer/>

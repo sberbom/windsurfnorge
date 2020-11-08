@@ -1,0 +1,19 @@
+.myInfo-container {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    margin-top: 1rem;
+}
+
+.myinfo-button {
+    margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 550px) {
+    .myInfo-container {
+        width: auto;
+        margin: 1rem 1rem;
+    }
+}

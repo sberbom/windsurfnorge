@@ -1,16 +1,19 @@
 import React,  {useState} from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {signIn, signInWithGoogle, signInWithFacebook} from '../utils'
+import {signIn, signInWithGoogle, signInWithFacebook, sendPasswordResetEmail} from '../utils'
 import { useHistory } from "react-router-dom";
 import signInWithGoogleButton from '../images/signInWithGoogle.png'
 import continueWithFacebookButton from '../images/continuteWithFacebook.png'
+import Input from './input'
 import '../styles/logIn.css';
 
 const LogInModal = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState()
+    const [recoveryEmail, setRecoveryEmail] = useState("")
+    const [isForgottonPassword, setIsForgottonPassword] = useState(false)
 
     const history = useHistory()
 
@@ -51,7 +54,11 @@ const LogInModal = (props) => {
     const onRegistrer = () => {
         props.onHide();
         history.push('/register')
-    
+    }
+
+    const onRecoveryPasswordClick = () => {
+        sendPasswordResetEmail(recoveryEmail)
+        props.onHide();
     }
 
     return(
@@ -68,24 +75,24 @@ const LogInModal = (props) => {
         </Modal.Header>
         <Modal.Body>
         <Form className='logInForm'>
-                <Form.Group controlId="formBasicEmail" onSubmit={onSignIn}>
-                    <Form.Label>Epost</Form.Label>
-                    <Form.Control type="email" placeholder="windsurf@norge.no" onChange={(event) => setEmail(event.target.value)} />
-                </Form.Group>
+                <Input value={email} title={"Epost"} onChange={setEmail} /> 
+                <Input value={password} title={"Passord"} onChange={setPassword} type="password" /> 
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Passord</Form.Label>
-                    <Form.Control type="password" placeholder="Passord" onChange={(event) => setPassword(event.target.value)}/>
-                </Form.Group>
-
+                <p className={"forgotten-password"} onClick={() => setIsForgottonPassword(!isForgottonPassword)}>Glemt passord?</p>
                 {errorMessage && <p className='errorMessage'>{errorMessage}</p>}
+
+                {isForgottonPassword && 
+                    <>
+                        <Input value={recoveryEmail} title={"Epost"} onChange={setRecoveryEmail} />
+                        <Button variant="primary" onClick={onRecoveryPasswordClick}>Send nytt passord</Button>
+                    </>
+                }
 
                 <div className='externalLogInContainer'>
                     <img src={signInWithGoogleButton} alt='sign in with google' onClick={onSignInWithGoogle} className='logInImg'/>
                     <img src={continueWithFacebookButton} alt='continue with facebook' onClick={onSignInWithFacebook} className='logInImg'/>
                 </div>
                 
-                {/* <Button variant="primary" className='hidden' type="submit">Logg inn</Button>             */}
             </Form>
         </Modal.Body>
         <Modal.Footer>

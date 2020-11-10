@@ -20,3 +20,17 @@
     display: flex;
     flex-direction: column;
 }
+
+.forgotten-password {
+    font-size: 0.8rem;
+    padding-left: 0.2rem;
+    color: blue;
+}
+
+.forgotten-password:hover {
+    cursor: pointer;
+}
+
+.no-margin {
+    margin: 0 !important;
+}

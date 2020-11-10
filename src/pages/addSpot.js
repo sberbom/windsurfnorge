@@ -108,6 +108,7 @@ function AddSpot() {
         <div>
             <Header
                 title={isEdit ? "Endre spot" : "Legg til spot"}
+                image={imageAsUrl[0]}
             />
             {!isLoading &&
                 <> 

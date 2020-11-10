@@ -19,3 +19,8 @@
 .card-container {
     margin: auto;
 }
+
+.card-img-top {
+    height: 190px;
+    object-fit: cover;
+}

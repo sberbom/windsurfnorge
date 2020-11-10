@@ -24,8 +24,10 @@ function AddSpot() {
     const [timeStamp, setTimeStamp] = useState(new Date())
     const [views, setViews] = useState(0);
 
-    const [latLng, setLatLng] = useState(null);
+    const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
+
+    const [imageAsUrl, setImageAsUrl] = useState([]);
 
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
@@ -50,6 +52,7 @@ function AddSpot() {
                 setViews(spot.views)
                 const address = await getAddress(spot.latLng.lat, spot.latLng.lng)
                 setAddress(address);
+                setImageAsUrl(spot.imageAsUrl)
             }
             setIsLoading(false)
         }
@@ -59,7 +62,6 @@ function AddSpot() {
     const history = useHistory()
 
     useEffect(() => {
-        console.log(user)
         if(user == null){
             setShowLogInModal(true);
         }
@@ -84,6 +86,7 @@ function AddSpot() {
     }
 
     const onSubmit = () => {
+        console.log(imageAsUrl)
         const spot = {
             name: spotName,
             about: aboutSpot,
@@ -92,7 +95,8 @@ function AddSpot() {
             latLng: latLng,
             user: user,
             timeStamp: timeStamp,
-            views: views
+            views: views,
+            images: imageAsUrl
         }
         if(checkValid()){
             dbService.addSpot(spot)
@@ -124,9 +128,12 @@ function AddSpot() {
                                 approach = {approachSpot}
                                 facebook = {facbookPageSpot}
                                 isEdit ={isEdit}
+                                setImageAsUrl = {setImageAsUrl}
+                                imageAsUrl = {imageAsUrl}
                             />
                         </div>
                     </div>
+                    <p onClick={() => console.log(imageAsUrl)}>asdfasdf</p>
                     <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
                     <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
                 </>

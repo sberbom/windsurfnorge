@@ -1,0 +1,9 @@
+.imageUploade-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.imageUploade-container > * > img {
+    height: 30px;
+}

@@ -10,13 +10,15 @@ import '../styles/spot.css'
 function Spot() {
 
     const [spot, setSpot] = useState(null)
+    const [image, setImage] = useState(null)
 
     useEffect(() => {
         const fetchSpot = async () => {
             const spotName = queryString.parse(window.location.search).spotName
             const spot = await dbService.getSpot(spotName);
-            console.log(spot)
             setSpot(spot);
+            console.log(spot)
+            spot.images && spot.images[0] ? setImage(spot.images[0]) : setImage(null)
         }
         fetchSpot();
     }, [])
@@ -27,6 +29,7 @@ function Spot() {
                 <>
                     <Header
                         title={spot.name}
+                        image={image}
                     />
                     <div className="spot-container">
                         <div className="spot-map-container">

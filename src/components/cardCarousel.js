@@ -23,6 +23,7 @@ const CardCarousel = ({spots}) => {
             text={spot.about}
             button="Se mer"
             onDragStart={handleDragStart}
+            image={spot.images && spot.images[0] ? spot.images[0] : "https://fiskesnakk.files.wordpress.com/2010/09/img_8242-3.jpg"}
         />
     )  
 

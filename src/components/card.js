@@ -3,11 +3,11 @@ import {Card, Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import '../styles/card.css'
 
-function SBCard({title, text, button}) {
+function SBCard({title, text, button, image}) {
     return(
         <div className="card-container">
             <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="https://fiskesnakk.files.wordpress.com/2010/09/img_8242-3.jpg" />
+            <Card.Img variant="top" src={image} />
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{text}</Card.Text>

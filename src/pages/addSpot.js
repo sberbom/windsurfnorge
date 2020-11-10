@@ -52,7 +52,7 @@ function AddSpot() {
                 setViews(spot.views)
                 const address = await getAddress(spot.latLng.lat, spot.latLng.lng)
                 setAddress(address);
-                setImageAsUrl(spot.imageAsUrl)
+                setImageAsUrl(spot.images ? spot.images : [])
             }
             setIsLoading(false)
         }

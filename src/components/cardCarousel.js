@@ -16,7 +16,7 @@ import '../styles/cardCarousel.css'
 const CardCarousel = ({spots}) => {
     const handleDragStart = (e) => e.preventDefault();
 
-    const cards = spots.map((spot, i) => 
+    const cards = spots.sort((spot1, spot2) => spot2.views - spot1.views).map((spot, i) => 
         <Card
             key={i}
             title={spot.name}

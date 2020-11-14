@@ -14,6 +14,7 @@
     height: 70vh;
     object-fit: cover;
     width: 100%;
+    filter: grayscale(20%);
 }
 
 .header-info {

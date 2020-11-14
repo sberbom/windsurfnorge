@@ -17,7 +17,7 @@ function Spot() {
             const spotName = queryString.parse(window.location.search).spotName
             const spot = await dbService.getSpot(spotName);
             setSpot(spot);
-            console.log(spot)
+            dbService.incrementSpotViews(spot);
             spot.images && spot.images[0] ? setImage(spot.images[0]) : setImage(null)
         }
         fetchSpot();

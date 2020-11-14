@@ -33,3 +33,13 @@ export const addSpot = async (spot) => {
     }
 }
 
+export const incrementSpotViews = async (spot) => {
+    try{
+        db.collection('spots').doc(spot.name).update({
+            views: spot.views + 1,
+        })
+    }catch(error) {
+        console.log('Error incrementing spot views', error)
+    }
+}
+

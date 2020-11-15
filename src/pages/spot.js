@@ -6,6 +6,7 @@ import Map from '../components/map'
 import SpotInfo from '../components/spotInfo'
 import queryString from 'query-string'
 import '../styles/spot.css'
+import ImageCarousel from '../components/imageCarousel';
 
 function Spot() {
 
@@ -38,6 +39,9 @@ function Spot() {
                         <div className="spot-spotInfo-container">
                             <SpotInfo spot={spot}/>
                         </div>
+                    </div>
+                    <div className="image-carousel-container">
+                        <ImageCarousel images={spot.images} />
                     </div>
                 </>
             }

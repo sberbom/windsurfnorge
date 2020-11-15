@@ -19,6 +19,10 @@
     border-radius: 10px;
 }
 
+.image-carousel-container {
+    margin-top: 2rem;
+}
+
 @media only screen and (max-width: 700px) {
     .spot-container{
         flex-direction: column-reverse;

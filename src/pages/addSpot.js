@@ -62,8 +62,11 @@ function AddSpot() {
     const history = useHistory()
 
     useEffect(() => {
-        if(user == null){
+        if(user === null){
             setShowLogInModal(true);
+        }
+        else{
+            setShowLogInModal(false);
         }
         if(user && !user.emailVerified){
             setShowEmailVerificationModal(true);

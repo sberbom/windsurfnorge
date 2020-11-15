@@ -15,6 +15,7 @@ const ImageCarousel = ({images}) => {
                 key={i}
                 src={image}
                 alt={image}
+                onDragStart={handleDragStart}
             />
         </div> 
     )

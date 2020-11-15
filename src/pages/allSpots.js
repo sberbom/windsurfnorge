@@ -42,9 +42,13 @@ function AllSpots() {
                 onSearchWordChange={setSearchWord}
                 onSortbyChange={setSortBy}
             />
-            <CardList 
-                spots={sort(spots.filter(spot => spot.name.toLowerCase().includes(searchWord.toLowerCase())), sortBy)}
-            />
+            {spots.length === 0 ?
+                <div className="empty"></div>
+                :
+                <CardList 
+                    spots={sort(spots.filter(spot => spot.name.toLowerCase().includes(searchWord.toLowerCase())), sortBy)}
+                />
+            }
         </div>
     )
 }

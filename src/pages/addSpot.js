@@ -134,7 +134,6 @@ function AddSpot() {
                             />
                         </div>
                     </div>
-                    <p onClick={() => console.log(imageAsUrl)}>asdfasdf</p>
                     <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
                     <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
                 </>

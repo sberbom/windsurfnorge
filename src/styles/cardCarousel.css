@@ -5,3 +5,18 @@
 .alice-carousel__stage-item {
     width: 288px;
 }
+
+.card-skeleton-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-skeleton-container > span {
+    text-align: center;
+}
+
+.card-skeleton-container > span > span {
+    display: inline-block;
+}
+

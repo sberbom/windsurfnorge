@@ -10,27 +10,47 @@ const SBNavbar = () =>  {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const user = useContext(UserContext)
 
+    const [expanded, setExpanded] = useState(false);
+
     useEffect(() => { 
         const getNavBackground = () => {
             document.addEventListener("scroll", () => {
                 const backgroundcolor = window.scrollY < 100 ? {backgroundColor: "rgba(0, 0, 0, 0)"} : {backgroundColor: "rgba(0, 0, 0, 0.7)"}
                 setNavBackground(backgroundcolor)
+                setExpanded(false)
             });
         }
         getNavBackground();
-    }, [])
+    }, [expanded])
+
+    const onNavbarToggle = () => {
+        if(window.scrollY < 100 && !expanded){
+            setNavBackground({backgroundColor: "rgba(0, 0, 0, 0.7)"})
+        }
+        else if(window.scrollY < 100 && expanded){
+            setNavBackground({backgroundColor: "rgba(0, 0, 0, 0)"})
+        }
+        setExpanded(!expanded)
+    }
+
+    const onLinkClick = () => {
+        if(navBackground.backgroundColor === "rgba(0, 0, 0, 0.7)"){
+            setNavBackground({backgroundColor: "rgba(0, 0, 0, 0)"})
+        }
+        setExpanded(false)
+    }
     
     return(
         <div>
-            <Navbar expand="lg" className="sbnavbar" style={navBackground}>
+            <Navbar expand="lg" className="sbnavbar" style={navBackground} expanded={expanded}>
                 <Navbar.Brand style={{color: "white"}}><Link to='home' className='navbar-brand' style={{color: "white"}}>Windsurf Norge</Link></Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={onNavbarToggle}/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Link to="/home" className="nav-link" style={{color: "white"}} >Hjem</Link>
-                        <Link to="/map" className="nav-link" style={{color: "white"}}>Kart</Link>
-                        <Link to="/allSpots" className="nav-link" style={{color: "white"}}>Steder å windsurfe</Link>
-                        <Link to="/addSpot" className="nav-link" style={{color: "white"}}>Legg til spot</Link>
+                        <Link to="/home" className="nav-link" style={{color: "white"}} onClick={onLinkClick}>Hjem</Link>
+                        <Link to="/map" className="nav-link" style={{color: "white"}} onClick={onLinkClick}>Kart</Link>
+                        <Link to="/allSpots" className="nav-link" style={{color: "white"}} onClick={onLinkClick}>Steder å windsurfe</Link>
+                        <Link to="/addSpot" className="nav-link" style={{color: "white"}} onClick={onLinkClick}>Legg til spot</Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className='justify-content-end'>

@@ -135,3 +135,7 @@ export const validatePassword = (password1, password2) => {
 export const validateEmail = (email) => {
     return (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email));
 }
+
+export const getRandomInt = () => {
+    return Math.floor(Math.random() * Math.floor(1000));
+}

@@ -4,19 +4,29 @@ import {Button} from 'react-bootstrap'
 import sync from '../images/sync.png'
 import checked from '../images/checked.png'
 import close from '../images/close.png'
+import imageCompression from 'browser-image-compression';
+import {getRandomInt} from '../utils'
 import '../styles/imageUploade.css'
 
-
-const ImageUploade = ({setImageAsUrl, imageAsUrl}) =>  {
+const ImageUploade = ({setImageAsUrl, imageAsUrl, spotName}) =>  {
 
     const [imageAsFile, setImageAsFile] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [isUploadeCompleted, setIsUploadeCompleted] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [imageName, setImageName] = useState('')
 
-    const handleImageAsFile = (event) => {
+    const options = {
+        maxSizeMB: 1, 
+        maxWidthOrHeight: 1920,
+        useWebWorker: true
+    }
+
+    const handleImageAsFile = async (event) => {
         const image = event.target.files[0]
-        setImageAsFile(imageFile => (image))
+        const compressedFile = await imageCompression(image, options);
+        setImageName(spotName + getRandomInt())
+        setImageAsFile(compressedFile)
     } 
 
     const handleFirebaseUploade = (event) => {
@@ -30,7 +40,7 @@ const ImageUploade = ({setImageAsUrl, imageAsUrl}) =>  {
         setIsError(false)
         setIsUploadeCompleted(false)
         setIsUploading(true);
-        const uploadTask = storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile)
+        const uploadTask = storage.ref(`/images/${imageName}`).put(imageAsFile)
         uploadTask.on('state_changed', 
         (snapShot) => {
             console.log(snapShot)
@@ -39,7 +49,7 @@ const ImageUploade = ({setImageAsUrl, imageAsUrl}) =>  {
             setIsError(true)
             setIsUploading(false)
         }, () => {
-            storage.ref('images').child(imageAsFile.name).getDownloadURL()
+            storage.ref('images').child(imageName).getDownloadURL()
                 .then(fireBaseUrl => {
                     setImageAsUrl(imageAsUrl.concat(fireBaseUrl))
                     setIsUploading(false)

@@ -7,7 +7,7 @@ function SBCard({title, text, button, image}) {
     return(
         <div className="card-container">
             <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={image} />
+            <Card.Img variant="top" src={image} alt="image of spot" />
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{text}</Card.Text>

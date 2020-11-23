@@ -46,7 +46,7 @@ const CardCarousel = ({spots}) => {
     };
 
     return (
-        <AliceCarousel mouseTracking items={cards} responsive={responsive} autoPlay={false} autoPlayInterval={3000} disableDotsControls={true}/>
+        <AliceCarousel mouseTracking items={cards} responsive={responsive} autoPlay={true} autoPlayInterval={3000} disableDotsControls={true}/>
     );
 }
 

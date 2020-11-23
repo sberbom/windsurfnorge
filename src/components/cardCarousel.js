@@ -25,15 +25,25 @@ const CardCarousel = ({spots}) => {
         }
     }
     else{
-        cards = spots.sort((spot1, spot2) => spot2.views - spot1.views).map((spot, i) => 
-            <Card
-                key={i}
-                title={spot.name}
-                text={spot.about}
-                button="Se mer"
-                onDragStart={handleDragStart}
-                image={spot.images && spot.images[0] ? spot.images[0] : "https://fiskesnakk.files.wordpress.com/2010/09/img_8242-3.jpg"}
-            />
+        cards = spots.sort((spot1, spot2) => spot2.views - spot1.views).map((spot, i) => {
+            let image = "https://fiskesnakk.files.wordpress.com/2010/09/img_8242-3.jpg"
+            if(spot.smallImages && spot.smallImages[0]){
+                image = spot.smallImages[0]
+            }
+            else if(spot.images && spot.images[0]) {
+                image = spot.images[0]
+            }
+            return(
+                <Card
+                    key={i}
+                    title={spot.name}
+                    text={spot.about}
+                    button="Se mer"
+                    onDragStart={handleDragStart}
+                    image={image}
+                />
+            )}
+            
         )  
     }
     

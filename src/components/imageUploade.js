@@ -8,25 +8,39 @@ import imageCompression from 'browser-image-compression';
 import {getRandomInt} from '../utils'
 import '../styles/imageUploade.css'
 
-const ImageUploade = ({setImageAsUrl, imageAsUrl, spotName}) =>  {
+const ImageUploade = ({setBigImageAsUrl, bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, spotName}) =>  {
 
     const [imageAsFile, setImageAsFile] = useState('');
+    const [bigImageAsFile, setBigImageAsFile] = useState('');
+    const [smallImageAsFile, setSmallImageAsFile] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [isUploadeCompleted, setIsUploadeCompleted] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [imageName, setImageName] = useState('')
+    const [bigImageName, setBigImageName] = useState('')
+    const [smallImageName, setSmallImageName] = useState('')
 
-    const options = {
-        maxSizeMB: 1, 
+    const optionsBigImage = {
+        maxSizeMB: 5, 
         maxWidthOrHeight: 1920,
+        useWebWorker: true
+    }
+
+    const optionsSmallImage = {
+        maxSizeMB: 2, 
+        maxWidthOrHeight: 286,
         useWebWorker: true
     }
 
     const handleImageAsFile = async (event) => {
         const image = event.target.files[0]
-        const compressedFile = await imageCompression(image, options);
-        setImageName(spotName + getRandomInt())
-        setImageAsFile(compressedFile)
+        const compressedFileBig = await imageCompression(image, optionsBigImage);
+        const compressedFileSmall = await imageCompression(image, optionsSmallImage);
+        const randint = getRandomInt()
+        setBigImageName(spotName + randint + 'big.jpg')
+        setSmallImageName(spotName + randint + 'small.jpg')
+        setBigImageAsFile(compressedFileBig)
+        setSmallImageAsFile(compressedFileSmall)
+        setImageAsFile(image)
     } 
 
     const handleFirebaseUploade = (event) => {
@@ -40,8 +54,11 @@ const ImageUploade = ({setImageAsUrl, imageAsUrl, spotName}) =>  {
         setIsError(false)
         setIsUploadeCompleted(false)
         setIsUploading(true);
-        const uploadTask = storage.ref(`/images/${imageName}`).put(imageAsFile)
-        uploadTask.on('state_changed', 
+
+        const bigImageUploade = storage.ref(`/images/${bigImageName}`).put(bigImageAsFile)
+        const smallImageUploade = storage.ref(`/images/${smallImageName}`).put(smallImageAsFile)
+
+        bigImageUploade.on('state_changed', 
         (snapShot) => {
             console.log(snapShot)
         }, (err) => {
@@ -49,9 +66,23 @@ const ImageUploade = ({setImageAsUrl, imageAsUrl, spotName}) =>  {
             setIsError(true)
             setIsUploading(false)
         }, () => {
-            storage.ref('images').child(imageName).getDownloadURL()
+            storage.ref('images').child(bigImageName).getDownloadURL()
                 .then(fireBaseUrl => {
-                    setImageAsUrl(imageAsUrl.concat(fireBaseUrl))
+                    setBigImageAsUrl(bigImageAsUrl.concat(fireBaseUrl))
+            })
+        })
+
+        smallImageUploade.on('state_changed', 
+        (snapShot) => {
+            console.log(snapShot)
+        }, (err) => {
+            console.log(err)
+            setIsError(true)
+            setIsUploading(false)
+        }, () => {
+            storage.ref('images').child(smallImageName).getDownloadURL()
+                .then(fireBaseUrl => {
+                    setSmallImageAsUrl(smallImageAsUrl.concat(fireBaseUrl))
                     setIsUploading(false)
                     setIsUploadeCompleted(true)
             })

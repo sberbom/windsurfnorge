@@ -27,7 +27,8 @@ function AddSpot() {
     const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
 
-    const [imageAsUrl, setImageAsUrl] = useState([]);
+    const [bigImageAsUrl, setBigImageAsUrl] = useState([]);
+    const [smallImageAsUrl, setSmallImageAsUrl] = useState([]);
 
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
@@ -52,7 +53,8 @@ function AddSpot() {
                 setViews(spot.views)
                 const address = await getAddress(spot.latLng.lat, spot.latLng.lng)
                 setAddress(address);
-                setImageAsUrl(spot.images ? spot.images : [])
+                setBigImageAsUrl(spot.images ? spot.images : [])
+                setSmallImageAsUrl(spot.smallImages ? spot.images : [])
             }
             setIsLoading(false)
         }
@@ -89,7 +91,6 @@ function AddSpot() {
     }
 
     const onSubmit = () => {
-        console.log(imageAsUrl)
         const spot = {
             name: spotName,
             about: aboutSpot,
@@ -99,7 +100,8 @@ function AddSpot() {
             user: user,
             timeStamp: timeStamp,
             views: views,
-            images: imageAsUrl
+            images: bigImageAsUrl,
+            smallImages: smallImageAsUrl
         }
         if(checkValid()){
             dbService.addSpot(spot)
@@ -111,7 +113,7 @@ function AddSpot() {
         <div>
             <Header
                 title={isEdit ? "Endre spot" : "Legg til spot"}
-                image={imageAsUrl[0]}
+                image={bigImageAsUrl[0]}
             />
             {!isLoading &&
                 <> 
@@ -132,8 +134,10 @@ function AddSpot() {
                                 approach = {approachSpot}
                                 facebook = {facbookPageSpot}
                                 isEdit ={isEdit}
-                                setImageAsUrl = {setImageAsUrl}
-                                imageAsUrl = {imageAsUrl}
+                                setBigImageAsUrl = {setBigImageAsUrl}
+                                bigImageAsUrl = {bigImageAsUrl}
+                                setSmallImageAsUrl = {setSmallImageAsUrl}
+                                smallImageAsUrl = {smallImageAsUrl}
                             />
                         </div>
                     </div>

@@ -36,7 +36,7 @@ function AddSpotForm(props) {
                 <Form.Control as="textarea" rows="1" value={props.facebook} onChange={(event) => props.onFacebookPageChange(event.target.value)}/>
             </Form.Group>
 
-            <ImageUploade setImageAsUrl={props.setImageAsUrl} imageAsUrl={props.imageAsUrl} spotName={props.name} />
+            <ImageUploade setBigImageAsUrl={props.setBigImageAsUrl} bigImageAsUrl={props.bigImageAsUrl} setSmallImageAsUrl={props.setSmallImageAsUrl} smallImageAsUrl={props.smallImageAsUrl} spotName={props.name} />
             
             <Button variant="primary" type='submit' onClick={props.onSubmit} >
                 {props.isEdit ? "Lagre spot" : "Legg til spot"}

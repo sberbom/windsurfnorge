@@ -24,6 +24,10 @@ function Spot() {
         fetchSpot();
     }, [])
 
+    if(!spot) {
+        return(<div className="empty"></div>)
+    }
+
     return (
         <div>
             {spot && 
@@ -41,7 +45,7 @@ function Spot() {
                         </div>
                     </div>
                     <div className="image-carousel-container">
-                        <ImageCarousel images={spot.images} />
+                        {spot.images && <ImageCarousel images={spot.images} />}
                     </div>
                 </>
             }

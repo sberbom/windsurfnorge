@@ -30,6 +30,8 @@ const RegisterInfo = () => {
             
             {(password2 && (password1 !== password2)) && <p className='errorMessage'>{"Passordene må være like"}</p>}
 
+            <p>Ved å registere deg godtar du <a href="/termsAndConditions" target="_blank">terms and conditions</a> og <a href="/policy">policy</a>.</p>
+
             <Button className="myinfo-button" onClick={createNewUser}>Lagre</Button>
         </div>
     )

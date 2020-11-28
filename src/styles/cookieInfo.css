@@ -1,0 +1,16 @@
+.cookieInfo-container {
+    display: flex;
+    justify-content: space-evenly;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    background-color: gray;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 10px 10px 8px 10px #888888;
+    color:white;
+}
+
+.cookieInfo-container > p > a {
+    color: white;
+}

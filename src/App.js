@@ -14,9 +14,11 @@ import './App.css';
 import UserProvider from './providers/userProvider';
 import TermsAndConditions from './pages/termsAndConditions';
 import Policy from './pages/policy';
+import CookieInfo from './components/cookieInfo';
 
 
 function App() {
+
   return (
     <div>
       <UserProvider>
@@ -53,6 +55,7 @@ function App() {
             <Policy/>
           </Route>
         </Switch>
+        <CookieInfo />
         <Footer/>
       </UserProvider>
     </div>

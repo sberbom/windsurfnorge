@@ -7,6 +7,7 @@ import SpotInfo from '../components/spotInfo'
 import queryString from 'query-string'
 import '../styles/spot.css'
 import ImageCarousel from '../components/imageCarousel';
+import Weather from '../components/weather'
 
 function Spot() {
 
@@ -44,6 +45,7 @@ function Spot() {
                             <SpotInfo spot={spot}/>
                         </div>
                     </div>
+                    <Weather latLng={spot.latLng}/>
                     <div className="image-carousel-container">
                         {spot.images && <ImageCarousel images={spot.images} />}
                     </div>

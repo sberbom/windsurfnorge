@@ -30,7 +30,7 @@ export const addSpot = async (spot) => {
             smallImages: spot.smallImages
         })
     }catch(error) {
-        console.log('Error adding spot', error)
+        console.error('Error adding spot', error)
     }
 }
 
@@ -40,7 +40,7 @@ export const incrementSpotViews = async (spot) => {
             views: spot.views + 1,
         })
     }catch(error) {
-        console.log('Error incrementing spot views', error)
+        console.error('Error incrementing spot views', error)
     }
 }
 

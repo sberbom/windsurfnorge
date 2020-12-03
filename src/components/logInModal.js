@@ -27,7 +27,7 @@ const LogInModal = (props) => {
                 setErrorMessage('Kunne ikke logge in')
             }
         }catch(error) {
-            console.log(error)
+            console.error(error)
         } 
     }
 
@@ -37,7 +37,7 @@ const LogInModal = (props) => {
             await signInWithGoogle();
             history.push('/')
         }catch(error) {
-            console.log(error)
+            console.error(error)
         } 
     }
 
@@ -47,7 +47,7 @@ const LogInModal = (props) => {
             await signInWithFacebook();
             history.push('/')
         }catch(error) {
-            console.log(error)
+            console.error(error)
         } 
     }
 

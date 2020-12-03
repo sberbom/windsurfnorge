@@ -62,7 +62,7 @@ const ImageUploade = ({setBigImageAsUrl, bigImageAsUrl, smallImageAsUrl, setSmal
         (snapShot) => {
             console.log(snapShot)
         }, (err) => {
-            console.log(err)
+            console.error(err)
             setIsError(true)
             setIsUploading(false)
         }, () => {
@@ -76,7 +76,7 @@ const ImageUploade = ({setBigImageAsUrl, bigImageAsUrl, smallImageAsUrl, setSmal
         (snapShot) => {
             console.log(snapShot)
         }, (err) => {
-            console.log(err)
+            console.error(err)
             setIsError(true)
             setIsUploading(false)
         }, () => {

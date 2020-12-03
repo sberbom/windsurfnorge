@@ -139,3 +139,25 @@ export const validateEmail = (email) => {
 export const getRandomInt = () => {
     return Math.floor(Math.random() * Math.floor(1000));
 }
+
+export const getWeekDay = (date) => {
+    switch (date.getDay()){
+        case 0:
+            return 'Søndag'
+        case 1:
+            return 'Mandag'
+        case 2:
+            return 'Tirsdag'
+        case 3:
+            return 'Onsdag'
+        case 4:
+            return 'Torsdag'
+        case 5:
+            return 'Fredag'
+        case 6:
+            return 'Lørdag'
+        default:
+            return ''
+    }
+
+}

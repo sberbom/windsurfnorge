@@ -8,10 +8,7 @@ function CookieInfo() {
     const [cookies, setCookie] = useCookies(['consentCookie']);
     const [showCookieInfo, setShowCookieInfo] = useState(false)
     
-    console.log(cookies.consentCookie)
-
     useEffect(() => {
-        console.log(cookies.consentCookie)
         if(cookies.consentCookie !== "true") {
             setShowCookieInfo(true)
             setCookie('consentCookie', true)

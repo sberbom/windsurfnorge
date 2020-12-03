@@ -6,8 +6,6 @@ import '../styles/imageCarousel.css'
 const ImageCarousel = ({images}) => {
     const handleDragStart = (e) => e.preventDefault();
 
-    console.log(images)
-
     const imageObjects = images.map((image, i) =>
         <div className="image-container">
             <img

@@ -24,3 +24,7 @@
     height: 190px;
     object-fit: cover;
 }
+
+.rating-img-card{
+    height: 20px;
+}

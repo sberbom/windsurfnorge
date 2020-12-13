@@ -1,6 +1,10 @@
 import React from 'react';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
+import Rating from 'react-rating'
+import star from '../images/star.png'
+import star_empty from '../images/star_empty.png'
+import {updateRating} from '../db-service'
 import '../styles/spotInfo.css'
 
 function SpotInfo({spot}) {
@@ -9,6 +13,10 @@ function SpotInfo({spot}) {
 
     const onEditSpotClick = (spot) => {
         history.push(`/addSpot?spotName=${spot.name}&edit=true`)
+    }
+
+    const onUpdateRating = (rate) => {
+        updateRating(spot, rate);
     }
 
     if(!spot.about && !spot.approach && !spot.facebook) {
@@ -54,6 +62,15 @@ function SpotInfo({spot}) {
                     <a href={spot.facebook} target="_blank" rel="noopener noreferrer">{spot.facebook}</a>
                 </>
             }
+            <div className="rating-container">
+                <Rating
+                    emptySymbol={<img src={star_empty} className="icon rating-img" alt="emptyStar"/>}
+                    fullSymbol={<img src={star} className="icon rating-img" alt="filledStar"/>}
+                    fractions={2}
+                    initialRating={spot.rating}
+                    onChange={onUpdateRating}
+                />
+            </div>
         </div>
     )
 }

@@ -3,7 +3,6 @@ import '../styles/cardList.css';
 import Card from './card';
 
 function CardList({spots}) {
-    
     return(
         <div className="cardList-container">
             <div className="cardList">
@@ -22,6 +21,7 @@ function CardList({spots}) {
                         text={spot.about}
                         button="Se mer"
                         image={image}
+                        rating={spot.rating}
                     />)}
                 )}
             </div>

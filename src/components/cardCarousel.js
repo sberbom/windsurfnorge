@@ -41,6 +41,7 @@ const CardCarousel = ({spots}) => {
                     button="Se mer"
                     onDragStart={handleDragStart}
                     image={image}
+                    rating={spot.rating}
                 />
             )}
             

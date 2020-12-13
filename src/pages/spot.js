@@ -9,6 +9,7 @@ import '../styles/spot.css'
 import ImageCarousel from '../components/imageCarousel';
 import Weather from '../components/weather'
 
+
 function Spot() {
 
     const [spot, setSpot] = useState(null)

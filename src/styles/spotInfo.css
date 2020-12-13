@@ -11,3 +11,11 @@
     margin-left:auto; 
     margin-right:0;
 }
+
+.rating-container {
+   margin: 1rem 0;
+}
+
+.rating-img {
+    height: 30px;
+}

@@ -24,11 +24,14 @@ function AllSpots() {
         if(sortMethod === "Alphabetical") {
             spots = spots.sort();
         }
-        if(sortMethod === "Newest") {
+        else if(sortMethod === "Newest") {
             spots = spots.sort((spot1, spot2) => spot2.timeStamp - spot1.timeStamp);
         }
-        if(sortMethod === "Most popular") {
+        else if(sortMethod === "Most popular") {
             spots = spots.sort((spot1, spot2) => spot2.views - spot1.views);
+        }
+        else if(sortMethod === "Rating") {
+            spots = spots.sort((spot1, spot2) => spot2.rating - spot1.rating);
         }
         return spots
     }

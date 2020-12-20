@@ -23,7 +23,7 @@ function Spot() {
             const spot = await dbService.getSpot(spotName);
             setSpot(spot);
             dbService.incrementSpotViews(spot);
-            spot.images && spot.images[0] ? setImage(spot.images[0]) : setImage(null)
+            spot.images && spot.images[spot.mainImage] ? setImage(spot.images[spot.mainImage]) : setImage(null)
         }
         fetchSpot();
     }, [])

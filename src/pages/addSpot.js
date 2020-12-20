@@ -31,8 +31,8 @@ function AddSpot() {
 
     const [bigImageAsUrl, setBigImageAsUrl] = useState([]);
     const [smallImageAsUrl, setSmallImageAsUrl] = useState([]);
-    // let bigImageAsUrl = []
-    // let smallImageAsUrl = []
+    const [mainImage, setMainImage] = useState(0);
+
 
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
@@ -41,21 +41,7 @@ function AddSpot() {
     const [isLoading, setIsLoading] = useState(true)
     const [isEdit, setIsEdit] = useState(false)
 
-    // const addToSmallImageAsUrl = (url) => {
-    //     smallImageAsUrl.push(url)
-    // }
 
-    // const addToBigImageAsUrl = (url) => {
-    //     bigImageAsUrl.push(url)
-    // }
-
-    // const setBigImageAsUrl = (urls) => {
-    //     bigImageAsUrl=urls
-    // }
-
-    // const setSmallImageAsUrl = (urls) => {
-    //     smallImageAsUrl=urls
-    // }
 
     useEffect(() => {
         const fetchSpot = async () => {
@@ -75,10 +61,9 @@ function AddSpot() {
                 setAddress(address);
                 setBigImageAsUrl(spot.images ? spot.images : [])
                 setSmallImageAsUrl(spot.smallImages ? spot.smallImages : [])
-                // setBigImageAsUrl(spot.images ? spot.images : [])
-                // setSmallImageAsUrl(spot.smallImages ? spot.smallImages : [])
+                setMainImage(spot.mainImage ? spot.mainImage : 0);
                 setRating(spot.rating)
-                setRatings(spot.ratings)
+                setRatings(spot.ratings ? spot.ratings : [])
             }
             setIsLoading(false)
         }
@@ -115,8 +100,7 @@ function AddSpot() {
     }
 
     const onSubmit = () => {
-        console.log("last", bigImageAsUrl)
-        console.log(smallImageAsUrl)
+        console.log(mainImage)
         const spot = {
             name: spotName,
             about: aboutSpot,
@@ -130,6 +114,7 @@ function AddSpot() {
             smallImages: smallImageAsUrl,
             rating: rating,
             ratings: ratings,
+            mainImage: mainImage
         }
         if(checkValid()){
             dbService.addSpot(spot)
@@ -166,6 +151,8 @@ function AddSpot() {
                                 bigImageAsUrl = {bigImageAsUrl}
                                 setSmallImageAsUrl = {setSmallImageAsUrl}
                                 smallImageAsUrl = {smallImageAsUrl}
+                                mainImage = {mainImage}
+                                setMainImage = {setMainImage}
                                 // addToBigImageAsUrl = {addToBigImageAsUrl}
                                 // addToSmallImageAsUrl ={addToSmallImageAsUrl}
                             />

@@ -27,11 +27,11 @@ const CardCarousel = ({spots}) => {
     else{
         cards = spots.sort((spot1, spot2) => spot2.views - spot1.views).map((spot, i) => {
             let image = "https://fiskesnakk.files.wordpress.com/2010/09/img_8242-3.jpg"
-            if(spot.smallImages && spot.smallImages[0]){
-                image = spot.smallImages[0]
+            if(spot.smallImages && spot.smallImages[spot.mainImage]){
+                image = spot.smallImages[spot.mainImage]
             }
-            else if(spot.images && spot.images[0]) {
-                image = spot.images[0]
+            else if(spot.images && spot.images[spot.mainImage]) {
+                image = spot.images[spot.mainImage]
             }
             return(
                 <Card

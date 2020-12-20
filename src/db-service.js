@@ -18,6 +18,7 @@ export const getSpot = async (spotName) => {
 
 export const addSpot = async (spot) => {
     try{
+        console.log(spot.ratings)
         db.collection('spots').doc(spot.name).set({
             name: spot.name,
             about: spot.about,
@@ -28,7 +29,9 @@ export const addSpot = async (spot) => {
             views: spot.views,
             images: spot.images,
             smallImages: spot.smallImages,
-            rating: spot.rating
+            rating: spot.rating,
+            ratings: spot.ratings,
+            mainImage: spot.mainImage,
         })
     }catch(error) {
         console.error('Error adding spot', error)
@@ -47,11 +50,11 @@ export const incrementSpotViews = async (spot) => {
 
 export const updateRating = async (spot, rating) => {
     try{
-        spot.ratings.push(rating)
+        const newRatings = spot.ratings.concat([rating])
         const newRating = spot.ratings.reduce((a,b) => a+b, 0) / spot.ratings.length
         db.collection('spots').doc(spot.name).update({
             rating: newRating,
-            ratings: spot.ratings
+            ratings: newRatings
         })
     }catch(error) {
         console.error('Error updating rating', error)

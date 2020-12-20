@@ -1,0 +1,21 @@
+.image-selector-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.image-selector-image {
+    width: 100px;
+    object-fit: scale-down;
+    margin: 2px;
+}
+
+.image-selector-image:hover{
+    border: solid black 2px;
+    cursor: pointer;
+}
+
+.selected {
+    border: solid black 2px;
+}

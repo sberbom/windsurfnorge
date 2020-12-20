@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import ImageUploade from './imageUploade'
 import '../styles/addSpotForm.css';
+import ImageSelector from './imageSelector';
 
 function AddSpotForm(props) {
     return (
@@ -37,7 +38,9 @@ function AddSpotForm(props) {
             </Form.Group>
 
             <ImageUploade setBigImageAsUrl={props.setBigImageAsUrl} bigImageAsUrl={props.bigImageAsUrl} setSmallImageAsUrl={props.setSmallImageAsUrl} smallImageAsUrl={props.smallImageAsUrl} spotName={props.name} />
-            
+
+            <ImageSelector images={props.smallImageAsUrl} mainImage={props.mainImage} setMainImage={props.setMainImage}/>
+
             <Button variant="primary" type='submit' className="saveSpotButton" onClick={props.onSubmit} >
                 {props.isEdit ? "Lagre spot" : "Legg til spot"}
             </Button>

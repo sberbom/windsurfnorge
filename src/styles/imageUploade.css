@@ -1,9 +1,23 @@
 .imageUploade-container {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
-.imageUploade-container > * > img {
+.imageUploade-container > img {
     height: 30px;
+    margin-left: 1rem;
+}
+
+.input-field {
+    min-height: 50px;
+    border: gray dashed 2px;
+    width: 100%;
+    text-align: center;
+}
+
+.input-field > p {
+    margin-top: 10px ;
 }

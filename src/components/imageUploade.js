@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {storage} from '../firebase'
 import sync from '../images/sync.png'
 import checked from '../images/checked.png'
 import close from '../images/close.png'
 import imageCompression from 'browser-image-compression';
 import {getRandomInt} from '../utils'
+import {useDropzone} from 'react-dropzone'
 import '../styles/imageUploade.css'
 
 const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setBigImageAsUrl, spotName}) =>  {
@@ -17,6 +18,22 @@ const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setB
     const smallImageAsFile = [];
     const bigImageName = [];
     const smallImageName = [];
+
+    const onDrop = useCallback( async (files) => {
+        for(let i = 0; i< files.length; i++) {
+            const image = files[i]
+            const compressedFileBig = await imageCompression(image, optionsBigImage);
+            const compressedFileSmall = await imageCompression(image, optionsSmallImage);
+            const randint = getRandomInt()
+            bigImageName.push(spotName + randint + i + 'big.jpg')
+            smallImageName.push(spotName + randint + 'small.jpg')
+            bigImageAsFile.push(compressedFileBig)
+            smallImageAsFile.push(compressedFileSmall)
+            imageAsFile.push(image)
+        }
+        handleFirebaseUploade()    
+      }, [])
+
 
     const optionsBigImage = {
         maxSizeMB: 5, 
@@ -31,10 +48,7 @@ const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setB
     }
 
     const handleImageAsFile = async (event) => {
-        console.log(event.target.files)
-        console.log(event.target.files[0])
         const files = event.target.files
-        console.log(files.length)
         for(let i = 0; i< files.length; i++) {
             const image = files[i]
             const compressedFileBig = await imageCompression(image, optionsBigImage);
@@ -50,7 +64,6 @@ const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setB
     } 
 
     const handleFirebaseUploade = async () => {
-        console.log('start of uploade')
         for(let image in imageAsFile) {
             if(image === '') {
                 console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
@@ -60,6 +73,7 @@ const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setB
         }
         setIsError(false)
         setIsUploadeCompleted(false)
+        console.log('start of uploade')
         setIsUploading(true);
         
         let newBigImageUrl = []
@@ -88,20 +102,24 @@ const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setB
             } 
         }
     }
- 
+
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
     
     return(
         <div className="imageUploade-container">
-            <div>
+            <div {...getRootProps()} className="input-field">
                 <input
-                    type={"file"}
-                    onChange={handleImageAsFile}
-                    multiple
+                    {...getInputProps()}
                 />
-                {isUploading && <img src={sync} alt="sync" />}
-                {isUploadeCompleted && <img src={checked} alt="checked" />}
-                {isError && <img src={close} alt="close" />}
+                {
+                    isDragActive ?
+                    <p>Slipp bildene her ...</p> :
+                    <p>Dra og slipp bilder her, eller klikk for å laste opp bilder</p>
+                }
             </div>
+            {isUploading && <img src={sync} alt="sync" />}
+            {isUploadeCompleted && <img src={checked} alt="checked" />}
+            {isError && <img src={close} alt="close" />}
         </div>
         
     )

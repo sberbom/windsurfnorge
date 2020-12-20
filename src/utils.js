@@ -137,7 +137,7 @@ export const validateEmail = (email) => {
 }
 
 export const getRandomInt = () => {
-    return Math.floor(Math.random() * Math.floor(1000));
+    return Math.floor(Math.random() * Math.floor(1000000));
 }
 
 export const getWeekDay = (date) => {

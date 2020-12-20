@@ -31,6 +31,8 @@ function AddSpot() {
 
     const [bigImageAsUrl, setBigImageAsUrl] = useState([]);
     const [smallImageAsUrl, setSmallImageAsUrl] = useState([]);
+    // let bigImageAsUrl = []
+    // let smallImageAsUrl = []
 
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
@@ -38,6 +40,22 @@ function AddSpot() {
 
     const [isLoading, setIsLoading] = useState(true)
     const [isEdit, setIsEdit] = useState(false)
+
+    // const addToSmallImageAsUrl = (url) => {
+    //     smallImageAsUrl.push(url)
+    // }
+
+    // const addToBigImageAsUrl = (url) => {
+    //     bigImageAsUrl.push(url)
+    // }
+
+    // const setBigImageAsUrl = (urls) => {
+    //     bigImageAsUrl=urls
+    // }
+
+    // const setSmallImageAsUrl = (urls) => {
+    //     smallImageAsUrl=urls
+    // }
 
     useEffect(() => {
         const fetchSpot = async () => {
@@ -56,7 +74,9 @@ function AddSpot() {
                 const address = await getAddress(spot.latLng.lat, spot.latLng.lng)
                 setAddress(address);
                 setBigImageAsUrl(spot.images ? spot.images : [])
-                setSmallImageAsUrl(spot.smallImages ? spot.images : [])
+                setSmallImageAsUrl(spot.smallImages ? spot.smallImages : [])
+                // setBigImageAsUrl(spot.images ? spot.images : [])
+                // setSmallImageAsUrl(spot.smallImages ? spot.smallImages : [])
                 setRating(spot.rating)
                 setRatings(spot.ratings)
             }
@@ -95,6 +115,8 @@ function AddSpot() {
     }
 
     const onSubmit = () => {
+        console.log("last", bigImageAsUrl)
+        console.log(smallImageAsUrl)
         const spot = {
             name: spotName,
             about: aboutSpot,
@@ -144,6 +166,8 @@ function AddSpot() {
                                 bigImageAsUrl = {bigImageAsUrl}
                                 setSmallImageAsUrl = {setSmallImageAsUrl}
                                 smallImageAsUrl = {smallImageAsUrl}
+                                // addToBigImageAsUrl = {addToBigImageAsUrl}
+                                // addToSmallImageAsUrl ={addToSmallImageAsUrl}
                             />
                         </div>
                     </div>

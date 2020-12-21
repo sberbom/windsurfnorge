@@ -39,7 +39,7 @@ function AddSpotForm(props) {
 
             <ImageUploade setBigImageAsUrl={props.setBigImageAsUrl} bigImageAsUrl={props.bigImageAsUrl} setSmallImageAsUrl={props.setSmallImageAsUrl} smallImageAsUrl={props.smallImageAsUrl} spotName={props.name} />
 
-            <ImageSelector images={props.smallImageAsUrl} mainImage={props.mainImage} setMainImage={props.setMainImage}/>
+            <ImageSelector images={props.smallImageAsUrl} mainImage={props.mainImage} setMainImage={props.setMainImage} onDeleteImage={props.onDeleteImage}/>
 
             <Button variant="primary" type='submit' className="saveSpotButton" onClick={props.onSubmit} >
                 {props.isEdit ? "Lagre spot" : "Legg til spot"}

@@ -60,3 +60,15 @@ export const updateRating = async (spot, rating) => {
         console.error('Error updating rating', error)
     }
 }
+
+export const updateImages = async (spotName, images, smallImages, mainImage) => {
+    try{
+        db.collection('spots').doc(spotName).update({
+            images: images,
+            smallImages: smallImages,
+            mainImage: mainImage
+        })
+    }catch(error) {
+        console.error('Error updating images', error)
+    }
+}

@@ -13,8 +13,7 @@ import {UserContext} from '../providers/userProvider';
 import { useHistory } from "react-router-dom";
 import queryString from 'query-string'
 import EmailVerificationModal from '../components/emailVerificationModal'
-
-
+import {storage} from '../firebase'
 
 function AddSpot() {
     const [spotName, setSpotName] = useState("")
@@ -90,6 +89,26 @@ function AddSpot() {
         setAddress(address)
       }
 
+    const onDeleteImage = async (imageIndex) => {        
+        try{
+            await storage.refFromURL(bigImageAsUrl[imageIndex]).delete()
+            await storage.refFromURL(smallImageAsUrl[imageIndex]).delete()
+            const bigImages = bigImageAsUrl.filter(image => image !== bigImageAsUrl[imageIndex])
+            const smallImages = smallImageAsUrl.filter(image => image !== smallImageAsUrl[imageIndex])
+            let mainImageLocal = mainImage
+            setBigImageAsUrl(bigImages)
+            setSmallImageAsUrl(smallImages)
+            if(mainImage === imageIndex) {
+                setMainImage(0)
+                mainImageLocal = 0
+            }
+            dbService.updateImages(spotName, bigImages, smallImages, mainImageLocal)
+        }
+        catch(error){
+            console.error("Could not delete image", error)
+        }
+    }
+
 
     const checkValid = () => {
         if (spotName === '' || latLng === mapCenter) {
@@ -153,6 +172,7 @@ function AddSpot() {
                                 smallImageAsUrl = {smallImageAsUrl}
                                 mainImage = {mainImage}
                                 setMainImage = {setMainImage}
+                                onDeleteImage = {onDeleteImage}
                                 // addToBigImageAsUrl = {addToBigImageAsUrl}
                                 // addToSmallImageAsUrl ={addToSmallImageAsUrl}
                             />

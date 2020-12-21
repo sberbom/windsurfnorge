@@ -19,3 +19,28 @@
 .selected {
     border: solid black 2px;
 }
+
+.select-image-container {
+    position: relative;
+    width: 100px;
+}
+
+.close {
+    /* display: none; */
+    width: 10px;
+    position: absolute;
+    margin: 2px;
+    right: 2px;
+    top: 4px;
+}
+
+.close:hover {
+    cursor: pointer;
+    display: inline;
+    right: 4px;
+    top:8px;
+    transform: scale(2);
+    transition: 0.05s;
+    background-color: white;
+    padding: 2px;
+}

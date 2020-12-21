@@ -82,24 +82,29 @@ const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setB
 
         for(let i = 0; i < numberOfImages; i++){
 
-            await storage.ref(`/images/${bigImageName[i]}`).put(bigImageAsFile[i])
-            let fireBaseUrl = await storage.ref('images').child(bigImageName[i]).getDownloadURL()
-            newBigImageUrl.push(fireBaseUrl)
-            if(newBigImageUrl.length === numberOfImages) {
-                setBigImageAsUrl(bigImageAsUrl.concat(newBigImageUrl))
-                console.log("big completed")
-                
+            try{
+                await storage.ref(`/images/${bigImageName[i]}`).put(bigImageAsFile[i])
+                let fireBaseUrl = await storage.ref('images').child(bigImageName[i]).getDownloadURL()
+                newBigImageUrl.push(fireBaseUrl)
+                if(newBigImageUrl.length === numberOfImages) {
+                    setBigImageAsUrl(bigImageAsUrl.concat(newBigImageUrl))
+                    console.log("big completed")
+                    
+                }
+            
+                await storage.ref(`/images/${smallImageName[i]}`).put(smallImageAsFile[i])
+                fireBaseUrl = await storage.ref('images').child(smallImageName[i]).getDownloadURL()
+                newSmallImageUrl.push(fireBaseUrl)
+                if(newSmallImageUrl.length === numberOfImages) {
+                    setSmallImageAsUrl(smallImageAsUrl.concat(newSmallImageUrl))
+                    console.log("Small completed")
+                    setIsUploadeCompleted(true);
+                    setIsUploading(false);
+                } 
             }
-        
-            await storage.ref(`/images/${smallImageName[i]}`).put(smallImageAsFile[i])
-            fireBaseUrl = await storage.ref('images').child(smallImageName[i]).getDownloadURL()
-            newSmallImageUrl.push(fireBaseUrl)
-            if(newSmallImageUrl.length === numberOfImages) {
-                setSmallImageAsUrl(smallImageAsUrl.concat(newSmallImageUrl))
-                console.log("Small completed")
-                setIsUploadeCompleted(true);
-                setIsUploading(false);
-            } 
+            catch(error){
+                console.error("Could not uploade image", error)
+            }
         }
     }
 

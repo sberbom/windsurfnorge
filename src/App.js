@@ -15,6 +15,7 @@ import UserProvider from './providers/userProvider';
 import TermsAndConditions from './pages/termsAndConditions';
 import Policy from './pages/policy';
 import CookieInfo from './components/cookieInfo';
+import NotFound from './pages/notFound'
 
 
 function App() {
@@ -53,6 +54,9 @@ function App() {
           </Route>
           <Route path="/policy">
             <Policy/>
+          </Route>
+          <Route>
+            <NotFound/>
           </Route>
         </Switch>
         <CookieInfo />

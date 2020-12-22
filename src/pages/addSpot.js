@@ -149,7 +149,7 @@ function AddSpot() {
             />
             {!isLoading &&
                 <> 
-                    <div className="spot-container">
+                    <div className="spot-container-edit">
                         <div className="spot-map-container">
                             <Map draggable={true} onDragEnd={dragEnd} markerPos={latLng}/>
                         </div>

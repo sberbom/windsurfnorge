@@ -11,3 +11,16 @@
     height: 75vh;
     margin-top: 5vh;
 }
+
+@media only screen and (max-width: 700px) {
+    .home-center-button > * > .btn {
+        width: auto;
+        padding: 0.5rem 3rem;
+        margin: 5vw;
+    }
+
+    .home-map-container {
+        height: 50vh;
+        margin-top: 2vh;
+    }
+}

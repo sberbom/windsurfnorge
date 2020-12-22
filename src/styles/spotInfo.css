@@ -19,3 +19,8 @@
 .rating-img {
     height: 30px;
 }
+
+.overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

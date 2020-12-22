@@ -38,7 +38,7 @@ function SpotInfo({spot}) {
     }
 
     return(
-        <div className="spotInfo-container">
+        <div className="spotInfo-container overflow">
             <div className="options-container">
                 {spot.about && <h2>Beskrivelse</h2>}
                 <DropdownButton
@@ -59,7 +59,7 @@ function SpotInfo({spot}) {
             {spot.facebook &&
                 <>
                     <h2>Facebook</h2>
-                    <a href={spot.facebook} target="_blank" rel="noopener noreferrer">{spot.facebook}</a>
+                    <a href={spot.facebook} target="_blank" rel="noopener noreferrer" >{spot.facebook}</a>
                 </>
             }
             <div className="rating-container">

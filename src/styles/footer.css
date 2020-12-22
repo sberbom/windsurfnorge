@@ -1,5 +1,5 @@
 .footer-container {
-    height: 20vh;
+    min-height: 20vh;
     background-color: #151515;
     color: gray;
     display: grid;
@@ -7,8 +7,9 @@
     padding: 1rem 2rem;
 }
 
-/* .footer-left{
-} */
+.footer-left{
+    text-align: left;
+}
 
 .footer-center {
     text-align: center;
@@ -24,4 +25,18 @@
 
 .footer-right > * > a:hover {
     color: gray;
+}
+
+@media only screen and (max-width: 700px) {
+    .footer-container {
+        display: block;
+    }
+
+    .footer-right {
+        text-align: center;
+    }
+
+    .footer-left {
+        text-align: center;
+    }
 }

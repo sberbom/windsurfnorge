@@ -15,7 +15,7 @@ const Sortbar = ({onSearchWordChange, onSortbyChange}) => {
             </DropdownButton>
             <InputGroup className="mb-3 searchfield">
                 <FormControl
-                    placeholder="Halden brygge"
+                    placeholder="Spot"
                     onChange={(event) => onSearchWordChange(event.target.value)}
                 />
                 <InputGroup.Append>

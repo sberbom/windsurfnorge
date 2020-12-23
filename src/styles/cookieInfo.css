@@ -14,3 +14,8 @@
 .cookieInfo-container > p > a {
     color: white;
 }
+
+.cookie-button {
+    min-width: 50px;
+    margin-left: 1rem;
+}

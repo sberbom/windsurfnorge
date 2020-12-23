@@ -20,7 +20,7 @@ function CookieInfo() {
         return(
             <div className="cookieInfo-container">
                 <p>Vi bruker cookies. Ved å bruke denne siden godtar du bruken av coookies. Les mer i <a href="/termsAndConditions" target="_blank">terms and conditions</a></p>
-                <Button onClick={() => setShowCookieInfo(false)}>OK</Button>
+                <Button onClick={() => setShowCookieInfo(false)} className="cookie-button">OK</Button>
             </div>
         )
     }

@@ -72,7 +72,7 @@ function AddSpot() {
             setIsLoading(false)
         }
         fetchSpot();
-    }, [])
+    }, [user])
 
     const history = useHistory()
 

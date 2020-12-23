@@ -5,7 +5,9 @@ import '../styles/mapView.css'
 
 function MapView() {
     const [spots, setSpots] = useState([])
-    
+
+    document.title = `Windsurf Norge - Kart`
+
     useEffect(() => {
         const fetchData = async () => {
             const allSpots = await dbService.getAllSpots();

@@ -8,6 +8,8 @@ const MyPage = () => {
 
     const user = useContext(UserContext)
 
+    document.title = `Windsurf Norge - Min Side`
+
     return(
         <div>
             <Header

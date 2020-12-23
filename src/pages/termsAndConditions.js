@@ -3,6 +3,9 @@ import Header from '../components/header'
 import '../styles/termsAndConditions.css'
 
 function TermsAndConditions() {
+
+    document.title = `Windsurf Norge`
+
     return(
         <div>
             <Header

@@ -4,6 +4,8 @@ import '../styles/notFound.css'
 
 const NotFound = () => {
 
+    document.title = `Windsurf Norge`
+
     return (
         <div>
             <Header

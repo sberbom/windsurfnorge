@@ -11,6 +11,8 @@ function AllSpots() {
     const [sortBy, setSortBy] = useState("Alphabetical")
     const [searchWord, setSearchWord] = useState("");
 
+    document.title = `Windsurf Norge - Steder å windsurfe`
+
     useEffect(() => {
         const fetchData = async () => {
             const allSpots = await dbService.getAllSpots();

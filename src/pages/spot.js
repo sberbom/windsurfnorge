@@ -24,6 +24,7 @@ function Spot() {
             setSpot(spot);
             dbService.incrementSpotViews(spot);
             spot.images && spot.images[spot.mainImage] ? setImage(spot.images[spot.mainImage]) : setImage(null)
+            document.title = `Windsurf Norge - ${spot.name}`
         }
         fetchSpot();
     }, [])

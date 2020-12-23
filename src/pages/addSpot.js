@@ -40,7 +40,7 @@ function AddSpot() {
     const [isLoading, setIsLoading] = useState(true)
     const [isEdit, setIsEdit] = useState(false)
 
-
+    document.title = `Windsurf Norge - Legg til/endre spot`
 
     useEffect(() => {
         const fetchSpot = async () => {

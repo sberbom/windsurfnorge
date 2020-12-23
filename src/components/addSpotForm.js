@@ -37,8 +37,10 @@ function AddSpotForm(props) {
                 <Form.Control as="textarea" rows="1" value={props.facebook} onChange={(event) => props.onFacebookPageChange(event.target.value)}/>
             </Form.Group>
 
+            <label className="form-label">Last opp bilder</label>
             <ImageUploade setBigImageAsUrl={props.setBigImageAsUrl} bigImageAsUrl={props.bigImageAsUrl} setSmallImageAsUrl={props.setSmallImageAsUrl} smallImageAsUrl={props.smallImageAsUrl} spotName={props.name} />
 
+            {props.smallImageAsUrl.length > 0 && <label className="form-label">Velg hovedbilde</label>}
             <ImageSelector images={props.smallImageAsUrl} mainImage={props.mainImage} setMainImage={props.setMainImage} onDeleteImage={props.onDeleteImage}/>
 
             <Button variant="primary" type='submit' className="saveSpotButton" onClick={props.onSubmit} >

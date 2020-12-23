@@ -18,7 +18,7 @@ function Footer(props) {
                 <p>
                     Kontakt: <br/>
                     Sigmund Berbom <br/>
-                    <a href="https://sberbom.com">sberbom.com</a>
+                    <a href="https://sberbom.com" target="_blank" rel="noopener noreferrer">sberbom.com</a>
                 </p>
 
             </div>

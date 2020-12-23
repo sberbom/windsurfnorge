@@ -32,6 +32,8 @@ function AddSpot() {
     const [smallImageAsUrl, setSmallImageAsUrl] = useState([]);
     const [mainImage, setMainImage] = useState(0);
 
+    const [createdBy, setCreatedBy] = useState();
+    const [editList, setEditList] = useState([]);
 
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
@@ -46,6 +48,7 @@ function AddSpot() {
         const fetchSpot = async () => {
             const spotName = queryString.parse(window.location.search).spotName
             const edit = queryString.parse(window.location.search).edit
+            user && !edit && setCreatedBy(user.email)
             if(edit) {
                 setIsEdit(true)
                 const spot = await dbService.getSpot(spotName);
@@ -63,6 +66,8 @@ function AddSpot() {
                 setMainImage(spot.mainImage ? spot.mainImage : 0);
                 setRating(spot.rating)
                 setRatings(spot.ratings ? spot.ratings : [])
+                setCreatedBy(spot.createdBy ? spot.createdBy : 'Windsurf Norge')
+                setEditList(spot.editList ? spot.editList : [])
             }
             setIsLoading(false)
         }
@@ -119,7 +124,6 @@ function AddSpot() {
     }
 
     const onSubmit = () => {
-        console.log(mainImage)
         const spot = {
             name: spotName,
             about: aboutSpot,
@@ -133,7 +137,9 @@ function AddSpot() {
             smallImages: smallImageAsUrl,
             rating: rating,
             ratings: ratings,
-            mainImage: mainImage
+            mainImage: mainImage,
+            createdBy: createdBy,
+            editList: editList.concat([user.email])
         }
         if(checkValid()){
             dbService.addSpot(spot)

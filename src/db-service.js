@@ -18,7 +18,6 @@ export const getSpot = async (spotName) => {
 
 export const addSpot = async (spot) => {
     try{
-        console.log(spot.ratings)
         db.collection('spots').doc(spot.name).set({
             name: spot.name,
             about: spot.about,
@@ -32,6 +31,8 @@ export const addSpot = async (spot) => {
             rating: spot.rating,
             ratings: spot.ratings,
             mainImage: spot.mainImage,
+            createdBy: spot.createdBy,
+            editList: spot.editList
         })
     }catch(error) {
         console.error('Error adding spot', error)

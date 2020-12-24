@@ -1,6 +1,5 @@
 import Geocode from "react-geocode";
 import {auth, googleAuthProvider, facebookAuthProvider } from './firebase'
-import * as firebase from 'firebase/app';
 import { googleKey } from './keys';
 
 
@@ -111,7 +110,7 @@ export const sendPasswordResetEmail = async (email) => {
 
 export const reAuthenticateUser = async(user, password) => {
     try{
-        const credentials = firebase.auth.EmailAuthProvider.credential(user.email, password);
+        const credentials = auth.EmailAuthProvider.credential(user.email, password);
         await user.reauthenticateWithCredential(credentials)
     }
     catch(error) {

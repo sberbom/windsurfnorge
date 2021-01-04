@@ -1,6 +1,6 @@
 .cookieInfo-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     position: fixed;
     bottom: 0;
     width: 100vw;

@@ -49,11 +49,11 @@ function SpotInfo({spot}) {
                     <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
                 </DropdownButton>
             </div>
-            {spot.about && <p>{spot.about}</p>}
+            {spot.about && <p className="pre-line">{spot.about}</p>}
             {spot.approach &&
                 <> 
                     <h2>Annokmst</h2>
-                    <p>{spot.approach}</p>
+                    <p className="pre-line">{spot.approach}</p>
                 </>
             }
             {spot.facebook &&

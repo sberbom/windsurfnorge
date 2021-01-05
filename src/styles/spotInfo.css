@@ -24,3 +24,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.pre-line {
+    white-space: pre-line;
+}

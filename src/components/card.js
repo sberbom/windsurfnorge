@@ -12,7 +12,7 @@ function SBCard({title, text, button, image, rating}) {
             <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={image} alt="image of spot" />
             <Card.Body>
-                <Card.Title>{title}</Card.Title>
+                <Card.Title className="no-overflow">{title}</Card.Title>
                 <Card.Text>
                     <Rating
                         emptySymbol={<img src={star_empty} className="icon rating-img-card" alt="emptyStar"/>}

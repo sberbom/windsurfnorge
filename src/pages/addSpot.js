@@ -48,7 +48,7 @@ function AddSpot() {
         const fetchSpot = async () => {
             const spotName = queryString.parse(window.location.search).spotName
             const edit = queryString.parse(window.location.search).edit
-            user && !edit && setCreatedBy(user.email)
+            user && !edit && setCreatedBy(user.displayName)
             if(edit) {
                 setIsEdit(true)
                 const spot = await dbService.getSpot(spotName);

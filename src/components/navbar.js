@@ -39,6 +39,8 @@ const SBNavbar = () =>  {
         }
         setExpanded(false)
     }
+
+    console.log(user)
     
     return(
         <div>

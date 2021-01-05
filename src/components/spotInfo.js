@@ -71,6 +71,9 @@ function SpotInfo({spot}) {
                     onChange={onUpdateRating}
                 />
             </div>
+            <div className="created-by-container">
+                <p className="created-by">{`Opprettet av: ${spot.createdBy ? spot.createdBy : "Windsurf Norge"}`}</p>
+            </div>
         </div>
     )
 }

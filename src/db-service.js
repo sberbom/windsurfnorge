@@ -1,7 +1,7 @@
 import { db } from './firebase';
 
 export const getAllSpots = async () => {
-    const fetchedSpots = await db.collection('spots').get()
+    const fetchedSpots = await db.collection('spots').where("deleted", "==", false).get()
     const spots = [];
     fetchedSpots.forEach((doc) => spots.push(doc.data()))
     return spots;
@@ -71,5 +71,15 @@ export const updateImages = async (spotName, images, smallImages, mainImage) => 
         })
     }catch(error) {
         console.error('Error updating images', error)
+    }
+}
+
+export const deleteSpot = async (spotName) => {
+    try{
+        db.collection('spots').doc(spotName).update({
+            deleted: true
+        })
+    }catch(error) {
+        console.error('Error deleting spot', error)
     }
 }

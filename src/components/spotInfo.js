@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import Rating from 'react-rating'
@@ -6,8 +6,11 @@ import star from '../images/star.png'
 import star_empty from '../images/star_empty.png'
 import {updateRating} from '../db-service'
 import '../styles/spotInfo.css'
+import DeleteSpotModal from './deleteSpotModal'
 
 function SpotInfo({spot}) {
+
+    const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
 
     const history = useHistory()
 
@@ -30,9 +33,14 @@ function SpotInfo({spot}) {
                         size="sm"
                     >
                         <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
+                        <Dropdown.Item eventKey="2" size="sm" onClick={() => setShowDeleteSpotModal(true)}>Slett spot</Dropdown.Item>
                     </DropdownButton>
                 </div>
                 <p>Vi har ingen beskrivelse av denne spotten. Har du vært her? Legg gjerne inn infomasjon om spotten!</p>
+                <div className="created-by-container">
+                    <p className="created-by">{`Opprettet av: ${spot.createdBy ? spot.createdBy : "Windsurf Norge"}`}</p>
+                </div>
+                <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
             </div>
         )
     }
@@ -47,6 +55,7 @@ function SpotInfo({spot}) {
                     size="sm"
                 >
                     <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
+                    <Dropdown.Item eventKey="2" size="sm" onClick={() => setShowDeleteSpotModal(true)}>Slett spot</Dropdown.Item>
                 </DropdownButton>
             </div>
             {spot.about && <p className="pre-line">{spot.about}</p>}
@@ -74,6 +83,7 @@ function SpotInfo({spot}) {
             <div className="created-by-container">
                 <p className="created-by">{`Opprettet av: ${spot.createdBy ? spot.createdBy : "Windsurf Norge"}`}</p>
             </div>
+            <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
         </div>
     )
 }

@@ -1,6 +1,7 @@
 // Firebase App (the core Firebase SDK) is always required and must be listed first
-import firebase from 'firebase/';
+import firebase from 'firebase/app';
 // Add the Firebase products that you want to use
+import 'firebase/database';
 import 'firebase/firestore';
 import 'firebase/storage';
 import 'firebase/auth';

@@ -7,7 +7,8 @@ const confirmDeleteModal = (props) => {
 
     return(
         <Modal
-            {...props}
+            show={props.show} 
+            onHide={props.onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -24,7 +25,7 @@ const confirmDeleteModal = (props) => {
                 <img src={props.img} alt="to-delete" className="image-to-delete"/>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onDelete}>Slett</Button>
+                <Button onClick={props.deleteImage}>Slett</Button>
                 <Button onClick={props.onHide}>Avbryt</Button>
             </Modal.Footer>
         </Modal>

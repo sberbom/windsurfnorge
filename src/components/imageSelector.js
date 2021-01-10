@@ -34,7 +34,7 @@ const ImageSelector = ({images, mainImage, setMainImage, onDeleteImage}) => {
                         /> 
                 </div>
             )}
-            <ConfirmDeleteModal show={showConfirmDeleteModal} onDelete={onDelete} img={imageToDelete} onHide={() => setShowConfirmDeleteModal(false)}/>
+            <ConfirmDeleteModal show={showConfirmDeleteModal} deleteImage={onDelete} img={imageToDelete} onHide={() => setShowConfirmDeleteModal(false)}/>
         </div>
         
     );

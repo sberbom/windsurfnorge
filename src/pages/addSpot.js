@@ -30,6 +30,8 @@ function AddSpot() {
 
     const [bigImageAsUrl, setBigImageAsUrl] = useState([]);
     const [smallImageAsUrl, setSmallImageAsUrl] = useState([]);
+    const [loadedImages, setLoadedImages] = useState([]);
+    const [loadedSmallImages, setLoadedSmallImages] = useState([]);
     const [mainImage, setMainImage] = useState(0);
 
     const [createdBy, setCreatedBy] = useState();
@@ -52,6 +54,8 @@ function AddSpot() {
             if(edit) {
                 setIsEdit(true)
                 const spot = await dbService.getSpot(spotName);
+                setLoadedImages(spot.images);
+                setLoadedSmallImages(spot.smallImages);
                 setSpotName(spot.name);
                 setAboutSpot(spot.about);
                 setApproachSpot(spot.approach);
@@ -96,10 +100,12 @@ function AddSpot() {
 
     const onDeleteImage = async (imageIndex) => {        
         try{
-            await storage.refFromURL(bigImageAsUrl[imageIndex]).delete()
-            await storage.refFromURL(smallImageAsUrl[imageIndex]).delete()
-            const bigImages = bigImageAsUrl.filter(image => image !== bigImageAsUrl[imageIndex])
-            const smallImages = smallImageAsUrl.filter(image => image !== smallImageAsUrl[imageIndex])
+            const bigImageUrl = bigImageAsUrl[imageIndex]
+            const smallImageUrl = smallImageAsUrl[imageIndex]
+            await storage.refFromURL(bigImageUrl).delete()
+            await storage.refFromURL(smallImageUrl).delete()
+            const bigImages = bigImageAsUrl.filter(image => image !== bigImageUrl)
+            const smallImages = smallImageAsUrl.filter(image => image !== smallImageUrl)
             let mainImageLocal = mainImage
             setBigImageAsUrl(bigImages)
             setSmallImageAsUrl(smallImages)
@@ -108,12 +114,12 @@ function AddSpot() {
                 mainImageLocal = 0
             }
             dbService.updateImages(spotName, bigImages, smallImages, mainImageLocal)
+            dbService.deleteImageFromUserUploade(bigImageUrl, smallImageUrl)
         }
         catch(error){
             console.error("Could not delete image", error)
         }
     }
-
 
     const checkValid = () => {
         if (spotName === '' || latLng === mapCenter) {
@@ -139,10 +145,20 @@ function AddSpot() {
             ratings: ratings,
             mainImage: mainImage,
             createdBy: createdBy,
-            editList: editList.concat([user.email])
+            editList: editList.concat([user.email]),
+            deleted: false,
         }
         if(checkValid()){
             dbService.addSpot(spot)
+            if(isEdit){
+                const bigImagesUploadedByUser = bigImageAsUrl.filter(imageUrl => loadedImages.indexOf(imageUrl) < 0)
+                const smallImageUploadedByUser = smallImageAsUrl.filter(imageUrl => loadedSmallImages.indexOf(imageUrl) < 0)
+                bigImagesUploadedByUser.length > 0 && dbService.addImageUploadedByUser(bigImagesUploadedByUser, smallImageUploadedByUser, user.uid)
+            }
+            else{
+                dbService.addSpotCreatedByUser(spot.name, user.uid)
+                dbService.addImageUploadedByUser(bigImageAsUrl, smallImageAsUrl, user.uid, true)
+            }
             history.push('/')
         }
     }
@@ -179,8 +195,6 @@ function AddSpot() {
                                 mainImage = {mainImage}
                                 setMainImage = {setMainImage}
                                 onDeleteImage = {onDeleteImage}
-                                // addToBigImageAsUrl = {addToBigImageAsUrl}
-                                // addToSmallImageAsUrl ={addToSmallImageAsUrl}
                             />
                         </div>
                     </div>

@@ -1,0 +1,12 @@
+.spot-entry-conainer > a{
+    font-size: 1.25rem;
+}
+
+.restore {
+    color: #007bff;
+}
+
+.restore:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}

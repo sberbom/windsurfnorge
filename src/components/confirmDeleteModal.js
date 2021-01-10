@@ -24,7 +24,7 @@ const confirmDeleteModal = (props) => {
                 <img src={props.img} alt="to-delete" className="image-to-delete"/>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onDelete}>Slette</Button>
+                <Button onClick={props.onDelete}>Slett</Button>
                 <Button onClick={props.onHide}>Avbryt</Button>
             </Modal.Footer>
         </Modal>

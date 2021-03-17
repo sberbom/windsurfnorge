@@ -1,0 +1,21 @@
+.my-spots-container{
+    text-align: center;
+    margin-top: 1.25rem;
+}
+
+.my-content-container > * > h2 {
+    margin-bottom: 1.25rem;
+}
+
+.my-spots-container > a{
+    font-size: 1.25rem;
+}
+
+.my-content-container {
+    margin-bottom: 3rem;
+}
+
+.my-images-conatiner {
+    text-align: center;
+    margin-top: 1.25rem;
+}

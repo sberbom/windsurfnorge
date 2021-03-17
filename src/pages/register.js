@@ -10,6 +10,9 @@ const Register = () => {
     const user = useContext(UserContext)
     const history = useHistory()
 
+    document.title = `Windsurf Norge - Ny bruker`
+
+
     if(user) {
         history.push("/mypage")
     }

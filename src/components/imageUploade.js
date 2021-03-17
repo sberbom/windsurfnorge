@@ -1,66 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {storage} from '../firebase'
-import {Button} from 'react-bootstrap'
 import sync from '../images/sync.png'
 import checked from '../images/checked.png'
 import close from '../images/close.png'
+import imageCompression from 'browser-image-compression';
+import {getRandomInt} from '../utils'
+import {useDropzone} from 'react-dropzone'
 import '../styles/imageUploade.css'
 
+const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setBigImageAsUrl, spotName}) =>  {
 
-const ImageUploade = ({setImageAsUrl, imageAsUrl}) =>  {
-
-    const [imageAsFile, setImageAsFile] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [isUploadeCompleted, setIsUploadeCompleted] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const handleImageAsFile = (event) => {
-        const image = event.target.files[0]
-        setImageAsFile(imageFile => (image))
-    } 
-
-    const handleFirebaseUploade = (event) => {
-        event.preventDefault();
-        console.log('start of uploade')
-        if(imageAsFile === '') {
-            console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
-            setIsError(true)
-            return;
+    const onDrop = useCallback( async (files) => {
+        const optionsBigImage = {
+            maxSizeMB: 5, 
+            maxWidthOrHeight: 1920,
+            useWebWorker: true
         }
-        setIsError(false)
-        setIsUploadeCompleted(false)
-        setIsUploading(true);
-        const uploadTask = storage.ref(`/images/${imageAsFile.name}`).put(imageAsFile)
-        uploadTask.on('state_changed', 
-        (snapShot) => {
-            console.log(snapShot)
-        }, (err) => {
-            console.log(err)
-            setIsError(true)
-            setIsUploading(false)
-        }, () => {
-            storage.ref('images').child(imageAsFile.name).getDownloadURL()
-                .then(fireBaseUrl => {
-                    setImageAsUrl(imageAsUrl.concat(fireBaseUrl))
-                    setIsUploading(false)
-                    setIsUploadeCompleted(true)
-            })
-        })
-    }
- 
+    
+        const optionsSmallImage = {
+            maxSizeMB: 2, 
+            maxWidthOrHeight: 286,
+            useWebWorker: true
+        }
+
+        const handleFirebaseUploade = async (imageAsFile, bigImageAsFile, smallImageAsFile, bigImageName, smallImageName) => {
+            for(let image in imageAsFile) {
+                if(image === '') {
+                    console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+                    setIsError(true)
+                    return;
+                }
+            }
+            setIsError(false)
+            setIsUploadeCompleted(false)
+            console.log('start of uploade')
+            setIsUploading(true);
+            
+            let newBigImageUrl = []
+            let newSmallImageUrl = []
+            const numberOfImages = bigImageName.length
+    
+            for(let i = 0; i < numberOfImages; i++){
+    
+                try{
+                    await storage.ref(`/images/${bigImageName[i]}`).put(bigImageAsFile[i])
+                    let fireBaseUrl = await storage.ref('images').child(bigImageName[i]).getDownloadURL()
+                    newBigImageUrl.push(fireBaseUrl)
+                    if(newBigImageUrl.length === numberOfImages) {
+                        setBigImageAsUrl(bigImageAsUrl.concat(newBigImageUrl))
+                        console.log("big completed")
+                        
+                    }
+                
+                    await storage.ref(`/images/${smallImageName[i]}`).put(smallImageAsFile[i])
+                    fireBaseUrl = await storage.ref('images').child(smallImageName[i]).getDownloadURL()
+                    newSmallImageUrl.push(fireBaseUrl)
+                    if(newSmallImageUrl.length === numberOfImages) {
+                        setSmallImageAsUrl(smallImageAsUrl.concat(newSmallImageUrl))
+                        console.log("Small completed")
+                        setIsUploadeCompleted(true);
+                        setIsUploading(false);
+                    } 
+                }
+                catch(error){
+                    console.error("Could not uploade image", error)
+                }
+            }
+        }
+        
+        const imageAsFile = []
+        const bigImageAsFile = []
+        const smallImageAsFile = []
+        const bigImageName = []
+        const smallImageName = []
+        for(let i = 0; i< files.length; i++) {
+            const image = files[i]
+            const compressedFileBig = await imageCompression(image, optionsBigImage);
+            const compressedFileSmall = await imageCompression(image, optionsSmallImage);
+            const randint = getRandomInt()
+            bigImageName.push(spotName + randint + i + 'big.jpg')
+            smallImageName.push(spotName + randint + 'small.jpg')
+            bigImageAsFile.push(compressedFileBig)
+            smallImageAsFile.push(compressedFileSmall)
+            imageAsFile.push(image)
+        }
+        handleFirebaseUploade(imageAsFile, bigImageAsFile, smallImageAsFile, bigImageName, smallImageName)    
+      }, [spotName, bigImageAsUrl, setBigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl])
+
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
     
     return(
         <div className="imageUploade-container">
-            <div>
+            <div {...getRootProps()} className="input-field">
                 <input
-                    type={"file"}
-                    onChange={handleImageAsFile}
+                    {...getInputProps()}
                 />
-                {isUploading && <img src={sync} alt="sync" />}
-                {isUploadeCompleted && <img src={checked} alt="checked" />}
-                {isError && <img src={close} alt="close" />}
+                {
+                    isDragActive ?
+                    <p>Slipp bildene her ...</p> :
+                    <p>Dra og slipp bilder her, eller klikk for å laste opp bilder</p>
+                }
             </div>
-            <Button onClick={handleFirebaseUploade}>Last opp</Button>
+            {isUploading && <img src={sync} alt="sync" />}
+            {isUploadeCompleted && <img src={checked} alt="checked" />}
+            {isError && <img src={close} alt="close" />}
         </div>
         
     )

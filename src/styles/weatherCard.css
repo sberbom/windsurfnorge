@@ -1,0 +1,22 @@
+.weather-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    /* background-color: gray; */
+    margin: 1rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.weather-card-container > img {
+    width: 75px;
+}
+
+.wind-icon {
+    margin-bottom: 0.75rem;
+}
+

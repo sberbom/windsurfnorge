@@ -1,0 +1,21 @@
+.cookieInfo-container {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    background-color: gray;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 10px 10px 8px 10px #888888;
+    color:white;
+}
+
+.cookieInfo-container > p > a {
+    color: white;
+}
+
+.cookie-button {
+    min-width: 50px;
+    margin-left: 1rem;
+}

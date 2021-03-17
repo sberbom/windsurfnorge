@@ -24,3 +24,14 @@
     height: 190px;
     object-fit: cover;
 }
+
+.rating-img-card{
+    height: 20px;
+}
+
+.no-overflow {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 15%;
+}

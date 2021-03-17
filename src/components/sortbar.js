@@ -11,10 +11,11 @@ const Sortbar = ({onSearchWordChange, onSortbyChange}) => {
                 <Dropdown.Item onClick={() => onSortbyChange("Newest")}>Nyeste</Dropdown.Item>
                 <Dropdown.Item onClick={() => onSortbyChange("Alphabetical")}>Alfabetisk</Dropdown.Item>
                 <Dropdown.Item onClick={() => onSortbyChange("Most popular")}>Mestpopulære</Dropdown.Item>
+                <Dropdown.Item onClick={() => onSortbyChange("Rating")}>Rating</Dropdown.Item>
             </DropdownButton>
             <InputGroup className="mb-3 searchfield">
                 <FormControl
-                    placeholder="Halden brygge"
+                    placeholder="Spot"
                     onChange={(event) => onSearchWordChange(event.target.value)}
                 />
                 <InputGroup.Append>

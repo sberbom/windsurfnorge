@@ -1,0 +1,8 @@
+.image-gallery-image{
+    max-height: 70vh !important;
+}
+
+.image-gallery-thumbnail-image{
+    height: 100px;
+    object-fit: scale-down;
+}

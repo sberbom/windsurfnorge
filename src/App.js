@@ -12,9 +12,14 @@ import { Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import UserProvider from './providers/userProvider';
+import TermsAndConditions from './pages/termsAndConditions';
+import Policy from './pages/policy';
+import CookieInfo from './components/cookieInfo';
+import NotFound from './pages/notFound'
 
 
 function App() {
+
   return (
     <div>
       <UserProvider>
@@ -44,7 +49,17 @@ function App() {
           <Route path="/register">
             <Register/>
           </Route>
+          <Route path="/termsAndConditions">
+            <TermsAndConditions/>
+          </Route>
+          <Route path="/policy">
+            <Policy/>
+          </Route>
+          <Route>
+            <NotFound/>
+          </Route>
         </Switch>
+        <CookieInfo />
         <Footer/>
       </UserProvider>
     </div>

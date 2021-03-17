@@ -1,0 +1,46 @@
+.image-selector-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.image-selector-image {
+    width: 100px;
+    object-fit: scale-down;
+    margin: 2px;
+}
+
+.image-selector-image:hover{
+    border: solid black 2px;
+    cursor: pointer;
+}
+
+.selected {
+    border: solid black 2px;
+}
+
+.select-image-container {
+    position: relative;
+    width: 100px;
+}
+
+.delete {
+    /* display: none; */
+    width: 10px;
+    position: absolute;
+    margin: 2px;
+    right: 2px;
+    top: 4px;
+}
+
+.delete:hover {
+    cursor: pointer;
+    display: inline;
+    right: 4px;
+    top:8px;
+    transform: scale(2);
+    transition: 0.05s;
+    background-color: white;
+    padding: 2px;
+}

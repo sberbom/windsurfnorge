@@ -1,8 +1,26 @@
+.spot-container-edit {
+    padding: 0 5vw;
+    padding-bottom: 5vh;
+    display: flex;
+    justify-content: space-between;
+    min-height: 60vh;
+}
 
 .addSpot-spotInfo {
+    margin-top: 1rem;
     width: 45%;
 }
 
 .fileUploade {
     display: block;
+}
+
+@media only screen and (max-width: 700px) {
+    .addSpot-spotInfo {
+        width: 100%;
+    }
+
+    .spot-container-edit{
+        flex-direction: column;
+    }
 }

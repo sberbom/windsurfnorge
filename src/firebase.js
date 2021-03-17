@@ -1,11 +1,12 @@
 // Firebase App (the core Firebase SDK) is always required and must be listed first
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 // Add the Firebase products that you want to use
+import 'firebase/database';
 import 'firebase/firestore';
 import 'firebase/storage';
-import 'firebase/auth'
+import 'firebase/auth';
+import 'firebase/analytics'
 import { firebaseKey } from './keys';
-
 
 const firebaseConfig = {
     apiKey: firebaseKey,
@@ -24,6 +25,7 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 export const auth = firebase.auth();
 export const storage = firebase.storage();
+export const analytics = firebase.analytics();
 
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 export const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();

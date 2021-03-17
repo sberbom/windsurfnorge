@@ -10,6 +10,8 @@ import '../styles/home.css';
 
 function Home() {
     const [spots, setSpots] = useState([])
+
+    document.title = `Windsurf Norge`
     
     useEffect(() => {
         const fetchData = async () => {

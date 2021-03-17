@@ -1,6 +1,5 @@
 import Geocode from "react-geocode";
 import {auth, googleAuthProvider, facebookAuthProvider } from './firebase'
-import * as firebase from 'firebase/app';
 import { googleKey } from './keys';
 
 
@@ -111,7 +110,7 @@ export const sendPasswordResetEmail = async (email) => {
 
 export const reAuthenticateUser = async(user, password) => {
     try{
-        const credentials = firebase.auth.EmailAuthProvider.credential(user.email, password);
+        const credentials = auth.EmailAuthProvider.credential(user.email, password);
         await user.reauthenticateWithCredential(credentials)
     }
     catch(error) {
@@ -134,4 +133,30 @@ export const validatePassword = (password1, password2) => {
 
 export const validateEmail = (email) => {
     return (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email));
+}
+
+export const getRandomInt = () => {
+    return Math.floor(Math.random() * Math.floor(1000000));
+}
+
+export const getWeekDay = (date) => {
+    switch (date.getDay()){
+        case 0:
+            return 'Søndag'
+        case 1:
+            return 'Mandag'
+        case 2:
+            return 'Tirsdag'
+        case 3:
+            return 'Onsdag'
+        case 4:
+            return 'Torsdag'
+        case 5:
+            return 'Fredag'
+        case 6:
+            return 'Lørdag'
+        default:
+            return ''
+    }
+
 }

@@ -6,7 +6,11 @@ import Map from '../components/map'
 import SpotInfo from '../components/spotInfo'
 import queryString from 'query-string'
 import '../styles/spot.css'
-import ImageCarousel from '../components/imageCarousel';
+// import ImageCarousel from '../components/imageCarousel';
+import Weather from '../components/weather'
+import SBImageGallery from '../components/imageGallery'
+
+
 
 function Spot() {
 
@@ -19,10 +23,15 @@ function Spot() {
             const spot = await dbService.getSpot(spotName);
             setSpot(spot);
             dbService.incrementSpotViews(spot);
-            spot.images && spot.images[0] ? setImage(spot.images[0]) : setImage(null)
+            spot.images && spot.images[spot.mainImage] ? setImage(spot.images[spot.mainImage]) : setImage(null)
+            document.title = `Windsurf Norge - ${spot.name}`
         }
         fetchSpot();
     }, [])
+
+    if(!spot) {
+        return(<div className="empty"></div>)
+    }
 
     return (
         <div>
@@ -40,8 +49,9 @@ function Spot() {
                             <SpotInfo spot={spot}/>
                         </div>
                     </div>
-                    <div className="image-carousel-container">
-                        <ImageCarousel images={spot.images} />
+                    <Weather latLng={spot.latLng}/>
+                    <div className="image-gallery-container">
+                        {spot.images && <SBImageGallery images={spot.images} smallImages={spot.smallImages} />}
                     </div>
                 </>
             }

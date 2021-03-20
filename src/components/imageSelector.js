@@ -29,7 +29,7 @@ const ImageSelector = ({images, mainImage, setMainImage, onDeleteImage}) => {
                         src={image.small_image} 
                         alt="spotImage" 
                         key={index} 
-                        className={`image-selector-image ${index===mainImage ? "selected" : ""}`}
+                        className={`image-selector-image ${image.id===mainImage ? "selected" : ""}`}
                         onClick={() => setMainImage(image.id)}
                         /> 
                 </div>

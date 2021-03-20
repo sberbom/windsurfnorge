@@ -100,6 +100,7 @@ export const addSpot = async (spot) => {
             'lat': spot.lat,
             'lng': spot.lng,
             'created_by': spot.user,
+            'main_image': spot.main_image,
             'token': token,
         })
     })

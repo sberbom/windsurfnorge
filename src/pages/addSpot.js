@@ -28,7 +28,7 @@ function AddSpot() {
     const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
 
-    const [mainImage, setMainImage] = useState(0);
+    const [mainImage, setMainImage] = useState(null);
 
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
@@ -57,7 +57,7 @@ function AddSpot() {
                 const address = await getAddress(spot.lat, spot.lng)
                 setAddress(address);
                 setImages(images)
-                setMainImage(spot.main_image ? spot.main_image : 0);
+                setMainImage(spot.main_image);
             }
             setIsLoading(false)
         }
@@ -133,7 +133,8 @@ function AddSpot() {
             facebook: facbookPageSpot,
             lat: latLng.lat,
             lng: latLng.lng,
-            current_user_id: dbUser.id
+            current_user_id: dbUser.id,
+            main_image: mainImage
         }
         if(checkValid()){
             if(isEdit){

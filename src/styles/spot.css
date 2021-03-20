@@ -1,43 +1,3 @@
-<<<<<<< HEAD
-.spot-container {
-    padding: 0 5vw;
-    padding-bottom: 5vh;
-    display: flex;
-    justify-content: space-between;
-    min-height: 60vh;
-}
-
-.spot-spotInfo-container {
-    width: 45%;
-}
-
-.spot-map-container {
-    width: 45%;
-    margin-bottom: 2rem;
-}
-
-.map {
-    border-radius: 10px;
-}
-
-.image-carousel-container {
-    margin-top: 2rem;
-}
-
-@media only screen and (max-width: 700px) {
-    .spot-container{
-        flex-direction: column-reverse;
-    }
-
-    .spot-spotInfo-container {
-        width: 100%;
-    }
-
-    .spot-map-container {
-        width: 100%;
-        height: 60vh;
-    }
-=======
 .spot-container {
     padding: 0 5vw;
     padding-bottom: 5vh;
@@ -78,5 +38,4 @@
         height: 25vh;
         margin-bottom: 0rem;
     }
->>>>>>> aadfe98411df165f19524e03dae0dd7b3e401b16
 }

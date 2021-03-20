@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import Rating from 'react-rating'
 import star from '../images/star.png'
 import star_empty from '../images/star_empty.png'
-import {updateRating} from '../db-service'
+import {updateRating} from '../api-service'
 import '../styles/spotInfo.css'
 import DeleteSpotModal from './deleteSpotModal'
+import {UserContext} from '../providers/userProvider';
+
 
 function SpotInfo({spot}) {
 
     const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
+    const user = useContext(UserContext)
 
     const history = useHistory()
 
@@ -18,8 +21,8 @@ function SpotInfo({spot}) {
         history.push(`/addSpot?spotName=${spot.name}&edit=true`)
     }
 
-    const onUpdateRating = (rate) => {
-        updateRating(spot, rate);
+    const onUpdateRating = (rating) => {
+        updateRating(spot.id, rating, user.email);
     }
 
     if(!spot.about && !spot.approach && !spot.facebook) {

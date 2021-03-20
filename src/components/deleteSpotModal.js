@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
-import {deleteSpot} from '../db-service'
+import {deleteSpot} from '../api-service'
 import { useHistory } from "react-router-dom";
 import '../styles/confirmDeleteModal.css'
 
@@ -9,8 +9,8 @@ const DeleteSpotModal = (props) => {
 
     const history = useHistory()
 
-    const onDeleteSpot = (spotName) => {
-        deleteSpot(spotName); 
+    const onDeleteSpot = (id) => {
+        deleteSpot(id); 
         props.onHide()
         history.push("/")
     }
@@ -33,7 +33,7 @@ const DeleteSpotModal = (props) => {
                 </p>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => onDeleteSpot(props.spot.name)}>Slette</Button>
+                <Button onClick={() => onDeleteSpot(props.spot.id)}>Slette</Button>
                 <Button onClick={props.onHide}>Avbryt</Button>
             </Modal.Footer>
         </Modal>

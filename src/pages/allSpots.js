@@ -3,7 +3,7 @@ import Header from '../components/header'
 import CardList from '../components/cardList'
 import Sortbar from '../components/sortbar';
 import {withRouter} from 'react-router-dom'
-import * as dbService from '../db-service';
+import {getAllSpots} from '../api-service';
 import '../styles/allSpots.css'
 
 function AllSpots() {
@@ -15,7 +15,7 @@ function AllSpots() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const allSpots = await dbService.getAllSpots();
+            const allSpots = await getAllSpots();
             setSpots(allSpots);
         }
         fetchData();

@@ -5,12 +5,10 @@ import AliceCarousel from 'react-alice-carousel';
 
 
 
-const Weather = ({latLng}) => {
+const Weather = ({lat, lng}) => {
 
     const [weather, setWeather] = useState(null)
     const [filteredWeather, setFilteredWeather] = useState(null)
-    const lat = Number((latLng.lat).toFixed(4));
-    const lng = Number((latLng.lng).toFixed(4));
 
     useEffect(() => {
         if(weather === null){

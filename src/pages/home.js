@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import * as dbService from '../db-service';
+import {getAllSpots} from '../api-service';
 import { Button } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import Header from '../components/header';
@@ -15,7 +15,7 @@ function Home() {
     
     useEffect(() => {
         const fetchData = async () => {
-            const allSpots = await dbService.getAllSpots();
+            const allSpots = await getAllSpots();
             setSpots(allSpots);
         }
         fetchData();

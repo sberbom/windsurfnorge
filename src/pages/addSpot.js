@@ -114,12 +114,12 @@ function AddSpot() {
 
     const addImages = async (spotId, dbUser) => {
         const newImages = images.filter(image => image.id === undefined)
-        newImages.forEach(async image => {
+        for(const image of newImages) {
             const newImage = {bigImageUrl: image.big_image, smallImageUrl: image.small_image}
             await addImage(newImage, spotId, dbUser.id)
-        })
-        if(spot.mainImage === undefined){
-            const images = await getImages(spot.id)
+        }
+        if(newImages.length !== 0 && (spot === null || spot.mainImage === undefined)){
+            const images = await getImages(spotId)
             updateMainImage(images[0].id, spotId)
         }
     }
@@ -155,7 +155,7 @@ function AddSpot() {
         <div>
             <Header
                 title={isEdit ? "Endre spot" : "Legg til spot"}
-                image={spot.big_image}
+                image={spot && spot.big_image}
             />
             {!isLoading &&
                 <> 

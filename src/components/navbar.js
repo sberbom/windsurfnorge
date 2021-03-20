@@ -5,6 +5,7 @@ import LogInModal from './logInModal'
 import '../styles/navbar.css'
 import {UserContext} from '../providers/userProvider';
 
+
 const SBNavbar = () =>  {
     const [navBackground, setNavBackground] = useState({backgroundColor: "rgba(0, 0, 0, 0)"})
     const [showLogInModal, setShowLogInModal] = useState(false);

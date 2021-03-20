@@ -150,4 +150,57 @@ export const getUser = async (userEmail) => {
     return user[0]
 }
 
+export const addUser = async (userEmail) => {
+    const response = await fetch(`${host}/addUser`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'user_email': userEmail
+        })
+    })
+    const user = await response.json()
+    return user[0]
+}
 
+export const getUsers = async () => {
+    const response = await fetch(`${host}/users`, {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    const users = await response.json()
+    return users
+}
+
+export const getUserSpots = async (id) => {
+    const response = await fetch(`${host}/getUserSpots`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'user_id': id
+        })
+    })
+    const userSpots = await response.json()
+    return userSpots
+}
+
+export const restoreSpot = async (id) => {
+    await fetch(`${host}/restoreSpot`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'id': id,
+        })
+    })
+}
+
+export const getUserImages = async (id) => {
+    const response = await fetch(`${host}/getUserImages`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'user_id': id
+        })
+    })
+    const images = await response.json()
+    return images
+}

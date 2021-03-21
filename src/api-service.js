@@ -190,13 +190,9 @@ export const addUser = async (userEmail) => {
 }
 
 export const getUsers = async () => {
-    const token = await auth.currentUser.getIdToken(true)
     const response = await fetch(`${host}/getUsers`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            'token': token
-        })
     })
     const users = await response.json()
     return users

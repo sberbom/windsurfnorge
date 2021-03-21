@@ -24,10 +24,14 @@ function AllSpots() {
     const sort = (spotsToSort, sortMethod) => {
         let spots = spotsToSort;
         if(sortMethod === "Alphabetical") {
-            spots = spots.sort();
+            spots = spots.sort((spot1, spot2) => {
+                if(spot1.name < spot2.name) { return -1; }
+                if(spot1.name > spot2.name) { return 1; }
+                return 0;
+            });
         }
         else if(sortMethod === "Newest") {
-            spots = spots.sort((spot1, spot2) => spot2.timeStamp - spot1.timeStamp);
+            spots = spots.sort((spot1, spot2) => new Date(spot2.created) - new Date(spot1.created));
         }
         else if(sortMethod === "Most popular") {
             spots = spots.sort((spot1, spot2) => spot2.views - spot1.views);

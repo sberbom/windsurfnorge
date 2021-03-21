@@ -75,16 +75,21 @@ export const addImage = async (image, spotId, userId) => {
 }
 
 export const updateMainImage = async (main_image, spotId) => {
-    const token = await auth.currentUser.getIdToken(true)
-    await fetch(`${host}/updateMainImage`, {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            'spot_id': spotId,
-            'main_image': main_image,
-            'token': token
+    try{
+        const token = await auth.currentUser.getIdToken(true)
+        await fetch(`${host}/updateMainImage`, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                'spot_id': spotId,
+                'main_image': main_image,
+                'token': token
+            })
         })
-    })
+    }
+    catch(error){
+        console.log(error)
+    }
 }
 
 

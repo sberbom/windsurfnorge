@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
-import * as dbService from '../db-service';
+import {getImages, getSpot} from '../api-service'
 import Header from '../components/header'
 import Map from '../components/map'
 import SpotInfo from '../components/spotInfo'
@@ -15,15 +15,18 @@ import SBImageGallery from '../components/imageGallery'
 function Spot() {
 
     const [spot, setSpot] = useState(null)
+    const [images, setImages] = useState(null)
     const [image, setImage] = useState(null)
 
     useEffect(() => {
         const fetchSpot = async () => {
             const spotName = queryString.parse(window.location.search).spotName
-            const spot = await dbService.getSpot(spotName);
+            const spot = await getSpot(spotName);
+            const images = await getImages(spot.id);
             setSpot(spot);
-            dbService.incrementSpotViews(spot);
-            spot.images && spot.images[spot.mainImage] ? setImage(spot.images[spot.mainImage]) : setImage(null)
+            setImages(images);
+            setImage(spot.big_image)
+            // spot.images && spot.images[spot.mainImage] ? setImage(spot.images[spot.mainImage]) : setImage(null)
             document.title = `Windsurf Norge - ${spot.name}`
         }
         fetchSpot();
@@ -49,9 +52,9 @@ function Spot() {
                             <SpotInfo spot={spot}/>
                         </div>
                     </div>
-                    <Weather latLng={spot.latLng}/>
+                    <Weather lat={spot.lat} lng={ spot.lng}/>
                     <div className="image-gallery-container">
-                        {spot.images && <SBImageGallery images={spot.images} smallImages={spot.smallImages} />}
+                        {images && <SBImageGallery images={images}/>}
                     </div>
                 </>
             }

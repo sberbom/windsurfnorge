@@ -15,7 +15,7 @@ const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}) => {
     let startZoom = 5;
 
     if(spot) {
-      mapCenter = [spot.latLng.lng, spot.latLng.lat]
+      mapCenter = [spot.lng, spot.lat]
       startZoom = 11;
     }
 
@@ -29,7 +29,7 @@ const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}) => {
     if(spots){
       spots.forEach((spot) => {
         new mapboxgl.Marker()
-        .setLngLat([spot.latLng.lng, spot.latLng.lat])
+        .setLngLat([spot.lng, spot.lat])
         .setPopup(new mapboxgl.Popup({closeButton: false}).setHTML(`<a href='/spot?spotName=${spot.name}'>${spot.name}</a>`))
         .addTo(map); // add the marker to the map
       })
@@ -37,7 +37,7 @@ const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}) => {
 
     if(spot){
       new mapboxgl.Marker()
-        .setLngLat([spot.latLng.lng, spot.latLng.lat])
+        .setLngLat([spot.lng, spot.lat])
         .addTo(map);
     }
 

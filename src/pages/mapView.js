@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import * as dbService from '../db-service';
+import {getAllSpots} from '../api-service'
 import Map from '../components/map'
 import '../styles/mapView.css'
 
@@ -10,7 +10,7 @@ function MapView() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const allSpots = await dbService.getAllSpots();
+            const allSpots = await getAllSpots();
             setSpots(allSpots);
         }
         fetchData();

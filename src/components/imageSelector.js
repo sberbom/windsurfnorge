@@ -6,17 +6,17 @@ import ConfirmDeleteModal from './confirmDeleteModal'
 const ImageSelector = ({images, mainImage, setMainImage, onDeleteImage}) => {
 
     const [imageToDelete, setImageToDelete] = useState();
-    const [imageToDeleteIndex, setImageToDeleteIndex] = useState(0);
+    const [imageToDeleteId, setImageToDeleteId] = useState(0);
     const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false)
 
-    const onShowDeleteModal = (image, index) => {
-        setImageToDelete(image)
-        setImageToDeleteIndex(index)
+    const onShowDeleteModal = (image) => {
+        setImageToDelete(image.big_image)
+        setImageToDeleteId(image.id)
         setShowConfirmDeleteModal(true)
     }
 
     const onDelete = () => {
-        onDeleteImage(imageToDeleteIndex);
+        onDeleteImage(imageToDeleteId);
         setShowConfirmDeleteModal(false);
     }
         
@@ -24,13 +24,13 @@ const ImageSelector = ({images, mainImage, setMainImage, onDeleteImage}) => {
         <div className="image-selector-container">
             {images.map((image, index) => 
                 <div className="select-image-container" key={index+"container"}>
-                    <img src={close} alt="close" className="delete" onClick={() => onShowDeleteModal(image, index)} key={index+"close"}/>
+                    <img src={close} alt="close" className="delete" onClick={() => onShowDeleteModal(image)} key={index+"close"}/>
                     <img 
-                        src={image} 
+                        src={image.small_image} 
                         alt="spotImage" 
                         key={index} 
-                        className={`image-selector-image ${index===mainImage ? "selected" : ""}`}
-                        onClick={() => setMainImage(index)}
+                        className={`image-selector-image ${image.id===mainImage ? "selected" : ""}`}
+                        onClick={() => setMainImage(image.id)}
                         /> 
                 </div>
             )}

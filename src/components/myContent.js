@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import ImageGallery from './imageGallery'
 import '../styles/myContent.css'
-import {getUserData } from '../db-service';
+import {getUser, getUserSpots, getUserImages} from '../api-service'
 import SpotCreatedByUserEntry from './spotCreatedByUserEntry';
 
 const MyContent = ({user}) => {
 
     const [spotsCreatedByUser, setSpotsCratedByUser] = useState([]);
-    const [bigImagesUploadedByUser, setBigImagesUploadedByUser] = useState([])
-    const [smallImageUploadedByUser, setSmallImagesUploadedByUser] = useState([])
+    const [userImages, setUserImages] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const userData = await getUserData(user.uid);
-            if(userData && userData.createdSpots){
-                setSpotsCratedByUser(userData.createdSpots);
+            const dbUser = await getUser(user.email);
+            const userSpots = await getUserSpots(dbUser.id)
+            const userImages = await getUserImages(dbUser.id)
+            if(userSpots){
+                setSpotsCratedByUser(userSpots);
             }
-            if(userData && userData.uploadedBigImages) {
-                setBigImagesUploadedByUser(userData.uploadedBigImages);
-                setSmallImagesUploadedByUser(userData.uploadedSmallImages);
+            if(userImages){
+                setUserImages(userImages)
             }
         }
         if(user) {
@@ -30,11 +30,11 @@ const MyContent = ({user}) => {
         <div className="my-content-container">
             <div className="my-spots-container">
                 {spotsCreatedByUser.length > 0 && <h2>Spotter jeg har opprettet</h2>}      
-                {spotsCreatedByUser.length > 0 && spotsCreatedByUser.map(spot => <SpotCreatedByUserEntry key={spot} spotName={spot}/>)}
+                {spotsCreatedByUser.length > 0 && spotsCreatedByUser.map(spot => <SpotCreatedByUserEntry key={spot.id} spot={spot}/>)}
             </div>
             <div className="my-images-conatiner">
-                {bigImagesUploadedByUser.length > 0 && <h2>Bilder jeg har lastet opp</h2>}      
-                {bigImagesUploadedByUser.length > 0 && <ImageGallery images={bigImagesUploadedByUser} smallImages={smallImageUploadedByUser} />}
+                {userImages.length > 0 && <h2>Bilder jeg har lastet opp</h2>}      
+                {userImages.length > 0 && <ImageGallery images={userImages} />}
             </div>
         </div>
     )

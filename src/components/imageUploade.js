@@ -8,7 +8,7 @@ import {getRandomInt} from '../utils'
 import {useDropzone} from 'react-dropzone'
 import '../styles/imageUploade.css'
 
-const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setBigImageAsUrl, spotName}) =>  {
+const ImageUploade = ({ spotName, setImages, images}) =>  {
 
     const [isUploading, setIsUploading] = useState(false);
     const [isUploadeCompleted, setIsUploadeCompleted] = useState(false);
@@ -40,36 +40,41 @@ const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setB
             console.log('start of uploade')
             setIsUploading(true);
             
-            let newBigImageUrl = []
-            let newSmallImageUrl = []
             const numberOfImages = bigImageName.length
+            let newImages = []
     
             for(let i = 0; i < numberOfImages; i++){
     
                 try{
                     await storage.ref(`/images/${bigImageName[i]}`).put(bigImageAsFile[i])
-                    let fireBaseUrl = await storage.ref('images').child(bigImageName[i]).getDownloadURL()
-                    newBigImageUrl.push(fireBaseUrl)
-                    if(newBigImageUrl.length === numberOfImages) {
-                        setBigImageAsUrl(bigImageAsUrl.concat(newBigImageUrl))
+                    const newBigImageUrl = await storage.ref('images').child(bigImageName[i]).getDownloadURL()
+                    if(i+1 === numberOfImages) {
                         console.log("big completed")
-                        
                     }
                 
                     await storage.ref(`/images/${smallImageName[i]}`).put(smallImageAsFile[i])
-                    fireBaseUrl = await storage.ref('images').child(smallImageName[i]).getDownloadURL()
-                    newSmallImageUrl.push(fireBaseUrl)
-                    if(newSmallImageUrl.length === numberOfImages) {
-                        setSmallImageAsUrl(smallImageAsUrl.concat(newSmallImageUrl))
+                    const newSmallImageUrl = await storage.ref('images').child(smallImageName[i]).getDownloadURL()
+                    if(i+1 === numberOfImages) {
                         console.log("Small completed")
                         setIsUploadeCompleted(true);
                         setIsUploading(false);
                     } 
+
+                    const newImage = {
+                        big_image: newBigImageUrl,
+                        small_image: newSmallImageUrl
+                    }
+
+                    newImages.push(newImage)
+
                 }
                 catch(error){
                     console.error("Could not uploade image", error)
                 }
             }
+
+            setImages(images.concat(newImages))
+
         }
         
         const imageAsFile = []
@@ -89,7 +94,7 @@ const ImageUploade = ({ bigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl, setB
             imageAsFile.push(image)
         }
         handleFirebaseUploade(imageAsFile, bigImageAsFile, smallImageAsFile, bigImageName, smallImageName)    
-      }, [spotName, bigImageAsUrl, setBigImageAsUrl, smallImageAsUrl, setSmallImageAsUrl])
+      }, [spotName, images, setImages])
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
     

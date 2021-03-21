@@ -27,21 +27,16 @@ function AddSpotForm(props) {
                 <Form.Control as="textarea" rows="1" value={props.address} placeholder={props.address} readOnly/>
             </Form.Group>
 
-            {/* <Form.Group controlId="exampleForm.ControlTextarea5">
-                <Form.Label>Bilde</Form.Label>
-                <input className='fileUploade' accept="image/*" type='file' onChange={props.handleImageAsFile}/>
-            </Form.Group> */}
-
             <Form.Group controlId="exampleForm.ControlTextarea6">
                 <Form.Label>Facbook side</Form.Label>
                 <Form.Control as="textarea" rows="1" value={props.facebook} onChange={(event) => props.onFacebookPageChange(event.target.value)}/>
             </Form.Group>
 
             <label className="form-label">Last opp bilder</label>
-            <ImageUploade setBigImageAsUrl={props.setBigImageAsUrl} bigImageAsUrl={props.bigImageAsUrl} setSmallImageAsUrl={props.setSmallImageAsUrl} smallImageAsUrl={props.smallImageAsUrl} spotName={props.name} />
+            <ImageUploade images={props.images} setImages={props.setImages} spotName={props.name} />
 
-            {props.smallImageAsUrl.length > 0 && <label className="form-label">Velg hovedbilde</label>}
-            <ImageSelector images={props.smallImageAsUrl} mainImage={props.mainImage} setMainImage={props.setMainImage} onDeleteImage={props.onDeleteImage}/>
+            {props.images.length > 0 && <label className="form-label">Velg hovedbilde</label>}
+            <ImageSelector images={props.images} mainImage={props.mainImage} setMainImage={props.setMainImage} onDeleteImage={props.onDeleteImage}/>
 
             <Button variant="primary" type='submit' className="saveSpotButton" onClick={props.onSubmit} >
                 {props.isEdit ? "Lagre spot" : "Legg til spot"}

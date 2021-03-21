@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import AddSpotForm from '../components/addSpotForm';
 import Header from '../components/header';
 import Map from '../components/map';
-import * as dbService from '../db-service';
+import {getSpot, addSpot, deleteImage, getImage, getUser, editSpot, addImage, getImages, updateMainImage} from '../api-service'
 import '../styles/addSpot.css';
 import '../styles/spot.css';
 import { getAddress } from '../utils';
@@ -20,22 +20,15 @@ function AddSpot() {
     const [aboutSpot, setAboutSpot] = useState("")
     const [approachSpot, setApproachSpot] = useState("")
     const [facbookPageSpot, setFacebookPageSpot] = useState("")
-    const [timeStamp, setTimeStamp] = useState(new Date())
-    const [views, setViews] = useState(0);
-    const [rating, setRating] = useState(0);
-    const [ratings, setRatings] = useState([]);
+    const [spotId, setSpotId] = useState(0);
+    const [spot, setSpot] = useState(null)
+    const [images, setImages] = useState([])
+    const [newImages, setNewImages] = useState([]);
 
     const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
 
-    const [bigImageAsUrl, setBigImageAsUrl] = useState([]);
-    const [smallImageAsUrl, setSmallImageAsUrl] = useState([]);
-    const [loadedImages, setLoadedImages] = useState([]);
-    const [loadedSmallImages, setLoadedSmallImages] = useState([]);
-    const [mainImage, setMainImage] = useState(0);
-
-    const [createdBy, setCreatedBy] = useState();
-    const [editList, setEditList] = useState([]);
+    const [mainImage, setMainImage] = useState(null);
 
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
@@ -50,28 +43,21 @@ function AddSpot() {
         const fetchSpot = async () => {
             const spotName = queryString.parse(window.location.search).spotName
             const edit = queryString.parse(window.location.search).edit
-            user && !edit && setCreatedBy(user.displayName)
             if(edit) {
                 setIsEdit(true)
-                const spot = await dbService.getSpot(spotName);
-                setLoadedImages(spot.images);
-                setLoadedSmallImages(spot.smallImages);
+                const spot = await getSpot(spotName);
+                const images = await getImages(spot.id)
+                setSpot(spot);
+                setSpotId(spot.id)
                 setSpotName(spot.name);
                 setAboutSpot(spot.about);
                 setApproachSpot(spot.approach);
                 setFacebookPageSpot(spot.facebook)
-                setLatLng(spot.latLng)
-                setTimeStamp(spot.timeStamp)
-                setViews(spot.views)
-                const address = await getAddress(spot.latLng.lat, spot.latLng.lng)
+                setLatLng({lat: spot.lat, lng: spot.lng})
+                const address = await getAddress(spot.lat, spot.lng)
                 setAddress(address);
-                setBigImageAsUrl(spot.images ? spot.images : [])
-                setSmallImageAsUrl(spot.smallImages ? spot.smallImages : [])
-                setMainImage(spot.mainImage ? spot.mainImage : 0);
-                setRating(spot.rating)
-                setRatings(spot.ratings ? spot.ratings : [])
-                setCreatedBy(spot.createdBy ? spot.createdBy : 'Windsurf Norge')
-                setEditList(spot.editList ? spot.editList : [])
+                setImages(images)
+                setMainImage(spot.main_image);
             }
             setIsLoading(false)
         }
@@ -98,30 +84,27 @@ function AddSpot() {
         setAddress(address)
       }
 
-    const onDeleteImage = async (imageIndex) => {        
+    const onDeleteImage = async (imageId) => {        
         try{
-            const bigImageUrl = bigImageAsUrl[imageIndex]
-            const smallImageUrl = smallImageAsUrl[imageIndex]
-            await storage.refFromURL(bigImageUrl).delete()
-            await storage.refFromURL(smallImageUrl).delete()
-            const bigImages = bigImageAsUrl.filter(image => image !== bigImageUrl)
-            const smallImages = smallImageAsUrl.filter(image => image !== smallImageUrl)
-            let mainImageLocal = mainImage
-            setBigImageAsUrl(bigImages)
-            setSmallImageAsUrl(smallImages)
-            if(mainImage === imageIndex) {
-                setMainImage(0)
-                mainImageLocal = 0
+            const image = await getImage(imageId)
+            storage.refFromURL(image.big_image).delete()
+            storage.refFromURL(image.small_image).delete()
+
+            const newImages = images.filter(oldImage => oldImage.id !== image.id)
+            
+            if(spot.main_image === imageId){
+                updateMainImage(null, spot.id)
             }
-            dbService.updateImages(spotName, bigImages, smallImages, mainImageLocal)
-            dbService.deleteImageFromUserUploade(bigImageUrl, smallImageUrl)
+
+            deleteImage(imageId)
+            setImages(newImages)
         }
         catch(error){
             console.error("Could not delete image", error)
         }
     }
 
-    const checkValid = () => {
+        const checkValid = () => {
         if (spotName === '' || latLng === mapCenter) {
             window.alert('Legg til navn og dra markøren til spottents posisjon');
             return false
@@ -129,35 +112,41 @@ function AddSpot() {
         return true
     }
 
-    const onSubmit = () => {
-        const spot = {
+    const addImages = async (spotId, dbUser) => {
+        const newImages = images.filter(image => image.id === undefined)
+        for(const image of newImages) {
+            const newImage = {bigImageUrl: image.big_image, smallImageUrl: image.small_image}
+            await addImage(newImage, spotId, dbUser.id)
+        }
+        if(newImages.length !== 0 && (spot === null || spot.mainImage === undefined)){
+            const images = await getImages(spotId)
+            updateMainImage(images[0].id, spotId)
+        }
+    }
+
+    const onSubmit = async () => {
+        const dbUser = await getUser(user.email);
+        let spot = {
             name: spotName,
             about: aboutSpot,
             approach: approachSpot,
             facebook: facbookPageSpot,
-            latLng: latLng,
-            user: user,
-            timeStamp: timeStamp,
-            views: views,
-            images: bigImageAsUrl,
-            smallImages: smallImageAsUrl,
-            rating: rating,
-            ratings: ratings,
-            mainImage: mainImage,
-            createdBy: createdBy,
-            editList: editList.concat([user.email]),
-            deleted: false,
+            lat: latLng.lat,
+            lng: latLng.lng,
+            current_user_id: dbUser.id,
+            main_image: mainImage
         }
         if(checkValid()){
-            dbService.addSpot(spot)
             if(isEdit){
-                const bigImagesUploadedByUser = bigImageAsUrl.filter(imageUrl => loadedImages.indexOf(imageUrl) < 0)
-                const smallImageUploadedByUser = smallImageAsUrl.filter(imageUrl => loadedSmallImages.indexOf(imageUrl) < 0)
-                bigImagesUploadedByUser.length > 0 && dbService.addImageUploadedByUser(bigImagesUploadedByUser, smallImageUploadedByUser, user.uid)
+                spot = {...spot, id: spotId}
+                editSpot(spot)
+                addImages(spot.id, dbUser)
             }
             else{
-                dbService.addSpotCreatedByUser(spot.name, user.uid)
-                dbService.addImageUploadedByUser(bigImageAsUrl, smallImageAsUrl, user.uid, true)
+                spot = {...spot, createdBy: dbUser.id}
+                await addSpot(spot)
+                const newSpot = await getSpot(spotName)
+                addImages(newSpot.id, dbUser)
             }
             history.push('/')
         }
@@ -167,7 +156,7 @@ function AddSpot() {
         <div>
             <Header
                 title={isEdit ? "Endre spot" : "Legg til spot"}
-                image={bigImageAsUrl[0]}
+                image={spot && spot.big_image}
             />
             {!isLoading &&
                 <> 
@@ -188,13 +177,13 @@ function AddSpot() {
                                 approach = {approachSpot}
                                 facebook = {facbookPageSpot}
                                 isEdit ={isEdit}
-                                setBigImageAsUrl = {setBigImageAsUrl}
-                                bigImageAsUrl = {bigImageAsUrl}
-                                setSmallImageAsUrl = {setSmallImageAsUrl}
-                                smallImageAsUrl = {smallImageAsUrl}
                                 mainImage = {mainImage}
                                 setMainImage = {setMainImage}
                                 onDeleteImage = {onDeleteImage}
+                                images = {images}
+                                setImages = {setImages}
+                                newImages = {newImages}
+                                setNewImages = {setNewImages}
                             />
                         </div>
                     </div>

@@ -1,10 +1,10 @@
 import React,  {useState} from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {signIn, signInWithGoogle, signInWithFacebook, sendPasswordResetEmail} from '../utils'
+import {signIn, signInWithGoogle, sendPasswordResetEmail} from '../utils'
 import { useHistory } from "react-router-dom";
 import signInWithGoogleButton from '../images/signInWithGoogle.png'
-import continueWithFacebookButton from '../images/continuteWithFacebook.png'
+// import continueWithFacebookButton from '../images/continuteWithFacebook.png'
 import Input from './input'
 import '../styles/logIn.css';
 
@@ -41,15 +41,15 @@ const LogInModal = (props) => {
         } 
     }
 
-    const onSignInWithFacebook = async () => {
-        try{
-            props.onHide();
-            await signInWithFacebook();
-            history.push('/')
-        }catch(error) {
-            console.error(error)
-        } 
-    }
+    // const onSignInWithFacebook = async () => {
+    //     try{
+    //         props.onHide();
+    //         await signInWithFacebook();
+    //         history.push('/')
+    //     }catch(error) {
+    //         console.error(error)
+    //     } 
+    // }
 
     const onRegistrer = () => {
         props.onHide();
@@ -90,7 +90,7 @@ const LogInModal = (props) => {
 
                 <div className='externalLogInContainer'>
                     <img src={signInWithGoogleButton} alt='sign in with google' onClick={onSignInWithGoogle} className='logInImg'/>
-                    <img src={continueWithFacebookButton} alt='continue with facebook' onClick={onSignInWithFacebook} className='logInImg'/>
+                    {/* <img src={continueWithFacebookButton} alt='continue with facebook' onClick={onSignInWithFacebook} className='logInImg'/> */}
                 </div>
                 
             </Form>

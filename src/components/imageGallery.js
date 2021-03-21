@@ -5,12 +5,12 @@ import "react-image-gallery/styles/css/image-gallery.css";
 
 
 
-const SBImageGallery = ({images, smallImages}) => {
+const SBImageGallery = ({images}) => {
     
-    const imageObjects = images.map((image, i) =>{
+    const imageObjects = images.map((image) =>{
         return {
-            original: image,
-            thumbnail: smallImages[i]
+            original: image.big_image,
+            thumbnail: image.small_image
         }
     })
         

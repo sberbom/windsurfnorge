@@ -1,5 +1,6 @@
 import Geocode from "react-geocode";
-import {auth, googleAuthProvider, facebookAuthProvider } from './firebase'
+import {auth, googleAuthProvider } from './firebase'
+import {addUser, getUsers} from './api-service' 
 import { googleKey } from './keys';
 
 
@@ -25,19 +26,32 @@ export const signIn = async (email, password) => {
 
 export const signInWithGoogle = async () => {
     try{
-        await auth.signInWithPopup(googleAuthProvider);
+        const user = await auth.signInWithPopup(googleAuthProvider);
+        const users = await getUsers()
+        const userEmail = user.additionalUserInfo.profile.email
+        let newUser = true;
+        users.forEach(dbUser => {
+            if(dbUser.identifier === userEmail){
+                newUser = false
+            } 
+        })
+        if(newUser){
+            console.log(userEmail)
+            addUser(userEmail)
+        }
     }catch(error) {
         console.error('kunne ikke logg inn med google', error)
     }
 }
 
-export const signInWithFacebook = async () => {
-    try{
-        await auth.signInWithPopup(facebookAuthProvider);
-    }catch(error){
-        console.error('kunne ikke logge inn med facebook', error)
-    }
-}
+// export const signInWithFacebook = async () => {
+//     try{
+//         const user = await auth.signInWithPopup(facebookAuthProvider);
+//         console.log(user)
+//     }catch(error){
+//         console.error('kunne ikke logge inn med facebook', error)
+//     }
+// }
 
 export const signOut = async (props) => {
     try {
@@ -51,6 +65,7 @@ export const registerUser = async (email, password) => {
     try{
         const user = await auth.createUserWithEmailAndPassword(email, password);
         sendEmailVerification(user.user)
+        addUser(email)
         return user;
     }
     catch(error){

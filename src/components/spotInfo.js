@@ -8,14 +8,30 @@ import {updateRating} from '../api-service'
 import '../styles/spotInfo.css'
 import DeleteSpotModal from './deleteSpotModal'
 import {UserContext} from '../providers/userProvider';
+import LogInModal from '../components/logInModal'
+import EmailVerificationModal from '../components/emailVerificationModal'
 
 
 function SpotInfo({spot}) {
 
     const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
+    const [showLogInModal, setShowLogInModal] = useState(false);
+    const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
     const user = useContext(UserContext)
 
     const history = useHistory()
+
+    const onDeleteSpotClick = () => {
+        if(user === null){
+            setShowLogInModal(true);
+        }
+        else if(user && !user.emailVerified){
+            setShowEmailVerificationModal(true);
+        }
+        else {
+            setShowDeleteSpotModal(true);
+        }
+    }
 
     const onEditSpotClick = (spot) => {
         history.push(`/addSpot?spotName=${spot.name}&edit=true`)
@@ -36,7 +52,7 @@ function SpotInfo({spot}) {
                         size="sm"
                     >
                         <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
-                        <Dropdown.Item eventKey="2" size="sm" onClick={() => setShowDeleteSpotModal(true)}>Slett spot</Dropdown.Item>
+                        <Dropdown.Item eventKey="2" size="sm" onClick={() => onDeleteSpotClick()}>Slett spot</Dropdown.Item>
                     </DropdownButton>
                 </div>
                 <p>Vi har ingen beskrivelse av denne spotten. Har du vært her? Legg gjerne inn infomasjon om spotten!</p>
@@ -44,6 +60,8 @@ function SpotInfo({spot}) {
                     <p className="created-by">{`Opprettet av: ${spot.createdBy ? spot.createdBy : "Windsurf Norge"}`}</p>
                 </div>
                 <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
+                <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
+                <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
             </div>
         )
     }
@@ -58,7 +76,7 @@ function SpotInfo({spot}) {
                     size="sm"
                 >
                     <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
-                    <Dropdown.Item eventKey="2" size="sm" onClick={() => setShowDeleteSpotModal(true)}>Slett spot</Dropdown.Item>
+                    <Dropdown.Item eventKey="2" size="sm" onClick={() => onDeleteSpotClick()}>Slett spot</Dropdown.Item>
                 </DropdownButton>
             </div>
             {spot.about && <p className="pre-line">{spot.about}</p>}
@@ -87,6 +105,8 @@ function SpotInfo({spot}) {
                 <p className="created-by">{`Opprettet av: ${spot.createdBy ? spot.createdBy : "Windsurf Norge"}`}</p>
             </div>
             <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
+            <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
+            <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
         </div>
     )
 }

@@ -110,7 +110,7 @@ const ImageUploade = ({ spotName, setImages, images}) =>  {
                     <p>Dra og slipp bilder her, eller klikk for å laste opp bilder</p>
                 }
             </div>
-            {isUploading && <img src={sync} alt="sync" />}
+            {isUploading && <img src={sync} alt="sync" className="rotate" />}
             {isUploadeCompleted && <img src={checked} alt="checked" />}
             {isError && <img src={close} alt="close" />}
         </div>

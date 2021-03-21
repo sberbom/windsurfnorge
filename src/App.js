@@ -16,10 +16,11 @@ import TermsAndConditions from './pages/termsAndConditions';
 import Policy from './pages/policy';
 import CookieInfo from './components/cookieInfo';
 import NotFound from './pages/notFound'
+import {analytics} from './firebase'
 
 
 function App() {
-
+  analytics.logEvent("Loaded page")
   return (
     <div>
       <UserProvider>

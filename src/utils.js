@@ -71,8 +71,9 @@ export const registerUser = async (email, password) => {
     catch(error){
         if (error.code === 'auth/weak-password') {
             alert('The password is too weak.');      
-        console.error("Error creating user", error) 
+            console.error("Error creating user", error) 
         }
+        alert(error.message)
     }
 }
 

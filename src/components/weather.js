@@ -24,7 +24,7 @@ const Weather = ({lat, lng}) => {
 
     const getFilteredWeater = (weather) => {
         const date = new Date(weather.properties.timeseries[0].time.slice(0,-1))
-        date.setHours(13)
+        date.setUTCHours(12)
         date.setDate(date.getDate()+1)
         const days = [weather.properties.timeseries[0]];
         weather.properties.timeseries.forEach(element => {

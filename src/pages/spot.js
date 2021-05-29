@@ -49,7 +49,7 @@ function Spot() {
                             <Map spot={spot}/>
                         </div>
                         <div className="spot-spotInfo-container">
-                            <SpotInfo spot={spot}/>
+                            <SpotInfo spot={spot} />
                         </div>
                     </div>
                     <Weather lat={spot.lat} lng={ spot.lng}/>

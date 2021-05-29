@@ -6,7 +6,7 @@ import ReAuthenticateModal from './reAuthenticateModal';
 import Input from './input'
 import '../styles/myinfo.css'
 
-const MyInfo = ({user}) => {
+const MyInfo = ({user, dbUser}) => {
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -21,11 +21,11 @@ const MyInfo = ({user}) => {
     const history = useHistory();
 
     useEffect(() => {
-        if(user) {
-            user.displayName && setUsername(user.displayName)
+        if(user && dbUser) {
+            dbUser.displayname && setUsername(dbUser.displayname)
             setEmail(user.email)
         }  
-    }, [user])
+    }, [user, dbUser])
 
     const onSubmit = () => {
         if(user.email !== email || newPassword) {
@@ -34,7 +34,7 @@ const MyInfo = ({user}) => {
         }
         try{
             if (user.displayName !== username) {
-                updateUsername(user, username)
+                updateUsername(user, dbUser.id, username)
             }
             history.push("/")
         }

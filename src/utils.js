@@ -29,6 +29,7 @@ export const signInWithGoogle = async () => {
         const user = await auth.signInWithPopup(googleAuthProvider);
         const users = await getUsers()
         const userEmail = user.additionalUserInfo.profile.email
+        const displayName = user.additionalUserInfo.profile.name
         let newUser = true;
         users.forEach(dbUser => {
             if(dbUser.identifier === userEmail){
@@ -36,8 +37,7 @@ export const signInWithGoogle = async () => {
             } 
         })
         if(newUser){
-            console.log(userEmail)
-            addUser(userEmail)
+            await addUser(displayName, userEmail)
         }
     }catch(error) {
         console.error('kunne ikke logg inn med google', error)
@@ -65,7 +65,7 @@ export const registerUser = async (email, password) => {
     try{
         const user = await auth.createUserWithEmailAndPassword(email, password);
         sendEmailVerification(user.user)
-        addUser(email)
+        await addUser(email)
         return user;
     }
     catch(error){
@@ -77,11 +77,12 @@ export const registerUser = async (email, password) => {
     }
 }
 
-export const updateUsername = async (user, username) => {
+export const updateUsername = async (user, userId, username) => {
     try{
-        await user.updateProfile({
+        user.updateProfile({
             displayName: username
         })
+        
     }
     catch(error){
         console.error("Could not update username", error)

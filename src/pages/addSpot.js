@@ -143,7 +143,7 @@ function AddSpot() {
                 addImages(spot.id, dbUser)
             }
             else{
-                spot = {...spot, createdBy: dbUser.id}
+                spot = {...spot, createdby: dbUser.id}
                 await addSpot(spot)
                 const newSpot = await getSpot(spotName)
                 addImages(newSpot.id, dbUser)

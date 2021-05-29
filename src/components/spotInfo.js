@@ -57,7 +57,7 @@ function SpotInfo({spot}) {
                 </div>
                 <p>Vi har ingen beskrivelse av denne spotten. Har du vært her? Legg gjerne inn infomasjon om spotten!</p>
                 <div className="created-by-container">
-                    <p className="created-by">{`Opprettet av: ${spot.createdBy ? spot.createdBy : "Windsurf Norge"}`}</p>
+                    <p className="created-by">{`Opprettet av: ${spot.createdby !== null ? spot.displayname : "Windsurf Norge"}`}</p>
                 </div>
                 <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
                 <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
@@ -102,7 +102,7 @@ function SpotInfo({spot}) {
                 />
             </div>
             <div className="created-by-container">
-                <p className="created-by">{`Opprettet av: ${spot.createdBy ? spot.createdBy : "Windsurf Norge"}`}</p>
+                <p className="created-by">{`Opprettet av: ${spot.createdby ? spot.displayname: "Windsurf Norge"}`}</p>
             </div>
             <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
             <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>

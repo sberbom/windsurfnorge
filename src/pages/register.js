@@ -20,7 +20,7 @@ const Register = () => {
     return(
         <div>
             <Header
-                title="Registerer ny bruker"
+                title="Registrer ny bruker"
             />
             <RegisterInfo />
         </div>

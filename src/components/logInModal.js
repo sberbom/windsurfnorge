@@ -31,15 +31,16 @@ const LogInModal = (props) => {
         } 
     }
 
-    const onSignInWithGoogle = async () => {
-        try{
-            props.onHide();
-            await signInWithGoogle();
-            history.push('/')
-        }catch(error) {
-            console.error(error)
-        } 
-    }
+    //const onSignInWithGoogle = async () => {
+    //   try{
+    //       props.onHide();
+    //       const res = await signInWithGoogle();
+    //       console.log(res);
+    //       // history.push('/')
+    //   }catch(error) {
+    //       console.error(error)
+    //   } 
+    //}
 
     // const onSignInWithFacebook = async () => {
     //     try{
@@ -88,10 +89,10 @@ const LogInModal = (props) => {
                     </>
                 }
 
-                <div className='externalLogInContainer'>
+                {/*<div className='externalLogInContainer'>
                     <img src={signInWithGoogleButton} alt='sign in with google' onClick={onSignInWithGoogle} className='logInImg'/>
-                    {/* <img src={continueWithFacebookButton} alt='continue with facebook' onClick={onSignInWithFacebook} className='logInImg'/> */}
-                </div>
+                    <img src={continueWithFacebookButton} alt='continue with facebook' onClick={onSignInWithFacebook} className='logInImg'/>
+                </div>*/}
                 
             </Form>
         </Modal.Body>

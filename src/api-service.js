@@ -1,7 +1,7 @@
 import {auth } from './firebase'
 
-// const host = 'http://localhost:3001';
-const host = 'https://windsurfnorge-server.herokuapp.com'
+const host = 'http://localhost:3001';
+//const host = 'https://windsurfnorge-server.herokuapp.com'
 
 export const getAllSpots = async () => {
     const spotResponse = await fetch(`${host}/spots`, {
@@ -105,7 +105,7 @@ export const addSpot = async (spot) => {
             'facebook': spot.facebook,
             'lat': spot.lat,
             'lng': spot.lng,
-            'created_by': spot.user,
+            'created_by': spot.createdby,
             'main_image': spot.main_image,
             'token': token,
         })
@@ -175,18 +175,31 @@ export const getUser = async (userEmail) => {
     return user[0]
 }
 
-export const addUser = async (userEmail) => {
-    const token = await auth.currentUser.getIdToken(true)
+export const addUser = async (displayName, userEmail) => {
     const response = await fetch(`${host}/addUser`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             'user_email': userEmail,
-            'token': token
+            'displayName': displayName
         })
     })
     const user = await response.json()
     return user[0]
+}
+
+export const updateUser = async (user) => {
+    const token = await auth.currentUser.getIdToken(true)
+    const response = await fetch(`${host}/updateUser`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'user': user,
+            'token': token,
+        })
+    })
+    //const user = await response.json()
+    //return user[0]
 }
 
 export const getUsers = async () => {

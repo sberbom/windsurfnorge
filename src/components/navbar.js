@@ -4,12 +4,13 @@ import { Link, withRouter } from 'react-router-dom'
 import LogInModal from './logInModal'
 import '../styles/navbar.css'
 import {UserContext} from '../providers/userProvider';
-
+import {getUser} from '../api-service'
 
 const SBNavbar = () =>  {
     const [navBackground, setNavBackground] = useState({backgroundColor: "rgba(0, 0, 0, 0)"})
     const [showLogInModal, setShowLogInModal] = useState(false);
     const user = useContext(UserContext)
+    const [dbUser, setDbUser] = useState(null)
 
     const [expanded, setExpanded] = useState(false);
 
@@ -23,6 +24,17 @@ const SBNavbar = () =>  {
         }
         getNavBackground();
     }, [expanded])
+
+    useEffect(() => {
+        const getDbUser = async (email) => {
+            const user = await getUser(email);
+            setDbUser(user);
+        }
+        if(user) {
+            getDbUser(user.email)
+        }
+    }, [user])
+
 
     const onNavbarToggle = () => {
         if(window.scrollY < 100 && !expanded){
@@ -40,7 +52,7 @@ const SBNavbar = () =>  {
         }
         setExpanded(false)
     }
-    
+
     return(
         <div>
             <Navbar expand="lg" className="sbnavbar" style={navBackground} expanded={expanded}>
@@ -57,7 +69,7 @@ const SBNavbar = () =>  {
                 <Navbar.Collapse className='justify-content-end'>
                     <Nav>
                         {user ? 
-                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user.displayName? user.displayName : user.email}</Link>
+                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{dbUser ? dbUser.displayname : 'Min side'}</Link>
                             :     
                             <div onClick={() => setShowLogInModal(true)} className="nav-link link-text" style={{color: "white"}}>Logg inn</div>
                     }

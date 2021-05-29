@@ -7,6 +7,7 @@ import '../styles/myinfo.css'
 const RegisterInfo = () => {
 
     const [email, setEmail] = useState("");
+    const [displayName, setDisplayName] = useState("");
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
 
@@ -18,12 +19,13 @@ const RegisterInfo = () => {
             alert("Passwords are not mathcing")
         }
 
-        await registerUser(email, password1)
+        await registerUser(displayName, email, password1)
 
     }
 
     return(
         <div className="myInfo-container">
+            <Input title={"Brukernavn:"} value={displayName} onChange={setDisplayName} />
             <Input title={"Email:"} value={email} onChange={setEmail} />
             <Input title={"Passord:"} value={password1} onChange={setPassword1} type={"password"} />
             <Input title={"Gjenta passord:"} value={password2} onChange={setPassword2} type={"password"}/>

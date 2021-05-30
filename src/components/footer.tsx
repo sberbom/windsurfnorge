@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/footer.css'
 
-function Footer(props) {
+function Footer(): JSX.Element {
     return(
         <div className="footer-container">
             <div className="footer-left">

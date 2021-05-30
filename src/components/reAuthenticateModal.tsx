@@ -2,8 +2,15 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import Input from './input'
 import '../styles/logIn.css';
+import {IModal} from '../types/types'
 
-const ReAuthenticateModal = (props) => {
+interface IProps extends IModal {
+    password: string;
+    onPasswordChange: React.Dispatch<React.SetStateAction<string>>;
+    onSubmit: () => void;
+}
+
+const ReAuthenticateModal = (props:IProps) => {
     
     return(
         <Modal

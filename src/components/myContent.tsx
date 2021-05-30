@@ -3,11 +3,16 @@ import ImageGallery from './imageGallery'
 import '../styles/myContent.css'
 import {getUser, getUserSpots, getUserImages} from '../api-service'
 import SpotCreatedByUserEntry from './spotCreatedByUserEntry';
+import {ISpot, IImage} from '../types/types'
 
-const MyContent = ({user}) => {
+interface IProps {
+    user: any;
+}
 
-    const [spotsCreatedByUser, setSpotsCratedByUser] = useState([]);
-    const [userImages, setUserImages] = useState([]);
+const MyContent = ({user}: IProps) => {
+
+    const [spotsCreatedByUser, setSpotsCratedByUser] = useState<ISpot[]>([]);
+    const [userImages, setUserImages] = useState<IImage[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {

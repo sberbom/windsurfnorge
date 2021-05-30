@@ -8,11 +8,16 @@ import {updateRating} from '../api-service'
 import '../styles/spotInfo.css'
 import DeleteSpotModal from './deleteSpotModal'
 import {UserContext} from '../providers/userProvider';
-import LogInModal from '../components/logInModal'
-import EmailVerificationModal from '../components/emailVerificationModal'
+import LogInModal from './logInModal'
+import EmailVerificationModal from './emailVerificationModal'
+import {ISpot} from '../types/types';
+
+interface IProps {
+    spot: ISpot;
+}
 
 
-function SpotInfo({spot}) {
+function SpotInfo({spot}: IProps) {
 
     const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -33,11 +38,11 @@ function SpotInfo({spot}) {
         }
     }
 
-    const onEditSpotClick = (spot) => {
+    const onEditSpotClick = (spot: ISpot) => {
         history.push(`/addSpot?spotName=${spot.name}&edit=true`)
     }
 
-    const onUpdateRating = (rating) => {
+    const onUpdateRating = (rating: number) => {
         updateRating(spot.id, rating, user.email);
     }
 
@@ -46,12 +51,15 @@ function SpotInfo({spot}) {
             <div className="spotInfo-container">
                 <div className="options-container">
                     <h2>Beskrivelse</h2>
+                    {/*@ts-ignore FIX*/}
                     <DropdownButton
                         variant={'secondary'}
                         title={'Alternativer'}
                         size="sm"
                     >
+                    {/*@ts-ignore FIX*/}
                         <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
+                    {/*@ts-ignore FIX*/}
                         <Dropdown.Item eventKey="2" size="sm" onClick={() => onDeleteSpotClick()}>Slett spot</Dropdown.Item>
                     </DropdownButton>
                 </div>
@@ -59,7 +67,9 @@ function SpotInfo({spot}) {
                 <div className="created-by-container">
                     <p className="created-by">{`Opprettet av: ${spot.createdby !== null ? spot.displayname : "Windsurf Norge"}`}</p>
                 </div>
+                    {/*@ts-ignore FIX*/}
                 <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
+                    {/*@ts-ignore FIX*/}
                 <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
                 <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
             </div>
@@ -70,12 +80,15 @@ function SpotInfo({spot}) {
         <div className="spotInfo-container overflow">
             <div className="options-container">
                 {spot.about && <h2>Beskrivelse</h2>}
+                    {/*@ts-ignore FIX*/}
                 <DropdownButton
                     variant={'secondary'}
                     title={'Alternativer'}
                     size="sm"
                 >
+                    {/*@ts-ignore FIX*/}
                     <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
+                    {/*@ts-ignore FIX*/}
                     <Dropdown.Item eventKey="2" size="sm" onClick={() => onDeleteSpotClick()}>Slett spot</Dropdown.Item>
                 </DropdownButton>
             </div>
@@ -104,7 +117,9 @@ function SpotInfo({spot}) {
             <div className="created-by-container">
                 <p className="created-by">{`Opprettet av: ${spot.createdby ? spot.displayname: "Windsurf Norge"}`}</p>
             </div>
+                    {/*@ts-ignore FIX*/}
             <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
+                    {/*@ts-ignore FIX*/}
             <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
             <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
         </div>

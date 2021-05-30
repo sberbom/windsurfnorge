@@ -1,7 +1,13 @@
 import React from 'react';
 
+interface IProps {
+    title: string;
+    value: string;
+    onChange: (event: any) => void;
+    type?: string;
+}
 
-const Input = ({title, value, onChange, type}) =>  {
+const Input = ({title, value, onChange, type}: IProps) =>  {
  
     
     return(

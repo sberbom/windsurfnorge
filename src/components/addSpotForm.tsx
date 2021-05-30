@@ -4,32 +4,54 @@ import ImageUploade from './imageUploade'
 import '../styles/addSpotForm.css';
 import ImageSelector from './imageSelector';
 
-function AddSpotForm(props) {
+// TODO proper function types
+
+interface props {
+    name: string;
+    about: string;
+    approach: string;
+    address: string;
+    facebook: string;
+    setImages: any;
+    mainImage: any;
+    images: [];
+    isEdit: boolean;
+    setImage: any;
+    setMainImage: any;
+    onDeleteImage: any;
+    onSubmit: any;
+    onNameChange: (event: any)=>void;
+    onAboutChange: (event: any) => void;
+    onApproachChange: (event: any) => void;
+    onFacebookPageChange: (event: any) => void;
+}
+
+function AddSpotForm(props:props) {
     return (
         <div className="spotInfo-container">
             <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Navn</Form.Label>
-                <Form.Control as="textarea" rows="1" value={props.name} onChange={(event) => props.onNameChange(event.target.value)}/>
+                <Form.Control as="textarea" rows={1} value={props.name} onChange={(event) => props.onNameChange(event.target.value)}/>
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlTextarea2">
                 <Form.Label>Beskrivelse</Form.Label>
-                <Form.Control as="textarea" rows="4" value={props.about} onChange={(event) => props.onAboutChange(event.target.value)} />
+                <Form.Control as="textarea" rows={4} value={props.about} onChange={(event) => props.onAboutChange(event.target.value)} />
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlTextarea3">
                 <Form.Label>Annkomst</Form.Label>
-                <Form.Control as="textarea" rows="3" value={props.approach} onChange={(event) => props.onApproachChange(event.target.value)} />
+                <Form.Control as="textarea" rows={3} value={props.approach} onChange={(event) => props.onApproachChange(event.target.value)} />
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlTextarea4">
                 <Form.Label>Addresse</Form.Label>
-                <Form.Control as="textarea" rows="1" value={props.address} placeholder={props.address} readOnly/>
+                <Form.Control as="textarea" rows={1} value={props.address} placeholder={props.address} readOnly/>
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlTextarea6">
                 <Form.Label>Facbook side</Form.Label>
-                <Form.Control as="textarea" rows="1" value={props.facebook} onChange={(event) => props.onFacebookPageChange(event.target.value)}/>
+                <Form.Control as="textarea" rows={1} value={props.facebook} onChange={(event) => props.onFacebookPageChange(event.target.value)}/>
             </Form.Group>
 
             <label className="form-label">Last opp bilder</label>

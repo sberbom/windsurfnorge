@@ -6,7 +6,16 @@ import Rating from 'react-rating'
 import star from '../images/star.png'
 import star_empty from '../images/star_empty.png'
 
-function SBCard({title, text, button, image, rating}) {
+interface props {
+    title: string;
+    text: string;
+    button: string;
+    image: string;
+    rating: number;
+    onDragStart?: (e: Event) => void;
+}
+
+function SBCard({title, text, button, image, rating}:props) {
     return(
         <div className="card-container">
             <Card style={{ width: '18rem' }}>

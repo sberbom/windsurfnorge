@@ -61,11 +61,11 @@ export const signOut = async (props) => {
     }
 }
 
-export const registerUser = async (email, password) => {
+export const registerUser = async (displayName, email, password) => {
     try{
         const user = await auth.createUserWithEmailAndPassword(email, password);
         sendEmailVerification(user.user)
-        await addUser(email)
+        await addUser(displayName, email)
         return user;
     }
     catch(error){

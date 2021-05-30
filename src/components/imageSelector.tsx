@@ -1,15 +1,23 @@
 import React, {useState} from 'react';
 import '../styles/imageSelector.css'
 import close from '../images/close.png'
-import ConfirmDeleteModal from './confirmDeleteModal'
+import ConfirmDeleteModal from './confirmDeleteModal';
+import {IImage} from '../types/types'
 
-const ImageSelector = ({images, mainImage, setMainImage, onDeleteImage}) => {
+interface IProps {
+    images: IImage[];
+    mainImage: number;
+    setMainImage: (image: number) => void;
+    onDeleteImage: (iamge: number) => void;
+}
 
-    const [imageToDelete, setImageToDelete] = useState();
+const ImageSelector = ({images, mainImage, setMainImage, onDeleteImage}: IProps) => {
+
+    const [imageToDelete, setImageToDelete] = useState("");
     const [imageToDeleteId, setImageToDeleteId] = useState(0);
     const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false)
 
-    const onShowDeleteModal = (image) => {
+    const onShowDeleteModal = (image: IImage) => {
         setImageToDelete(image.big_image)
         setImageToDeleteId(image.id)
         setShowConfirmDeleteModal(true)

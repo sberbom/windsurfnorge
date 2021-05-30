@@ -1,17 +1,21 @@
 import React,  {useState} from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {signIn, signInWithGoogle, sendPasswordResetEmail} from '../utils'
+import {signIn, 
+    //signInWithGoogle, 
+    sendPasswordResetEmail} from '../utils'
 import { useHistory } from "react-router-dom";
-import signInWithGoogleButton from '../images/signInWithGoogle.png'
+// import signInWithGoogleButton from '../images/signInWithGoogle.png'
 // import continueWithFacebookButton from '../images/continuteWithFacebook.png'
 import Input from './input'
 import '../styles/logIn.css';
+import {IModal} from '../types/types'
 
-const LogInModal = (props) => {
+
+const LogInModal = (props: IModal) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
-    const [errorMessage, setErrorMessage] = useState()
+    const [errorMessage, setErrorMessage] = useState("")
     const [recoveryEmail, setRecoveryEmail] = useState("")
     const [isForgottonPassword, setIsForgottonPassword] = useState(false)
 
@@ -104,5 +108,5 @@ const LogInModal = (props) => {
         </Modal>
     )
 }
-
+//@ts-ignore TODO: Fix
 export default withRouter(LogInModal);

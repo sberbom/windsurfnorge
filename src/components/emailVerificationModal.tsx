@@ -1,16 +1,21 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
-import {signOut} from '../utils'
+import {sendEmailVerification} from '../utils'
 import { useHistory } from "react-router-dom";
+import {IModal} from '../types/types'
 
+interface IProps extends IModal {
+    user: any;
+}
 
-const SignOutModal = (props) => {
+const EmailVerificationModal = (props: IProps) => {
+
     const history = useHistory();
 
-    const onSignOut = () => {
-        signOut();
-        props.onHide();
-        history.push('/');
+    const onSendEmailVerification = () => {
+        sendEmailVerification(props.user);
+        props.onHide()
+        history.push("/")
     }
 
     return(
@@ -22,20 +27,20 @@ const SignOutModal = (props) => {
         >
         <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-            Logg ut
+            Email bekreftelse
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <p>
-            Vil du logge ut?
+            Vennligst bekreft din email
             </p>
         </Modal.Body>
         <Modal.Footer>
-            <Button onClick={onSignOut}>Logg ut</Button>
+            <Button onClick={onSendEmailVerification}>Send ny email bekreftelse</Button>
             <Button onClick={props.onHide}>Avbryt</Button>
         </Modal.Footer>
         </Modal>
     )
 }
 
-export default SignOutModal;
+export default EmailVerificationModal;

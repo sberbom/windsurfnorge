@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import {restoreSpot} from '../api-service'
 import '../styles/spotCreatedByUserEntry.css'
+import {ISpot} from '../types/types';
 
-const SpotCreatedByUserEntry = ({spot}) => {
+interface IProps {
+    spot: ISpot;
+}
+
+const SpotCreatedByUserEntry = ({spot}: IProps) => {
 
     const [currentSpot, setCurrentSpot] = useState(spot) 
 
-    const onRestoreSpot = (id) => {
+    const onRestoreSpot = (id: number) => {
         restoreSpot(id);
         setCurrentSpot({...currentSpot, deleted: false})
     }

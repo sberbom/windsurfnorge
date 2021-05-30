@@ -5,8 +5,14 @@ import { useHistory } from "react-router-dom";
 import ReAuthenticateModal from './reAuthenticateModal';
 import Input from './input'
 import '../styles/myinfo.css'
+import {IUser} from '../types/types';
 
-const MyInfo = ({user, dbUser}) => {
+interface IProps {
+    user: any;
+    dbUser: IUser;
+}
+
+const MyInfo = ({user, dbUser}: IProps) => {
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -27,7 +33,7 @@ const MyInfo = ({user, dbUser}) => {
         }  
     }, [user, dbUser])
 
-    const onSubmit = () => {
+    const onSubmit = (): void => {
         if(user.email !== email || newPassword) {
             setShowPasswordModal(true);
             return;

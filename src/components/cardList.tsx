@@ -1,8 +1,13 @@
 import React from 'react';
 import '../styles/cardList.css';
 import Card from './card';
+import {Spot} from '../types/types';
 
-function CardList({spots}) {
+interface props {
+    spots: Spot[];
+}
+
+function CardList({spots}:props) {
     return(
         <div className="cardList-container">
             <div className="cardList">

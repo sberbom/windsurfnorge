@@ -2,10 +2,13 @@ import React from 'react';
 import ImageGallery from 'react-image-gallery';
 import '../styles/imageGallery.css'
 import "react-image-gallery/styles/css/image-gallery.css";
+import {IImage} from '../types/types'
 
+interface IProps {
+    images: IImage[]
+}
 
-
-const SBImageGallery = ({images}) => {
+const SBImageGallery = ({images}:IProps) => {
     
     const imageObjects = images.map((image) =>{
         return {

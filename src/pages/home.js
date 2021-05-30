@@ -25,8 +25,8 @@ function Home() {
         <div>
             <Header
                 title="Windsurf Norge"
-                button="Se spots"
-                link="/allSpots"
+                buttonText="Se spots"
+                buttonLink="/allSpots"
             />
             <Title title="Populære steder å windsurfe" />
             <CardCarousel

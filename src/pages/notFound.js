@@ -10,8 +10,8 @@ const NotFound = () => {
         <div>
             <Header
                 title={"Siden finnes ikke"}
-                button="Hjem"
-                link="/home"
+                buttonText="Hjem"
+                buttonLink="/home"
             />
             <div className="notFound-filler">
 

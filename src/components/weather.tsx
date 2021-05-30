@@ -3,15 +3,18 @@ import WeatherCard from './weatherCard'
 import '../styles/weather.css'
 import AliceCarousel from 'react-alice-carousel';
 
+interface IProps {
+    lat: number;
+    lng: number;
+}
 
+const Weather = ({lat, lng}: IProps) => {
 
-const Weather = ({lat, lng}) => {
-
-    const [weather, setWeather] = useState(null)
-    const [filteredWeather, setFilteredWeather] = useState(null)
+    const [weather, setWeather] = useState<any[]>([])
+    const [filteredWeather, setFilteredWeather] = useState<any[]>([])
 
     useEffect(() => {
-        if(weather === null){
+        if(weather.length === 0){
             fetch(`https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lng}`)
             .then(response => response.json())
             .then(data => {
@@ -22,12 +25,12 @@ const Weather = ({lat, lng}) => {
     }, [weather, lat, lng])
 
 
-    const getFilteredWeater = (weather) => {
+    const getFilteredWeater = (weather: any) => {
         const date = new Date(weather.properties.timeseries[0].time.slice(0,-1))
         date.setUTCHours(12)
         date.setDate(date.getDate()+1)
         const days = [weather.properties.timeseries[0]];
-        weather.properties.timeseries.forEach(element => {
+        weather.properties.timeseries.forEach((element:any) => {
             const elementDate = new Date(element.time)
             if(elementDate.toISOString() === date.toISOString()){
                 date.setDate(date.getDate()+1)

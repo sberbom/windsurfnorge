@@ -26,7 +26,7 @@ const SBNavbar = () =>  {
     }, [expanded])
 
     useEffect(() => {
-        const getDbUser = async (email) => {
+        const getDbUser = async (email : string) => {
             const user = await getUser(email);
             setDbUser(user);
         }
@@ -69,7 +69,9 @@ const SBNavbar = () =>  {
                 <Navbar.Collapse className='justify-content-end'>
                     <Nav>
                         {user ? 
-                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{dbUser ? dbUser.displayname : 'Min side'}</Link>
+                            // @ts-ignore: Object is possibly 'null'
+                            // Fix the above problems
+                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{dbUser !== null ? dbUser.displayname : 'Min side'}</Link>
                             :     
                             <div onClick={() => setShowLogInModal(true)} className="nav-link link-text" style={{color: "white"}}>Logg inn</div>
                     }

@@ -1,10 +1,12 @@
 import React, {useState, createContext, useEffect} from 'react';
 import {auth} from '../firebase'; 
 
-export const UserContext = createContext({user: null});
+//TODO: Add proper typechecking
 
-const UserProvider = (props) => {
-    const [user, setUser] = useState(null);
+export const UserContext = createContext<any>(null);
+
+const UserProvider = ({children}:any) => {
+    const [user, setUser] = useState<any>();
 
     useEffect(() => {
         auth.onAuthStateChanged(async userAuth => {setUser(userAuth)})
@@ -12,7 +14,7 @@ const UserProvider = (props) => {
 
     return(
         <UserContext.Provider value={user}>
-            {props.children}
+            {children}
         </UserContext.Provider>
     )
 }

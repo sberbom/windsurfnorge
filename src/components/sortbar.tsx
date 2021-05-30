@@ -2,7 +2,12 @@ import React from 'react';
 import {DropdownButton, InputGroup, FormControl, Button, Dropdown} from 'react-bootstrap'
 import '../styles/sortbar.css'
 
-const Sortbar = ({onSearchWordChange, onSortbyChange}) => {
+interface IProps {
+    onSearchWordChange: (event: any) => any;
+    onSortbyChange: (sort: string) => any;
+}
+
+const Sortbar = ({onSearchWordChange, onSortbyChange}: IProps) => {
 
 
     return(

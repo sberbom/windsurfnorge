@@ -1,14 +1,28 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
-import '../styles/confirmDeleteModal.css'
+import {deleteSpot} from '../api-service'
+import { useHistory } from "react-router-dom";
+import '../styles/confirmDeleteModal.css';
+import {ISpot} from '../types/types';
 
+interface props {
+    spot: ISpot;
+    onHide: () => void;
+}
 
-const confirmDeleteModal = (props) => {
+const DeleteSpotModal = (props: props) => {
+
+    const history = useHistory()
+
+    const onDeleteSpot = (id: number) => {
+        deleteSpot(id); 
+        props.onHide()
+        history.push("/")
+    }
 
     return(
         <Modal
-            show={props.show} 
-            onHide={props.onHide}
+            {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -20,16 +34,15 @@ const confirmDeleteModal = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <p>
-                    Vil du slette bildet?
+                    Vil du slette spotten, {props.spot.name}?
                 </p>
-                <img src={props.img} alt="to-delete" className="image-to-delete"/>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.deleteImage}>Slett</Button>
+                <Button onClick={() => onDeleteSpot(props.spot.id)}>Slette</Button>
                 <Button onClick={props.onHide}>Avbryt</Button>
             </Modal.Footer>
         </Modal>
     )
 }
 
-export default confirmDeleteModal;
+export default DeleteSpotModal;

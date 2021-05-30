@@ -4,9 +4,14 @@ import Card from './card'
 import 'react-alice-carousel/lib/alice-carousel.css';
 import '../styles/cardCarousel.css'
 import Skeleton from 'react-loading-skeleton';
+import {Spot} from '../types/types'
+
+interface props {
+    spots: Spot[];
+}
  
-const CardCarousel = ({spots}) => {
-    const handleDragStart = (e) => e.preventDefault();
+const CardCarousel = ({spots}:props) => {
+    const handleDragStart = (e: Event): void => e.preventDefault();
 
     let cards = [];
     

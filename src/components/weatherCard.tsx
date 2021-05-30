@@ -4,7 +4,11 @@ import '../styles/weatherCard.css'
 import '../styles/weather-icons-wind.css'
 import {getWeekDay} from '../utils'
 
-function WeatherCard({weatherData}) {
+interface IProps {
+    weatherData: any;
+}
+
+function WeatherCard({weatherData}: IProps) {
     const temprature = weatherData.data.instant.details.air_temperature
     const windSpeed = weatherData.data.instant.details.wind_speed
     const windDirection = Math.round(weatherData.data.instant.details.wind_from_direction)+180

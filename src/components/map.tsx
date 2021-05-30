@@ -2,16 +2,25 @@ import React, {useEffect} from "react";
 import mapboxgl from 'mapbox-gl';
 import '../styles/map.css';
 import { mapboxAccessToken } from "../keys";
+import {ISpot} from '../types/types';
 
 export const  mapCenter = [8.707806, 61.123456]
 
-const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}) => {
+interface IProps {
+  spots: ISpot[];
+  spot: ISpot;
+  draggable: boolean;
+  onDragEnd: (lngLat: mapboxgl.LngLatLike) => void;
+  markerPos: [number, number];
+}
+
+const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}: IProps) => {
 
   const mapRef = "mapRef"
 
   useEffect(() => {
     mapboxgl.accessToken = mapboxAccessToken;
-    let mapCenter = [8.707806, 61.123456]
+    let mapCenter: mapboxgl.LngLatLike = [8.707806, 61.123456]
     let startZoom = 5;
 
     if(spot) {

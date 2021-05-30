@@ -7,8 +7,14 @@ import imageCompression from 'browser-image-compression';
 import {getRandomInt} from '../utils'
 import {useDropzone} from 'react-dropzone'
 import '../styles/imageUploade.css'
+import {IImagePreUploade} from '../types/types';
 
-const ImageUploade = ({ spotName, setImages, images}) =>  {
+interface IProps {
+    spotName: string;
+    setImages: (images:IImagePreUploade[]) => void;
+    images: IImagePreUploade[];
+}
+const ImageUploade = ({ spotName, setImages, images}: IProps) =>  {
 
     const [isUploading, setIsUploading] = useState(false);
     const [isUploadeCompleted, setIsUploadeCompleted] = useState(false);
@@ -27,7 +33,7 @@ const ImageUploade = ({ spotName, setImages, images}) =>  {
             useWebWorker: true
         }
 
-        const handleFirebaseUploade = async (imageAsFile, bigImageAsFile, smallImageAsFile, bigImageName, smallImageName) => {
+        const handleFirebaseUploade = async (imageAsFile: any, bigImageAsFile: any, smallImageAsFile: any, bigImageName: string[], smallImageName: string[]) => {
             for(let image in imageAsFile) {
                 if(image === '') {
                     console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
@@ -60,7 +66,7 @@ const ImageUploade = ({ spotName, setImages, images}) =>  {
                         setIsUploading(false);
                     } 
 
-                    const newImage = {
+                    const newImage: IImagePreUploade = {
                         big_image: newBigImageUrl,
                         small_image: newSmallImageUrl
                     }

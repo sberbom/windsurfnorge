@@ -129,7 +129,6 @@ function AddSpot() {
     }
 
     const onSubmit = async () => {
-        //@ts-ignore FIX1
         let spot: ISpot | IToDbSpot = {
             name: spotName,
             about: aboutSpot,

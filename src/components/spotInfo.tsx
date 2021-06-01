@@ -45,8 +45,7 @@ function SpotInfo({spot}: IProps) {
     }
 
     const onUpdateRating = (rating: number) => {
-        //@ts-ignore TODO FIX1
-        updateRating(spot.id, rating, user!.email);
+        updateRating(spot.id, rating, user!.email!);
     }
 
     if(!spot.about && !spot.approach && !spot.facebook) {

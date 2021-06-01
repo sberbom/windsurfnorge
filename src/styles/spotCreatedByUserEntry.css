@@ -1,12 +1,21 @@
 .spot-entry-conainer > a{
     font-size: 1.25rem;
+    margin: auto;
 }
 
-.restore {
-    color: #007bff;
+.red {
+    color: red;
 }
 
-.restore:hover{
+.green {
+    color: green;
+}
+
+td {
+    min-width: 130px;
+}
+
+.clickable:hover{
     cursor: pointer;
     text-decoration: underline;
 }

@@ -105,7 +105,7 @@ const MyInfo = () => {
             {errorMessage && <p className='errorMessage'>{errorMessage}</p>}
 
             <Button className="myinfo-button" onClick={onSubmit}>Lagre</Button>
-            <Button className="myinfo-button" onClick={onSignOut}>Logg ut</Button>
+            <Button className="myinfo-button" variant="danger" onClick={onSignOut}>Logg ut</Button>
 
 
             <ReAuthenticateModal show={showPasswordModal} password={password} onHide={() => setShowPasswordModal(false)} onPasswordChange={setPassword} onSubmit={onReAuthenticateSubmit}/>

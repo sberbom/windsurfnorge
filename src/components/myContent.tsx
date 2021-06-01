@@ -6,6 +6,7 @@ import {getUserImages, getUserSpots} from '../api-service'
 
 import ImageGallery from './imageGallery'
 import SpotCreatedByUserEntry from './spotCreatedByUserEntry';
+import { Table } from 'react-bootstrap';
 import {UserContext} from '../providers/userProvider';
 
 const MyContent = () => {
@@ -34,11 +35,21 @@ const MyContent = () => {
     return(
         <div className="my-content-container">
             <div className="my-spots-container">
-                {spotsCreatedByUser.length > 0 && <h2>Spotter jeg har opprettet</h2>}      
-                {spotsCreatedByUser.length > 0 && spotsCreatedByUser.map(spot => <SpotCreatedByUserEntry key={spot.id} spot={spot}/>)}
+                {spotsCreatedByUser.length > 0 && <h2>Mine spotter</h2>}      
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Navn</th>
+                            <th>Aksjon</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {spotsCreatedByUser.length > 0 && spotsCreatedByUser.map(spot => <SpotCreatedByUserEntry key={spot.id} spot={spot}/>)}
+                    </tbody>
+                </Table>
             </div>
             <div className="my-images-conatiner">
-                {userImages.length > 0 && <h2>Bilder jeg har lastet opp</h2>}      
+                {userImages.length > 0 && <h2>Mine bilder</h2>}      
                 {userImages.length > 0 && <ImageGallery images={userImages} />}
             </div>
         </div>

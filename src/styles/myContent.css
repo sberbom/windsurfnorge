@@ -1,6 +1,8 @@
 .my-spots-container{
     text-align: center;
+    margin: auto;
     margin-top: 1.25rem;
+    max-width: 500px;
 }
 
 .my-content-container > * > h2 {
@@ -17,5 +19,6 @@
 
 .my-images-conatiner {
     text-align: center;
+    margin: auto 5vw;
     margin-top: 1.25rem;
 }

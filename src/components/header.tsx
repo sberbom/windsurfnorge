@@ -1,7 +1,9 @@
+import '../styles/header.css'
+
 import React, { useEffect, useState } from 'react';
+
 import {Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import '../styles/header.css'
 import background from '../images/background.jpg'
 
 interface props {
@@ -26,8 +28,7 @@ function Header({title, buttonLink, buttonText, image}:props): JSX.Element {
         <div className='header-container' style={{backgroundImage: backgroundImage}}>
             <div className='header-info'>
                 <h1>{title}</h1>
-                {/**@ts-ignore */}
-                {buttonText && <Link to={buttonLink}><Button>{buttonText}</Button></Link>}
+                {buttonText && <Link to={buttonLink!}><Button>{buttonText}</Button></Link>}
             </div>
             <img src={backgroundImage} alt="header" className="background" />
         </div>

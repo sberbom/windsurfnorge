@@ -6,6 +6,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import LogInModal from './logInModal'
 import {UserContext} from '../providers/userProvider';
+import userIcon from '../images/user.png'
 
 //import {getUser} from '../api-service'
 
@@ -74,7 +75,7 @@ const SBNavbar = () =>  {
                         {user ? 
                             // @ts-ignore: Object is possibly 'null'
                             // Fix the above problems
-                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user !== null ? user.displayName : 'Min side'}</Link>
+                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user.displayName}{<img className="navbarIcon" src={userIcon}/>}</Link>
                             :     
                             <div onClick={() => setShowLogInModal(true)} className="nav-link link-text" style={{color: "white"}}>Logg inn</div>
                     }

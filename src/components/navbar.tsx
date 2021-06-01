@@ -78,6 +78,7 @@ const SBNavbar = () =>  {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            {/**@ts-ignore */}
             <LogInModal show={showLogInModal} onHide={() => setShowLogInModal(false)}/>
         </div>
     )

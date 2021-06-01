@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import ImageUploade from './imageUploade'
 import '../styles/addSpotForm.css';
 import ImageSelector from './imageSelector';
+import { IImage } from '../types/types';
 
 // TODO proper function types
 
@@ -14,9 +15,9 @@ interface props {
     facebook: string;
     setImages: any;
     mainImage: any;
-    images: [];
+    images: IImage[];
     isEdit: boolean;
-    setImage: any;
+    //setImage: any;
     setMainImage: any;
     onDeleteImage: any;
     onSubmit: any;

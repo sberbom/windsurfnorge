@@ -4,14 +4,14 @@ import '../styles/map.css';
 import { mapboxAccessToken } from "../keys";
 import {ISpot} from '../types/types';
 
-export const  mapCenter = [8.707806, 61.123456]
+export const mapCenter: [number, number] = [8.707806, 61.123456]
 
 interface IProps {
-  spots: ISpot[];
-  spot: ISpot;
-  draggable: boolean;
-  onDragEnd: (lngLat: mapboxgl.LngLatLike) => void;
-  markerPos: [number, number];
+  spots?: ISpot[];
+  spot?: ISpot;
+  draggable?: boolean;
+  onDragEnd?: (lngLat: mapboxgl.LngLatLike) => void;
+  markerPos?: [number, number];
 }
 
 const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}: IProps) => {
@@ -20,7 +20,7 @@ const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}: IProps) => {
 
   useEffect(() => {
     mapboxgl.accessToken = mapboxAccessToken;
-    let mapCenter: mapboxgl.LngLatLike = [8.707806, 61.123456]
+    let mapCenter: [number, number] = [8.707806, 61.123456]
     let startZoom = 5;
 
     if(spot) {
@@ -56,6 +56,7 @@ const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}: IProps) => {
       .setLngLat(pos)
       .addTo(map)
 
+      //@ts-ignore TODO
       draggableMarker.on('dragend', () => onDragEnd(draggableMarker.getLngLat()))
     }
 

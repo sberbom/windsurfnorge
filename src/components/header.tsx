@@ -6,9 +6,9 @@ import background from '../images/background.jpg'
 
 interface props {
     title: string;
-    buttonLink: string;
-    buttonText: string;
-    image: string;
+    buttonLink?: string;
+    buttonText?: string;
+    image?: string;
 }
 
 function Header({title, buttonLink, buttonText, image}:props): JSX.Element {
@@ -26,6 +26,7 @@ function Header({title, buttonLink, buttonText, image}:props): JSX.Element {
         <div className='header-container' style={{backgroundImage: backgroundImage}}>
             <div className='header-info'>
                 <h1>{title}</h1>
+                {/**@ts-ignore */}
                 {buttonText && <Link to={buttonLink}><Button>{buttonText}</Button></Link>}
             </div>
             <img src={backgroundImage} alt="header" className="background" />

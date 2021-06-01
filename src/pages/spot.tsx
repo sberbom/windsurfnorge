@@ -9,18 +9,20 @@ import '../styles/spot.css'
 // import ImageCarousel from '../components/imageCarousel';
 import Weather from '../components/weather'
 import SBImageGallery from '../components/imageGallery'
+import { IImage, ISpot } from '../types/types';
 
 
 
 function Spot() {
 
-    const [spot, setSpot] = useState(null)
-    const [images, setImages] = useState(null)
-    const [image, setImage] = useState(null)
+    const [spot, setSpot] = useState<ISpot | undefined>(undefined)
+    const [images, setImages] = useState<IImage[] | undefined>(undefined)
+    const [image, setImage] = useState(undefined)
 
     useEffect(() => {
         const fetchSpot = async () => {
             const spotName = queryString.parse(window.location.search).spotName
+            //@ts-ignore
             const spot = await getSpot(spotName);
             const images = await getImages(spot.id);
             setSpot(spot);

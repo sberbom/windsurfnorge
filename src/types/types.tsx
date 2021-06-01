@@ -17,6 +17,17 @@ export interface ISpot {
     displayname: string;
 }
 
+export interface IToDbSpot {
+    name: string;
+    about: string;
+    approach: string;
+    facebook: string;
+    lat: number;
+    lng: number;
+    current_user_id: number;
+    main_image: string | undefined;
+}
+
 export interface IModal {
     show?: boolean;
     onHide: () => void;
@@ -26,6 +37,11 @@ export interface IUser {
     id: number;
     identifier: string;
     displayname: string;
+}
+
+export interface IPos {
+    lat: number;
+    lng: number;
 }
 
 export interface IImage {

@@ -4,10 +4,10 @@ import Card from './card'
 import 'react-alice-carousel/lib/alice-carousel.css';
 import '../styles/cardCarousel.css'
 import Skeleton from 'react-loading-skeleton';
-import {Spot} from '../types/types'
+import {ISpot} from '../types/types'
 
 interface props {
-    spots: Spot[];
+    spots: ISpot[];
 }
  
 const CardCarousel = ({spots}:props) => {

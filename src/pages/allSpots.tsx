@@ -5,6 +5,7 @@ import Sortbar from '../components/sortbar';
 import {withRouter} from 'react-router-dom'
 import {getAllSpots} from '../api-service';
 import '../styles/allSpots.css'
+import { ISpot } from '../types/types';
 
 function AllSpots() {
     const [spots, setSpots] = useState([]);
@@ -21,7 +22,7 @@ function AllSpots() {
         fetchData();
     }, [])
 
-    const sort = (spotsToSort, sortMethod) => {
+    const sort = (spotsToSort: ISpot[], sortMethod:string) => {
         let spots = spotsToSort;
         if(sortMethod === "Alphabetical") {
             spots = spots.sort((spot1, spot2) => {
@@ -31,6 +32,7 @@ function AllSpots() {
             });
         }
         else if(sortMethod === "Newest") {
+            //@ts-ignore TODO
             spots = spots.sort((spot1, spot2) => new Date(spot2.created) - new Date(spot1.created));
         }
         else if(sortMethod === "Most popular") {
@@ -55,7 +57,7 @@ function AllSpots() {
                 <div className="empty"></div>
                 :
                 <CardList 
-                    spots={sort(spots.filter(spot => spot.name.toLowerCase().includes(searchWord.toLowerCase())), sortBy)}
+                    spots={sort(spots.filter((spot:ISpot) => spot.name.toLowerCase().includes(searchWord.toLowerCase())), sortBy)}
                 />
             }
         </div>

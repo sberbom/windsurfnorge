@@ -9,7 +9,7 @@ import {IUser} from '../types/types';
 
 interface IProps {
     user: any;
-    dbUser: IUser;
+    dbUser?: IUser;
 }
 
 const MyInfo = ({user, dbUser}: IProps) => {
@@ -40,6 +40,7 @@ const MyInfo = ({user, dbUser}: IProps) => {
         }
         try{
             if (user.displayName !== username) {
+                //@ts-ignore TODO
                 updateUsername(user, dbUser.id, username)
             }
             history.push("/")

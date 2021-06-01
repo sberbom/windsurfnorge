@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import queryString from 'query-string'
 import EmailVerificationModal from '../components/emailVerificationModal'
 import {storage} from '../firebase'
+import {IImage, IUser, ISpot, IToDbSpot, IImagePreUploade} from '../types/types'
 
 function AddSpot() {
     const [spotName, setSpotName] = useState("")
@@ -22,13 +23,13 @@ function AddSpot() {
     const [facbookPageSpot, setFacebookPageSpot] = useState("")
     const [spotId, setSpotId] = useState(0);
     const [spot, setSpot] = useState(null)
-    const [images, setImages] = useState([])
-    const [newImages, setNewImages] = useState([]);
+    const [images, setImages] = useState<IImage[]>([])
+    //const [newImages, setNewImages] = useState([]);
 
     const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
 
-    const [mainImage, setMainImage] = useState(null);
+    const [mainImage, setMainImage] = useState(undefined);
 
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
@@ -45,6 +46,7 @@ function AddSpot() {
             const edit = queryString.parse(window.location.search).edit
             if(edit) {
                 setIsEdit(true)
+                //@ts-ignore TODO
                 const spot = await getSpot(spotName);
                 const images = await getImages(spot.id)
                 setSpot(spot);
@@ -53,7 +55,7 @@ function AddSpot() {
                 setAboutSpot(spot.about);
                 setApproachSpot(spot.approach);
                 setFacebookPageSpot(spot.facebook)
-                setLatLng({lat: spot.lat, lng: spot.lng})
+                setLatLng([spot.lng, spot.lat])
                 const address = await getAddress(spot.lat, spot.lng)
                 setAddress(address);
                 setImages(images)
@@ -78,21 +80,24 @@ function AddSpot() {
         }
     }, [user] )
 
-    const dragEnd = async (pos) => {
-        const address = await getAddress(pos.lat, pos.lng)
-        setLatLng({lat: pos.lat, lng: pos.lng})
+    //TODO fix any type
+    const dragEnd = async (pos: any) => {
+        const address = await getAddress(pos.lng, pos.lat)
+        setLatLng([pos.lng, pos.lat])
         setAddress(address)
       }
 
-    const onDeleteImage = async (imageId) => {        
+    const onDeleteImage = async (imageId: number) => {        
         try{
             const image = await getImage(imageId)
             storage.refFromURL(image.big_image).delete()
             storage.refFromURL(image.small_image).delete()
 
-            const newImages = images.filter(oldImage => oldImage.id !== image.id)
+            const newImages = images.filter((oldImage:IImage) => oldImage.id !== image.id)
             
+            //@ts-ignore TODO
             if(spot.main_image === imageId){
+                //@ts-ignore TODO
                 updateMainImage(null, spot.id)
             }
 
@@ -112,12 +117,13 @@ function AddSpot() {
         return true
     }
 
-    const addImages = async (spotId, dbUser) => {
-        const newImages = images.filter(image => image.id === undefined)
+    const addImages = async (spotId: number, dbUser: IUser) => {
+        const newImages: IImage[] = images.filter((image:IImage) => image.id === undefined)
         for(const image of newImages) {
-            const newImage = {bigImageUrl: image.big_image, smallImageUrl: image.small_image}
+            const newImage: IImagePreUploade = {big_image: image.big_image, small_image: image.small_image}
             await addImage(newImage, spotId, dbUser.id)
         }
+        //@ts-ignore TODO
         if(newImages.length !== 0 && (spot === null || spot.mainImage === undefined)){
             const images = await getImages(spotId)
             updateMainImage(images[0].id, spotId)
@@ -126,13 +132,13 @@ function AddSpot() {
 
     const onSubmit = async () => {
         const dbUser = await getUser(user.email);
-        let spot = {
+        let spot: ISpot | IToDbSpot = {
             name: spotName,
             about: aboutSpot,
             approach: approachSpot,
             facebook: facbookPageSpot,
-            lat: latLng.lat,
-            lng: latLng.lng,
+            lat: latLng[1],
+            lng: latLng[0],
             current_user_id: dbUser.id,
             main_image: mainImage
         }
@@ -140,6 +146,7 @@ function AddSpot() {
             if(isEdit){
                 spot = {...spot, id: spotId}
                 editSpot(spot)
+                //@ts-ignore TODO
                 addImages(spot.id, dbUser)
             }
             else{
@@ -156,6 +163,7 @@ function AddSpot() {
         <div>
             <Header
                 title={isEdit ? "Endre spot" : "Legg til spot"}
+                //@ts-ignore TODO
                 image={spot && spot.big_image}
             />
             {!isLoading &&
@@ -182,11 +190,12 @@ function AddSpot() {
                                 onDeleteImage = {onDeleteImage}
                                 images = {images}
                                 setImages = {setImages}
-                                newImages = {newImages}
-                                setNewImages = {setNewImages}
+                                //newImages = {newImages}
+                                //setNewImages = {setNewImages}
                             />
                         </div>
                     </div>
+                    {/*@ts-ignore */}
                     <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
                     <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
                 </>

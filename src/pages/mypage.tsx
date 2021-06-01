@@ -9,10 +9,10 @@ import '../styles/mypage.css'
 const MyPage = () => {
 
     const user = useContext(UserContext)
-    const [dbUser, setDbUser] = useState(null)
+    const [dbUser, setDbUser] = useState(undefined)
 
     useEffect(() => {
-        const getDbUser = async (email) => {
+        const getDbUser = async (email:string) => {
             const user = await getUser(email);
             setDbUser(user);
         }

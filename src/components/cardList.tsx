@@ -1,10 +1,10 @@
 import React from 'react';
 import '../styles/cardList.css';
 import Card from './card';
-import {Spot} from '../types/types';
+import {ISpot} from '../types/types';
 
 interface props {
-    spots: Spot[];
+    spots: ISpot[];
 }
 
 function CardList({spots}:props) {

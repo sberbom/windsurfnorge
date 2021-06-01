@@ -2,20 +2,23 @@ import Geocode from "react-geocode";
 import {auth, googleAuthProvider } from './firebase'
 import {addUser, getUsers} from './api-service' 
 import { googleKey } from './keys';
-
+import {IUser} from './types/types';
 
 Geocode.setApiKey(googleKey);
 
-export const getAddress = async (lat, lng) => {
+export const getAddress = async (lat: number, lng: number) => {
     try{
-        const fetchedData = await Geocode.fromLatLng(lat, lng)
+        const lat_string = String(lat);
+        const lng_string = String(lng);
+        const fetchedData = await Geocode.fromLatLng(lat_string, lng_string)
         return fetchedData.results[0].formatted_address
     }catch(error){
         console.error('Klarte ikke hente adresse', error)
     }
 }
 
-export const signIn = async (email, password) => {
+//@ts-ignore
+export const signIn = async (email: string, password: string) => {
     try{
         const user = await auth.signInWithEmailAndPassword(email, password)
         return user
@@ -28,10 +31,12 @@ export const signInWithGoogle = async () => {
     try{
         const user = await auth.signInWithPopup(googleAuthProvider);
         const users = await getUsers()
+        //@ts-ignore
         const userEmail = user.additionalUserInfo.profile.email
+        //@ts-ignore
         const displayName = user.additionalUserInfo.profile.name
         let newUser = true;
-        users.forEach(dbUser => {
+        users.forEach((dbUser: IUser) => {
             if(dbUser.identifier === userEmail){
                 newUser = false
             } 
@@ -53,7 +58,7 @@ export const signInWithGoogle = async () => {
 //     }
 // }
 
-export const signOut = async (props) => {
+export const signOut = async () => {
     try {
         await auth.signOut();
     }catch(error) {
@@ -61,6 +66,7 @@ export const signOut = async (props) => {
     }
 }
 
+        //@ts-ignore
 export const registerUser = async (displayName, email, password) => {
     try{
         const user = await auth.createUserWithEmailAndPassword(email, password);
@@ -77,7 +83,7 @@ export const registerUser = async (displayName, email, password) => {
     }
 }
 
-export const updateUsername = async (user, userId, username) => {
+export const updateUsername = async (user: any, username: string) => {
     try{
         user.updateProfile({
             displayName: username
@@ -89,7 +95,7 @@ export const updateUsername = async (user, userId, username) => {
     }
 }
 
-export const updateEmail = async (user, email) => {
+export const updateEmail = async (user: any, email: string) => {
     try{
         await user.updateEmail(email)
     }
@@ -98,7 +104,7 @@ export const updateEmail = async (user, email) => {
     }
 }
 
-export const updatePassword = async (user, password) => {
+export const updatePassword = async (user: any, password: string) => {
     try{
         await user.updatePassword(password)
     }
@@ -107,7 +113,7 @@ export const updatePassword = async (user, password) => {
     }
 }
 
-export const deleteUser = async (user) => {
+export const deleteUser = async (user: any) => {
     try{
         await user.delete()
     }
@@ -116,7 +122,7 @@ export const deleteUser = async (user) => {
     }
 }
 
-export const sendPasswordResetEmail = async (email) => {
+export const sendPasswordResetEmail = async (email: string) => {
     try{
         await auth.sendPasswordResetEmail(email)
     }
@@ -125,8 +131,9 @@ export const sendPasswordResetEmail = async (email) => {
     }
 }
 
-export const reAuthenticateUser = async(user, password) => {
+export const reAuthenticateUser = async(user: any, password: string) => {
     try{
+        //@ts-ignore
         const credentials = auth.EmailAuthProvider.credential(user.email, password);
         await user.reauthenticateWithCredential(credentials)
     }
@@ -135,7 +142,7 @@ export const reAuthenticateUser = async(user, password) => {
     }
 }
 
-export const sendEmailVerification = (user) => {
+export const sendEmailVerification = (user: any) => {
     try{
         user.sendEmailVerification()
     }
@@ -144,11 +151,11 @@ export const sendEmailVerification = (user) => {
     }
 } 
 
-export const validatePassword = (password1, password2) => {
+export const validatePassword = (password1: string, password2: string) => {
     return(password1 === password2)
 }
 
-export const validateEmail = (email) => {
+export const validateEmail = (email: string) => {
     return (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email));
 }
 
@@ -156,7 +163,7 @@ export const getRandomInt = () => {
     return Math.floor(Math.random() * Math.floor(1000000));
 }
 
-export const getWeekDay = (date) => {
+export const getWeekDay = (date: Date) => {
     switch (date.getDay()){
         case 0:
             return 'Søndag'

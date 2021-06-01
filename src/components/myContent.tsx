@@ -35,18 +35,21 @@ const MyContent = () => {
     return(
         <div className="my-content-container">
             <div className="my-spots-container">
-                {spotsCreatedByUser.length > 0 && <h2>Mine spotter</h2>}      
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>Navn</th>
-                            <th>Aksjon</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {spotsCreatedByUser.length > 0 && spotsCreatedByUser.map(spot => <SpotCreatedByUserEntry key={spot.id} spot={spot}/>)}
-                    </tbody>
-                </Table>
+                {spotsCreatedByUser.length > 0 &&
+                <> 
+                    <h2>Mine spotter</h2>      
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>Navn</th>
+                                <th>Aksjon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {spotsCreatedByUser.map(spot => <SpotCreatedByUserEntry key={spot.id} spot={spot}/>)}
+                        </tbody>
+                    </Table>
+                </>}
             </div>
             <div className="my-images-conatiner">
                 {userImages.length > 0 && <h2>Mine bilder</h2>}      

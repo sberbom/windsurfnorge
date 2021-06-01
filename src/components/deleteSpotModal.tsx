@@ -1,11 +1,13 @@
+import '../styles/confirmDeleteModal.css';
+
+import {Button, Modal} from 'react-bootstrap';
+import {IModal, ISpot} from '../types/types';
+
 import React from 'react';
-import {Modal, Button} from 'react-bootstrap';
 import {deleteSpot} from '../api-service'
 import { useHistory } from "react-router-dom";
-import '../styles/confirmDeleteModal.css';
-import {ISpot} from '../types/types';
 
-interface props {
+interface props extends IModal {
     spot: ISpot;
     onHide: () => void;
 }

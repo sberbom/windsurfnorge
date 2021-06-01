@@ -53,23 +53,20 @@ function SpotInfo({spot}: IProps) {
             <div className="spotInfo-container">
                 <div className="options-container">
                     <h2>Beskrivelse</h2>
-                    {/*@ts-ignore FIX*/}
                     <DropdownButton
                         variant={'secondary'}
                         title={'Alternativer'}
                         size="sm"
+                        id={"1"}
                     >
-                    {/*@ts-ignore FIX*/}
-                        <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
-                    {/*@ts-ignore FIX*/}
-                        <Dropdown.Item eventKey="2" size="sm" onClick={() => onDeleteSpotClick()}>Slett spot</Dropdown.Item>
+                        <Dropdown.Item id={"1"} eventKey="1" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
+                        <Dropdown.Item id={"2"} eventKey="2" onClick={() => onDeleteSpotClick()}>Slett spot</Dropdown.Item>
                     </DropdownButton>
                 </div>
                 <p>Vi har ingen beskrivelse av denne spotten. Har du vært her? Legg gjerne inn infomasjon om spotten!</p>
-                <div className="created-by-container">
+                {/**<div className="created-by-container">
                     <p className="created-by">{`Opprettet av: ${spot.createdby !== null ? spot.displayname : "Windsurf Norge"}`}</p>
-                </div>
-                    {/*@ts-ignore FIX*/}
+                </div>*/}
                 <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
                     {/*@ts-ignore FIX*/}
                 <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
@@ -82,16 +79,14 @@ function SpotInfo({spot}: IProps) {
         <div className="spotInfo-container overflow">
             <div className="options-container">
                 {spot.about && <h2>Beskrivelse</h2>}
-                    {/*@ts-ignore FIX*/}
                 <DropdownButton
                     variant={'secondary'}
                     title={'Alternativer'}
                     size="sm"
+                    id={"2"}
                 >
-                    {/*@ts-ignore FIX*/}
-                    <Dropdown.Item eventKey="1" size="sm" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
-                    {/*@ts-ignore FIX*/}
-                    <Dropdown.Item eventKey="2" size="sm" onClick={() => onDeleteSpotClick()}>Slett spot</Dropdown.Item>
+                    <Dropdown.Item eventKey="1" onClick={() => onEditSpotClick(spot)}>Endre spot</Dropdown.Item>
+                    <Dropdown.Item eventKey="2" onClick={() => onDeleteSpotClick()}>Slett spot</Dropdown.Item>
                 </DropdownButton>
             </div>
             {spot.about && <p className="pre-line">{spot.about}</p>}
@@ -119,9 +114,8 @@ function SpotInfo({spot}: IProps) {
             <div className="created-by-container">
                 <p className="created-by">{`Opprettet av: ${spot.createdby ? spot.displayname: "Windsurf Norge"}`}</p>
             </div>
-                    {/*@ts-ignore FIX*/}
             <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
-                    {/*@ts-ignore FIX*/}
+            {/*@ts-ignore FIX*/}
             <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
             <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
         </div>

@@ -83,7 +83,7 @@ function AddSpot() {
     }, [user] )
 
     const dragEnd = async (pos: IPos) => {
-        const address = await getAddress(pos.lng, pos.lat)
+        const address = await getAddress(pos.lat, pos.lng)
         setLatLng([pos.lng, pos.lat])
         setAddress(address)
       }

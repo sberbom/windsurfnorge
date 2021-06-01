@@ -1,13 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import {storage} from '../firebase'
-import sync from '../images/sync.png'
+import '../styles/imageUploade.css'
+
+import React, { useCallback, useState } from 'react';
+
+import {IImagePreUploade} from '../types/types';
 import checked from '../images/checked.png'
 import close from '../images/close.png'
-import imageCompression from 'browser-image-compression';
 import {getRandomInt} from '../utils'
+import imageCompression from 'browser-image-compression';
+import {storage} from '../firebase'
+import sync from '../images/sync.png'
 import {useDropzone} from 'react-dropzone'
-import '../styles/imageUploade.css'
-import {IImagePreUploade} from '../types/types';
 
 interface IProps {
     spotName: string;

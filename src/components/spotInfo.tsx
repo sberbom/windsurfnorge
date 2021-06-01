@@ -111,9 +111,9 @@ function SpotInfo({spot}: IProps) {
                     onChange={onUpdateRating}
                 />
             </div>
-            <div className="created-by-container">
+            {/**<div className="created-by-container">
                 <p className="created-by">{`Opprettet av: ${spot.createdby ? spot.displayname: "Windsurf Norge"}`}</p>
-            </div>
+            </div>*/}
             <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
             {/*@ts-ignore FIX*/}
             <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>

@@ -1,8 +1,10 @@
-import React, {useEffect} from "react";
-import mapboxgl from 'mapbox-gl';
 import '../styles/map.css';
+
+import {IPos, ISpot} from '../types/types';
+import React, {useEffect} from "react";
+
 import { mapboxAccessToken } from "../keys";
-import {ISpot} from '../types/types';
+import mapboxgl from 'mapbox-gl';
 
 export const mapCenter: [number, number] = [8.707806, 61.123456]
 
@@ -10,7 +12,7 @@ interface IProps {
   spots?: ISpot[];
   spot?: ISpot;
   draggable?: boolean;
-  onDragEnd?: (lngLat: mapboxgl.LngLatLike) => void;
+  onDragEnd?: (lngLat: IPos) => void;
   markerPos?: [number, number];
 }
 
@@ -56,8 +58,7 @@ const SBMap = ({spots, spot, draggable, onDragEnd, markerPos}: IProps) => {
       .setLngLat(pos)
       .addTo(map)
 
-      //@ts-ignore TODO
-      draggableMarker.on('dragend', () => onDragEnd(draggableMarker.getLngLat()))
+      draggableMarker.on('dragend', () => onDragEnd!(draggableMarker.getLngLat()))
     }
 
   

@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import {Button} from 'react-bootstrap'
-import {updateUsername, updateEmail, reAuthenticateUser, updatePassword, signOut} from '../utils'
-import { useHistory } from "react-router-dom";
-import ReAuthenticateModal from './reAuthenticateModal';
-import Input from './input'
 import '../styles/myinfo.css'
+
+import React, { useEffect, useState } from 'react';
+import {reAuthenticateUser, signOut, updateEmail, updatePassword, updateUsername} from '../utils'
+
+import {Button} from 'react-bootstrap'
 import {IUser} from '../types/types';
+import Input from './input'
+import ReAuthenticateModal from './reAuthenticateModal';
+import { useHistory } from "react-router-dom";
 
 interface IProps {
     user: any;
@@ -40,8 +42,7 @@ const MyInfo = ({user, dbUser}: IProps) => {
         }
         try{
             if (user.displayName !== username) {
-                //@ts-ignore TODO
-                updateUsername(user, dbUser.id, username)
+                updateUsername(user, username)
             }
             history.push("/")
         }

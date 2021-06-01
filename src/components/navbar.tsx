@@ -1,8 +1,10 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {Navbar, Nav} from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom'
-import LogInModal from './logInModal'
 import '../styles/navbar.css'
+
+import { Link, withRouter } from 'react-router-dom'
+import {Nav, Navbar} from 'react-bootstrap';
+import React, {useContext, useEffect, useState} from 'react';
+
+import LogInModal from './logInModal'
 import {UserContext} from '../providers/userProvider';
 import {getUser} from '../api-service'
 

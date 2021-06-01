@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import Header from '../components/header'
-import CardList from '../components/cardList'
-import Sortbar from '../components/sortbar';
-import {withRouter} from 'react-router-dom'
-import {getAllSpots} from '../api-service';
 import '../styles/allSpots.css'
+
+import React, {useEffect, useState} from 'react';
+
+import CardList from '../components/cardList'
+import Header from '../components/header'
 import { ISpot } from '../types/types';
+import Sortbar from '../components/sortbar';
+import {getAllSpots} from '../api-service';
+import {withRouter} from 'react-router-dom'
 
 function AllSpots() {
     const [spots, setSpots] = useState([]);
@@ -32,8 +34,7 @@ function AllSpots() {
             });
         }
         else if(sortMethod === "Newest") {
-            //@ts-ignore TODO
-            spots = spots.sort((spot1, spot2) => new Date(spot2.created) - new Date(spot1.created));
+            spots = spots.sort((spot1, spot2) => new Date(spot2.created).valueOf() - new Date(spot1.created).valueOf());
         }
         else if(sortMethod === "Most popular") {
             spots = spots.sort((spot1, spot2) => spot2.views - spot1.views);

@@ -7,7 +7,7 @@ export interface ISpot {
     rating: number;
     created: Date;
     createdby: number;
-    main_image: string;
+    main_image: number;
     lat: number;
     lng: number;
     views: number;

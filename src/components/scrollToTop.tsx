@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom'
 
 class ScrollToTop extends React.Component {
     componentDidUpdate(prevProps: any) {
-      //@ts-ignore TODO: FIX
+      //@ts-ignore
       if (this.props.location !== prevProps.location) {
         window.scrollTo(0, 0)
       }
@@ -14,5 +14,5 @@ class ScrollToTop extends React.Component {
     }
   }
   
-  //@ts-ignore TODO: FIX
+  //@ts-ignore
   export default withRouter(ScrollToTop)

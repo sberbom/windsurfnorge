@@ -1,5 +1,6 @@
-import {auth } from './firebase'
 import { IImage, IImagePreUploade, ISpot, IToDbSpot, IUser } from './types/types';
+
+import {auth} from './firebase'
 
 const host = 'http://localhost:3001';
 //const host = 'https://windsurfnorge-server.herokuapp.com'
@@ -37,8 +38,7 @@ export const getImages = async (spot_id: number) => {
 }
 
 export const deleteImage = async (imageId: number) => {
-    //@ts-ignore TODO
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/deleteImage`, {
         method: 'delete',
         headers: { 'Content-Type': 'application/json' },
@@ -62,8 +62,7 @@ export const getImage = async (imageId: number) => {
 }
 
 export const addImage = async (image: IImagePreUploade, spotId: number, userId: number) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/addImage`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -77,10 +76,9 @@ export const addImage = async (image: IImagePreUploade, spotId: number, userId: 
     })
 }
 
-export const updateMainImage = async (main_image: IImage, spotId: number) => {
+export const updateMainImage = async (main_image: IImage | null, spotId: number) => {
     try{
-        //@ts-ignore
-        const token = await auth.currentUser.getIdToken(true)
+        const token = await auth.currentUser!.getIdToken(true)
         await fetch(`${host}/updateMainImage`, {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
@@ -98,8 +96,7 @@ export const updateMainImage = async (main_image: IImage, spotId: number) => {
 
 
 export const addSpot = async (spot: ISpot | IToDbSpot) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     const spotResponse = await fetch(`${host}/addSpot`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -121,8 +118,7 @@ export const addSpot = async (spot: ISpot | IToDbSpot) => {
 }
 
 export const editSpot = async (spot: ISpot | IToDbSpot) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/editSpot`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -142,8 +138,7 @@ export const editSpot = async (spot: ISpot | IToDbSpot) => {
 }
 
 export const deleteSpot = async (id: number) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/spot`, {
         method: 'delete',
         headers: { 'Content-Type': 'application/json' },
@@ -155,8 +150,7 @@ export const deleteSpot = async (id: number) => {
 }
 
 export const updateRating = async (spotid: number, rating: number, userEmail: string) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     const user = await getUser(userEmail);
     const userid = user.id
     await fetch(`${host}/rating`, {
@@ -172,8 +166,7 @@ export const updateRating = async (spotid: number, rating: number, userEmail: st
 }
 
 export const getUser = async (userEmail:string) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     const response = await fetch(`${host}/getUser`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -200,8 +193,7 @@ export const addUser = async (displayName: string, userEmail: string) => {
 }
 
 export const updateUser = async (user: IUser) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/updateUser`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -224,8 +216,7 @@ export const getUsers = async () => {
 }
 
 export const getUserSpots = async (id: number) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     const response = await fetch(`${host}/getUserSpots`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -239,8 +230,7 @@ export const getUserSpots = async (id: number) => {
 }
 
 export const restoreSpot = async (id: number) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/restoreSpot`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -252,8 +242,7 @@ export const restoreSpot = async (id: number) => {
 }
 
 export const getUserImages = async (id: number) => {
-    //@ts-ignore
-    const token = await auth.currentUser.getIdToken(true)
+    const token = await auth.currentUser!.getIdToken(true)
     const response = await fetch(`${host}/getUserImages`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },

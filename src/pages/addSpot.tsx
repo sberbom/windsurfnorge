@@ -1,20 +1,22 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { withRouter } from 'react-router-dom';
-import AddSpotForm from '../components/addSpotForm';
-import Header from '../components/header';
-import Map from '../components/map';
-import {getSpot, addSpot, deleteImage, getImage, getUser, editSpot, addImage, getImages, updateMainImage} from '../api-service'
 import '../styles/addSpot.css';
 import '../styles/spot.css';
+
+import {IImage, IImagePreUploade, IPos, ISpot, IToDbSpot, IUser} from '../types/types'
+import React, { useContext, useEffect, useState } from 'react';
+import {addImage, addSpot, deleteImage, editSpot, getImage, getImages, getSpot, getUser, updateMainImage} from '../api-service'
+
+import AddSpotForm from '../components/addSpotForm';
+import EmailVerificationModal from '../components/emailVerificationModal'
+import Header from '../components/header';
+import LogInModal from '../components/logInModal'
+import Map from '../components/map';
+import {UserContext} from '../providers/userProvider';
 import { getAddress } from '../utils';
 import {mapCenter} from '../components/map'
-import LogInModal from '../components/logInModal'
-import {UserContext} from '../providers/userProvider';
-import { useHistory } from "react-router-dom";
 import queryString from 'query-string'
-import EmailVerificationModal from '../components/emailVerificationModal'
 import {storage} from '../firebase'
-import {IImage, IUser, ISpot, IToDbSpot, IImagePreUploade} from '../types/types'
+import { useHistory } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 
 function AddSpot() {
     const [spotName, setSpotName] = useState("")
@@ -22,7 +24,7 @@ function AddSpot() {
     const [approachSpot, setApproachSpot] = useState("")
     const [facbookPageSpot, setFacebookPageSpot] = useState("")
     const [spotId, setSpotId] = useState(0);
-    const [spot, setSpot] = useState(null)
+    const [spot, setSpot] = useState<ISpot | undefined>(undefined)
     const [images, setImages] = useState<IImage[]>([])
     //const [newImages, setNewImages] = useState([]);
 
@@ -80,8 +82,7 @@ function AddSpot() {
         }
     }, [user] )
 
-    //TODO fix any type
-    const dragEnd = async (pos: any) => {
+    const dragEnd = async (pos: IPos) => {
         const address = await getAddress(pos.lng, pos.lat)
         setLatLng([pos.lng, pos.lat])
         setAddress(address)
@@ -95,10 +96,8 @@ function AddSpot() {
 
             const newImages = images.filter((oldImage:IImage) => oldImage.id !== image.id)
             
-            //@ts-ignore TODO
-            if(spot.main_image === imageId){
-                //@ts-ignore TODO
-                updateMainImage(null, spot.id)
+            if(spot!.main_image === imageId){
+                updateMainImage(null, spot!.id)
             }
 
             deleteImage(imageId)
@@ -123,8 +122,7 @@ function AddSpot() {
             const newImage: IImagePreUploade = {big_image: image.big_image, small_image: image.small_image}
             await addImage(newImage, spotId, dbUser.id)
         }
-        //@ts-ignore TODO
-        if(newImages.length !== 0 && (spot === null || spot.mainImage === undefined)){
+        if(newImages.length !== 0 && (spot === null || spot?.main_image === undefined)){
             const images = await getImages(spotId)
             updateMainImage(images[0].id, spotId)
         }
@@ -163,7 +161,6 @@ function AddSpot() {
         <div>
             <Header
                 title={isEdit ? "Endre spot" : "Legg til spot"}
-                //@ts-ignore TODO
                 image={spot && spot.big_image}
             />
             {!isLoading &&
@@ -195,7 +192,7 @@ function AddSpot() {
                             />
                         </div>
                     </div>
-                    {/*@ts-ignore */}
+                    {/*@ts-ignore TODO*/}
                     <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
                     <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
                 </>

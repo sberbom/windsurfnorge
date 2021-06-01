@@ -108,5 +108,6 @@ const LogInModal = (props: IModal) => {
         </Modal>
     )
 }
-//@ts-ignore TODO: Fix
+
+//@ts-ignore
 export default withRouter(LogInModal);

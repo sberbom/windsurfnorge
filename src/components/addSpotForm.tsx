@@ -1,11 +1,11 @@
-import React from 'react';
-import { Button, Form } from 'react-bootstrap';
-import ImageUploade from './imageUploade'
 import '../styles/addSpotForm.css';
-import ImageSelector from './imageSelector';
-import { IImage } from '../types/types';
 
-// TODO proper function types
+import { Button, Form } from 'react-bootstrap';
+
+import { IImage } from '../types/types';
+import ImageSelector from './imageSelector';
+import ImageUploade from './imageUploade'
+import React from 'react';
 
 interface props {
     name: string;
@@ -17,14 +17,13 @@ interface props {
     mainImage: any;
     images: IImage[];
     isEdit: boolean;
-    //setImage: any;
     setMainImage: any;
     onDeleteImage: any;
     onSubmit: any;
-    onNameChange: (event: any)=>void;
-    onAboutChange: (event: any) => void;
-    onApproachChange: (event: any) => void;
-    onFacebookPageChange: (event: any) => void;
+    onNameChange: (name: string)=>void;
+    onAboutChange: (about: string) => void;
+    onApproachChange: (approach: string) => void;
+    onFacebookPageChange: (facebookPage: string) => void;
 }
 
 function AddSpotForm(props:props) {

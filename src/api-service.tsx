@@ -179,18 +179,18 @@ export const getUser = async (userEmail:string) => {
     return user[0]
 }
 
-export const addUser = async (displayName: string, userEmail: string) => {
-    const response = await fetch(`${host}/addUser`, {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            'user_email': userEmail,
-            'displayName': displayName
-        })
-    })
-    const user = await response.json()
-    return user[0]
-}
+//export const addUser = async (displayName: string, userEmail: string) => {
+//    const response = await fetch(`${host}/addUser`, {
+//        method: 'post',
+//        headers: { 'Content-Type': 'application/json' },
+//        body: JSON.stringify({
+//            'user_email': userEmail,
+//            'displayName': displayName
+//        })
+//    })
+//    const user = await response.json()
+//    return user[0]
+//}
 
 //export const updateUser = async (user: IUser) => {
 //    const token = await auth.currentUser!.getIdToken(true)

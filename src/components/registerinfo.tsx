@@ -1,8 +1,11 @@
-import React, {useState } from 'react';
-import {Button} from 'react-bootstrap'
-import {registerUser, validatePassword, validateEmail} from '../utils'
-import Input from './input'
 import '../styles/myinfo.css'
+
+import React, {useState} from 'react';
+import {registerUser, validateEmail, validatePassword} from '../utils'
+
+import {Button} from 'react-bootstrap'
+import Input from './input'
+import { useHistory } from "react-router-dom";
 
 const RegisterInfo = () => {
 
@@ -11,6 +14,8 @@ const RegisterInfo = () => {
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
 
+    const history = useHistory()
+    
     const createNewUser =  async () => {
         if(!validateEmail(email)) {
             alert("You have entered an invalid email address.")
@@ -21,6 +26,7 @@ const RegisterInfo = () => {
 
         await registerUser(displayName, email, password1)
 
+        history.push("/")
     }
 
     return(

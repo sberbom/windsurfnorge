@@ -1,7 +1,5 @@
 import Geocode from "react-geocode";
-import {addUser} from './api-service'
 import {auth} from './firebase'
-//import {IUser} from './types/types';
 import firebase from 'firebase/app'
 import { googleKey } from './keys';
 
@@ -73,7 +71,7 @@ export const registerUser = async (displayName: string, email: string, password:
         const user = await auth.createUserWithEmailAndPassword(email, password);
         if(user !== null){
             sendEmailVerification(user.user!)
-            await addUser(displayName, email)
+            updateUsername(firebase.auth().currentUser!, displayName);
             return user;
         }
         else {

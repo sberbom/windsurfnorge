@@ -1,16 +1,18 @@
-import React, { useState, useContext } from 'react';
-import {DropdownButton, Dropdown} from 'react-bootstrap'
-import { useHistory } from "react-router-dom";
+import '../styles/spotInfo.css'
+
+import {Dropdown, DropdownButton} from 'react-bootstrap'
+import React, { useContext, useState } from 'react';
+
+import DeleteSpotModal from './deleteSpotModal'
+import EmailVerificationModal from './emailVerificationModal'
+import {ISpot} from '../types/types';
+import LogInModal from './logInModal'
 import Rating from 'react-rating'
+import {UserContext} from '../providers/userProvider';
 import star from '../images/star.png'
 import star_empty from '../images/star_empty.png'
 import {updateRating} from '../api-service'
-import '../styles/spotInfo.css'
-import DeleteSpotModal from './deleteSpotModal'
-import {UserContext} from '../providers/userProvider';
-import LogInModal from './logInModal'
-import EmailVerificationModal from './emailVerificationModal'
-import {ISpot} from '../types/types';
+import { useHistory } from "react-router-dom";
 
 interface IProps {
     spot: ISpot;
@@ -43,7 +45,8 @@ function SpotInfo({spot}: IProps) {
     }
 
     const onUpdateRating = (rating: number) => {
-        updateRating(spot.id, rating, user.email);
+        //@ts-ignore TODO FIX1
+        updateRating(spot.id, rating, user!.email);
     }
 
     if(!spot.about && !spot.approach && !spot.facebook) {

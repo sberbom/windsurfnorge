@@ -6,13 +6,14 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import LogInModal from './logInModal'
 import {UserContext} from '../providers/userProvider';
-import {getUser} from '../api-service'
+
+//import {getUser} from '../api-service'
 
 const SBNavbar = () =>  {
     const [navBackground, setNavBackground] = useState({backgroundColor: "rgba(0, 0, 0, 0)"})
     const [showLogInModal, setShowLogInModal] = useState(false);
     const user = useContext(UserContext)
-    const [dbUser, setDbUser] = useState(null)
+//    const [dbUser, setDbUser] = useState(null)
 
     const [expanded, setExpanded] = useState(false);
 
@@ -27,15 +28,15 @@ const SBNavbar = () =>  {
         getNavBackground();
     }, [expanded])
 
-    useEffect(() => {
-        const getDbUser = async (email : string) => {
-            const user = await getUser(email);
-            setDbUser(user);
-        }
-        if(user) {
-            getDbUser(user.email)
-        }
-    }, [user])
+   // useEffect(() => {
+   //     const getDbUser = async (email : string) => {
+   //         const user = await getUser(email);
+   //         setDbUser(user);
+   //     }
+   //     if(user) {
+   //         //getDbUser(user.email)
+   //     }
+   // }, [user])
 
 
     const onNavbarToggle = () => {
@@ -73,7 +74,7 @@ const SBNavbar = () =>  {
                         {user ? 
                             // @ts-ignore: Object is possibly 'null'
                             // Fix the above problems
-                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{dbUser !== null ? dbUser.displayname : 'Min side'}</Link>
+                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user !== null ? user.displayName : 'Min side'}</Link>
                             :     
                             <div onClick={() => setShowLogInModal(true)} className="nav-link link-text" style={{color: "white"}}>Logg inn</div>
                     }

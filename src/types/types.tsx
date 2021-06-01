@@ -6,7 +6,7 @@ export interface ISpot {
     facebook: string;
     rating: number;
     created: Date;
-    createdby: number;
+    createdby: string;
     main_image: number;
     lat: number;
     lng: number;
@@ -24,7 +24,7 @@ export interface IToDbSpot {
     facebook: string;
     lat: number;
     lng: number;
-    current_user_id: number;
+    current_user_id: string;
     main_image: string | undefined;
 }
 
@@ -33,11 +33,6 @@ export interface IModal {
     onHide: () => void;
 }
 
-export interface IUser {
-    id: number;
-    identifier: string;
-    displayname: string;
-}
 
 export interface IPos {
     lat: number;

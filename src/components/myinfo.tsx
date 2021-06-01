@@ -1,20 +1,15 @@
 import '../styles/myinfo.css'
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {reAuthenticateUser, signOut, updateEmail, updatePassword, updateUsername} from '../utils'
 
 import {Button} from 'react-bootstrap'
-import {IUser} from '../types/types';
 import Input from './input'
 import ReAuthenticateModal from './reAuthenticateModal';
+import {UserContext} from '../providers/userProvider';
 import { useHistory } from "react-router-dom";
 
-interface IProps {
-    user: any;
-    dbUser?: IUser;
-}
-
-const MyInfo = ({user, dbUser}: IProps) => {
+const MyInfo = () => {
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -28,47 +23,62 @@ const MyInfo = ({user, dbUser}: IProps) => {
 
     const history = useHistory();
 
+    const user = useContext(UserContext)
+
     useEffect(() => {
-        if(user && dbUser) {
-            dbUser.displayname && setUsername(dbUser.displayname)
-            setEmail(user.email)
-        }  
-    }, [user, dbUser])
+        const setUserState = () => {
+            setUsername(user!.displayName!);
+            setEmail(user!.email!)
+        }
+        if(user !== null) {
+            setUserState();
+        }
+    },[user])
 
     const onSubmit = (): void => {
-        if(user.email !== email || newPassword) {
-            setShowPasswordModal(true);
-            return;
+        if(user == null){
+            console.error("User is null");
         }
-        try{
-            if (user.displayName !== username) {
-                updateUsername(user, username)
+        else{
+            if(newPassword) {
+                setShowPasswordModal(true);
+                return;
             }
-            history.push("/")
-        }
-        catch(error){
-            setErrorMessage("Noe gikk galt, vennligst prøv igjen.")
+            try{
+                if (user.displayName !== username) {
+                    updateUsername(user, username)
+                }
+                history.push("/")
+            }
+            catch(error){
+                setErrorMessage("Noe gikk galt, vennligst prøv igjen.")
+            }
         }
     }
 
     const onReAuthenticateSubmit = async () => {
-        try{
-            await reAuthenticateUser(user, password)
-            if(user.email !== email) {
-                updateEmail(user, email)
-            }
-            if(newPassword !== "") {
-                if(newPassword === newPasswordRepet){
-                    updatePassword(user, newPassword)
-                }
-                else{
-                    alert("Passordene må være like")
-                }
-            }
-            history.push("/")
+        if(user == null){
+            console.error("User is null");
         }
-        catch(error){
-            setErrorMessage("Noe gikk galt, vennligst prøv igjen.")
+        else {
+            try{
+                await reAuthenticateUser(user, password)
+                if(user.email !== email) {
+                    updateEmail(user, email)
+                }
+                if(newPassword !== "") {
+                    if(newPassword === newPasswordRepet){
+                        updatePassword(user, newPassword)
+                    }
+                    else{
+                        alert("Passordene må være like")
+                    }
+                }
+                history.push("/")
+            }
+            catch(error){
+                setErrorMessage("Noe gikk galt, vennligst prøv igjen.")
+            }
         }
     }
 
@@ -80,7 +90,7 @@ const MyInfo = ({user, dbUser}: IProps) => {
     return(
         <div className="myInfo-container">
             <Input title={"Brukernavn:"} value={username} onChange={setUsername} />
-            <Input title={"Email:"} value={email} onChange={setEmail} />
+            <Input title={"Email:"} value={email!} onChange={setEmail} readOnly={true}/>
             <Button className="myinfo-button" onClick={() => setIsChangePasswordSate(!isChangePasswordState)}>Endre passord</Button>
             {isChangePasswordState && 
                 <div>

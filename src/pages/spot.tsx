@@ -1,17 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import {withRouter} from 'react-router-dom';
+import '../styles/spot.css'
+
+import { IImage, ISpot } from '../types/types';
+import React, {useEffect, useState} from 'react';
 import {getImages, getSpot} from '../api-service'
+
 import Header from '../components/header'
 import Map from '../components/map'
+import SBImageGallery from '../components/imageGallery'
 import SpotInfo from '../components/spotInfo'
-import queryString from 'query-string'
-import '../styles/spot.css'
 // import ImageCarousel from '../components/imageCarousel';
 import Weather from '../components/weather'
-import SBImageGallery from '../components/imageGallery'
-import { IImage, ISpot } from '../types/types';
-
-
+import queryString from 'query-string'
+import {withRouter} from 'react-router-dom';
 
 function Spot() {
 

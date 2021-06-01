@@ -5,9 +5,10 @@ interface IProps {
     value: string;
     onChange: (event: any) => void;
     type?: string;
+    readOnly?: boolean;
 }
 
-const Input = ({title, value, onChange, type}: IProps) =>  {
+const Input = ({title, value, onChange, type, readOnly}: IProps) =>  {
  
     
     return(
@@ -20,6 +21,7 @@ const Input = ({title, value, onChange, type}: IProps) =>  {
                 value={value}
                 type={type}
                 onChange={(event) => onChange(event.target.value)}
+                readOnly={readOnly}
             />
         </div>
     )

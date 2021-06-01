@@ -1,8 +1,9 @@
 import Geocode from "react-geocode";
-import {auth, googleAuthProvider } from './firebase'
-import {addUser, getUsers} from './api-service' 
+import {addUser} from './api-service'
+import {auth} from './firebase'
+//import {IUser} from './types/types';
+import firebase from 'firebase/app'
 import { googleKey } from './keys';
-import {IUser} from './types/types';
 
 Geocode.setApiKey(googleKey);
 
@@ -27,27 +28,27 @@ export const signIn = async (email: string, password: string) => {
     }
 }
 
-export const signInWithGoogle = async () => {
-    try{
-        const user = await auth.signInWithPopup(googleAuthProvider);
-        const users = await getUsers()
-        //@ts-ignore
-        const userEmail = user.additionalUserInfo.profile.email
-        //@ts-ignore
-        const displayName = user.additionalUserInfo.profile.name
-        let newUser = true;
-        users.forEach((dbUser: IUser) => {
-            if(dbUser.identifier === userEmail){
-                newUser = false
-            } 
-        })
-        if(newUser){
-            await addUser(displayName, userEmail)
-        }
-    }catch(error) {
-        console.error('kunne ikke logg inn med google', error)
-    }
-}
+//export const signInWithGoogle = async () => {
+//    try{
+//        const user = await auth.signInWithPopup(googleAuthProvider);
+//        const users = await getUsers()
+//        //@ts-ignore
+//        const userEmail = user.additionalUserInfo.profile.email
+//        //@ts-ignore
+//        const displayName = user.additionalUserInfo.profile.name
+//        let newUser = true;
+//        users.forEach((dbUser: IUser) => {
+//            if(dbUser.identifier === userEmail){
+//                newUser = false
+//            } 
+//        })
+//        if(newUser){
+//            await addUser(displayName, userEmail)
+//        }
+//    }catch(error) {
+//        console.error('kunne ikke logg inn med google', error)
+//    }
+//}
 
 // export const signInWithFacebook = async () => {
 //     try{
@@ -66,13 +67,18 @@ export const signOut = async () => {
     }
 }
 
-        //@ts-ignore
-export const registerUser = async (displayName, email, password) => {
+//@ts-ignore TODO
+export const registerUser = async (displayName: string, email: string, password: string) => {
     try{
         const user = await auth.createUserWithEmailAndPassword(email, password);
-        sendEmailVerification(user.user)
-        await addUser(displayName, email)
-        return user;
+        if(user !== null){
+            sendEmailVerification(user.user!)
+            await addUser(displayName, email)
+            return user;
+        }
+        else {
+            console.error("Error creating user") 
+        }
     }
     catch(error){
         if (error.code === 'auth/weak-password') {
@@ -83,7 +89,7 @@ export const registerUser = async (displayName, email, password) => {
     }
 }
 
-export const updateUsername = async (user: any, username: string) => {
+export const updateUsername = async (user: firebase.User, username: string) => {
     try{
         user.updateProfile({
             displayName: username
@@ -95,7 +101,7 @@ export const updateUsername = async (user: any, username: string) => {
     }
 }
 
-export const updateEmail = async (user: any, email: string) => {
+export const updateEmail = async (user: firebase.User, email: string) => {
     try{
         await user.updateEmail(email)
     }
@@ -104,7 +110,7 @@ export const updateEmail = async (user: any, email: string) => {
     }
 }
 
-export const updatePassword = async (user: any, password: string) => {
+export const updatePassword = async (user: firebase.User, password: string) => {
     try{
         await user.updatePassword(password)
     }
@@ -113,7 +119,7 @@ export const updatePassword = async (user: any, password: string) => {
     }
 }
 
-export const deleteUser = async (user: any) => {
+export const deleteUser = async (user: firebase.User) => {
     try{
         await user.delete()
     }
@@ -131,7 +137,7 @@ export const sendPasswordResetEmail = async (email: string) => {
     }
 }
 
-export const reAuthenticateUser = async(user: any, password: string) => {
+export const reAuthenticateUser = async(user: firebase.User, password: string) => {
     try{
         //@ts-ignore
         const credentials = auth.EmailAuthProvider.credential(user.email, password);
@@ -142,7 +148,7 @@ export const reAuthenticateUser = async(user: any, password: string) => {
     }
 }
 
-export const sendEmailVerification = (user: any) => {
+export const sendEmailVerification = (user: firebase.User) => {
     try{
         user.sendEmailVerification()
     }
@@ -163,7 +169,7 @@ export const getRandomInt = () => {
     return Math.floor(Math.random() * Math.floor(1000000));
 }
 
-export const getWeekDay = (date: Date) => {
+export const getWeekDay = (date: Date):string => {
     switch (date.getDay()){
         case 0:
             return 'Søndag'

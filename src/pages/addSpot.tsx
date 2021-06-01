@@ -1,9 +1,9 @@
 import '../styles/addSpot.css';
 import '../styles/spot.css';
 
-import {IImage, IImagePreUploade, IPos, ISpot, IToDbSpot, IUser} from '../types/types'
+import {IImage, IImagePreUploade, IPos, ISpot, IToDbSpot} from '../types/types'
 import React, { useContext, useEffect, useState } from 'react';
-import {addImage, addSpot, deleteImage, editSpot, getImage, getImages, getSpot, getUser, updateMainImage} from '../api-service'
+import {addImage, addSpot, deleteImage, editSpot, getImage, getImages, getSpot, updateMainImage} from '../api-service'
 
 import AddSpotForm from '../components/addSpotForm';
 import EmailVerificationModal from '../components/emailVerificationModal'
@@ -116,11 +116,11 @@ function AddSpot() {
         return true
     }
 
-    const addImages = async (spotId: number, dbUser: IUser) => {
+    const addImages = async (spotId: number, uid: string) => {
         const newImages: IImage[] = images.filter((image:IImage) => image.id === undefined)
         for(const image of newImages) {
             const newImage: IImagePreUploade = {big_image: image.big_image, small_image: image.small_image}
-            await addImage(newImage, spotId, dbUser.id)
+            await addImage(newImage, spotId, uid)
         }
         if(newImages.length !== 0 && (spot === null || spot?.main_image === undefined)){
             const images = await getImages(spotId)
@@ -129,7 +129,7 @@ function AddSpot() {
     }
 
     const onSubmit = async () => {
-        const dbUser = await getUser(user.email);
+        //@ts-ignore FIX1
         let spot: ISpot | IToDbSpot = {
             name: spotName,
             about: aboutSpot,
@@ -137,7 +137,7 @@ function AddSpot() {
             facebook: facbookPageSpot,
             lat: latLng[1],
             lng: latLng[0],
-            current_user_id: dbUser.id,
+            current_user_id: user!.uid,
             main_image: mainImage
         }
         if(checkValid()){
@@ -145,13 +145,13 @@ function AddSpot() {
                 spot = {...spot, id: spotId}
                 editSpot(spot)
                 //@ts-ignore TODO
-                addImages(spot.id, dbUser)
+                addImages(spot.id, user.uid)
             }
             else{
-                spot = {...spot, createdby: dbUser.id}
+                spot = {...spot, createdby: user!.uid}
                 await addSpot(spot)
                 const newSpot = await getSpot(spotName)
-                addImages(newSpot.id, dbUser)
+                addImages(newSpot.id, user!.uid)
             }
             history.push('/')
         }

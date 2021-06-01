@@ -1,4 +1,4 @@
-import { IImage, IImagePreUploade, ISpot, IToDbSpot, IUser } from './types/types';
+import { IImage, IImagePreUploade, ISpot, IToDbSpot } from './types/types';
 
 import {auth} from './firebase'
 
@@ -61,7 +61,7 @@ export const getImage = async (imageId: number) => {
     return image;
 }
 
-export const addImage = async (image: IImagePreUploade, spotId: number, userId: number) => {
+export const addImage = async (image: IImagePreUploade, spotId: number, userId: string) => {
     const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/addImage`, {
         method: 'post',
@@ -192,19 +192,19 @@ export const addUser = async (displayName: string, userEmail: string) => {
     return user[0]
 }
 
-export const updateUser = async (user: IUser) => {
-    const token = await auth.currentUser!.getIdToken(true)
-    await fetch(`${host}/updateUser`, {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            'user': user,
-            'token': token,
-        })
-    })
-    //const user = await response.json()
-    //return user[0]
-}
+//export const updateUser = async (user: IUser) => {
+//    const token = await auth.currentUser!.getIdToken(true)
+//    await fetch(`${host}/updateUser`, {
+//        method: 'post',
+//        headers: { 'Content-Type': 'application/json' },
+//        body: JSON.stringify({
+//            'user': user,
+//            'token': token,
+//        })
+//    })
+//    //const user = await response.json()
+//    //return user[0]
+//}
 
 export const getUsers = async () => {
     const response = await fetch(`${host}/getUsers`, {
@@ -215,7 +215,7 @@ export const getUsers = async () => {
     return users
 }
 
-export const getUserSpots = async (id: number) => {
+export const getUserSpots = async (id: string) => {
     const token = await auth.currentUser!.getIdToken(true)
     const response = await fetch(`${host}/getUserSpots`, {
         method: 'post',
@@ -241,7 +241,7 @@ export const restoreSpot = async (id: number) => {
     })
 }
 
-export const getUserImages = async (id: number) => {
+export const getUserImages = async (id: string) => {
     const token = await auth.currentUser!.getIdToken(true)
     const response = await fetch(`${host}/getUserImages`, {
         method: 'post',

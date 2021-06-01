@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import ImageGallery from './imageGallery'
 import '../styles/myContent.css'
-import {getUser, getUserSpots, getUserImages} from '../api-service'
+
+import {IImage, ISpot} from '../types/types'
+import React, { useContext, useEffect, useState } from 'react';
+import {getUserImages, getUserSpots} from '../api-service'
+
+import ImageGallery from './imageGallery'
 import SpotCreatedByUserEntry from './spotCreatedByUserEntry';
-import {ISpot, IImage} from '../types/types'
+import {UserContext} from '../providers/userProvider';
 
-interface IProps {
-    user: any;
-}
-
-const MyContent = ({user}: IProps) => {
+const MyContent = () => {
 
     const [spotsCreatedByUser, setSpotsCratedByUser] = useState<ISpot[]>([]);
     const [userImages, setUserImages] = useState<IImage[]>([]);
 
+    const user = useContext(UserContext)
+    
     useEffect(() => {
         const fetchData = async () => {
-            const dbUser = await getUser(user.email);
-            const userSpots = await getUserSpots(dbUser.id)
-            const userImages = await getUserImages(dbUser.id)
+            const userSpots = await getUserSpots(user!.uid)
+            const userImages = await getUserImages(user!.uid)
             if(userSpots){
                 setSpotsCratedByUser(userSpots);
             }
@@ -26,7 +26,7 @@ const MyContent = ({user}: IProps) => {
                 setUserImages(userImages)
             }
         }
-        if(user) {
+        if(user !== null) {
             fetchData() 
         }
     }, [user])

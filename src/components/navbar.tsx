@@ -75,7 +75,7 @@ const SBNavbar = () =>  {
                         {user ? 
                             // @ts-ignore: Object is possibly 'null'
                             // Fix the above problems
-                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user.displayName}{<img className="navbarIcon" src={userIcon}/>}</Link>
+                            <Link to="/mypage" className="nav-link" style={{color: "white"}}>{user.displayName}{<img className="navbarIcon" src={userIcon} alt={"bruker ikon"}/>}</Link>
                             :     
                             <div onClick={() => setShowLogInModal(true)} className="nav-link link-text" style={{color: "white"}}>Logg inn</div>
                     }

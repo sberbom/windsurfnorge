@@ -6,6 +6,9 @@
 .home-center-button > * > .btn {
     width: 50vh;
 }
+.image-gallery-container-home {
+    margin: 5rem 5vw  5rem 5vw;
+}
 
 .home-map-container {
     height: 75vh;
@@ -19,6 +22,10 @@
         margin: 5vw;
     }
 
+    .home-center-button {
+        padding-top: 0px;
+    }
+    
     .home-map-container {
         height: 50vh;
         margin-top: 2vh;

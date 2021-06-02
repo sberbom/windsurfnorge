@@ -2,8 +2,8 @@ import { IImage, IImagePreUploade, ISpot, IToDbSpot } from './types/types';
 
 import {auth} from './firebase'
 
-//const host = 'http://localhost:3001';
-const host = 'https://windsurfnorge-server.herokuapp.com'
+const host = 'http://localhost:3001';
+//const host = 'https://windsurfnorge-server.herokuapp.com'
 
 export const getAllSpots = async () => {
     const spotResponse = await fetch(`${host}/spots`, {
@@ -56,6 +56,15 @@ export const getImage = async (imageId: number) => {
         body: JSON.stringify({
             'id': imageId 
         })
+    })
+    const image = imagesResponse.json()
+    return image;
+}
+
+export const getAllImages = async () => {
+    const imagesResponse = await fetch(`${host}/allImages`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
     })
     const image = imagesResponse.json()
     return image;

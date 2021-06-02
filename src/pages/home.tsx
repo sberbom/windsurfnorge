@@ -1,22 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import {getAllSpots} from '../api-service';
-import { Button } from 'react-bootstrap';
+import '../styles/home.css';
+
 import { Link, withRouter } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {getAllImages, getAllSpots} from '../api-service';
+
+import { Button } from 'react-bootstrap';
+import CardCarousel from '../components/cardCarousel'
 import Header from '../components/header';
+import { IImage } from '../types/types';
+import ImageGallery from '../components/imageGallery'
 import Map from '../components/map';
 import Title from '../components/title';
-import CardCarousel from '../components/cardCarousel'
-import '../styles/home.css';
 
 function Home() {
     const [spots, setSpots] = useState([])
+    const [images, setImages] = useState<IImage[]>([])
 
     document.title = `Windsurf Norge`
     
     useEffect(() => {
         const fetchData = async () => {
             const allSpots = await getAllSpots();
+            const allImages = await getAllImages();
+            console.log(allImages)
             setSpots(allSpots);
+            setImages(allImages)
         }
         fetchData();
     }, [])
@@ -37,6 +45,9 @@ function Home() {
             </div>
             <div className="home-map-container">
                 <Map spots={spots}/>
+            </div>
+            <div className="image-gallery-container-home">
+                <ImageGallery images={images}/>
             </div>
         </div>
     )

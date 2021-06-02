@@ -22,7 +22,8 @@ interface IProps {
 function SpotInfo({spot}: IProps) {
 
     const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
-    const [showLogInModal, setShowLogInModal] = useState(false);
+    const [showLogInModalDeleteSpot, setShowLogInModalDeleteSpot] = useState(false);
+    const [showLogInModalRating, setShowLogInModalRating] = useState(false);
     const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
     const user = useContext(UserContext)
 
@@ -30,7 +31,7 @@ function SpotInfo({spot}: IProps) {
 
     const onDeleteSpotClick = () => {
         if(user === null){
-            setShowLogInModal(true);
+            setShowLogInModalDeleteSpot(true);
         }
         else if(user && !user.emailVerified){
             setShowEmailVerificationModal(true);
@@ -45,7 +46,12 @@ function SpotInfo({spot}: IProps) {
     }
 
     const onUpdateRating = (rating: number) => {
-        updateRating(spot.id, rating, user!.email!);
+        if(user === null) {
+            setShowLogInModalRating(true);
+        }
+        else {
+            updateRating(spot.id, rating, user!.email!);
+        }
     }
 
     if(!spot.about && !spot.approach && !spot.facebook) {
@@ -69,8 +75,10 @@ function SpotInfo({spot}: IProps) {
                 </div>*/}
                 <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
                     {/*@ts-ignore FIX*/}
-                <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
-                <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
+                <LogInModal show={showLogInModalDeleteSpot} onHide={() => {setShowLogInModalDeleteSpot(false); history.push('/')}}/>
+                    {/*@ts-ignore FIX*/}
+                <LogInModal show={showLogInModalRating} onHide={() => {setShowLogInModalRating(false)}}/>
+                <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user}/>
             </div>
         )
     }
@@ -115,9 +123,11 @@ function SpotInfo({spot}: IProps) {
                 <p className="created-by">{`Opprettet av: ${spot.createdby ? spot.displayname: "Windsurf Norge"}`}</p>
             </div>*/}
             <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
-            {/*@ts-ignore FIX*/}
-            <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
-            <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
+                {/*@ts-ignore FIX*/}
+            <LogInModal show={showLogInModalDeleteSpot} onHide={() => {setShowLogInModalDeleteSpot(false); history.push('/')}}/>
+                {/*@ts-ignore FIX*/}
+            <LogInModal show={showLogInModalRating} onHide={() => {setShowLogInModalRating(false)}}/>
+            <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user}/>
         </div>
     )
 }

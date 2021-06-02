@@ -22,7 +22,6 @@ function Home() {
         const fetchData = async () => {
             const allSpots = await getAllSpots();
             const allImages = await getAllImages();
-            console.log(allImages)
             setSpots(allSpots);
             setImages(allImages)
         }

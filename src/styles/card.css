@@ -3,12 +3,20 @@
     margin: auto;
 }
 
+.card:hover {
+    cursor: pointer;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.2);
+}
+
 .card-title {
     height: 10%;
 }
 
 .card-text {
-    height: calc(70% - 1.75rem);
+    height: 130px;
     overflow: hidden;
 }
 
@@ -20,9 +28,15 @@
     margin: auto;
 }
 
-.card-img-top {
+.card-image-container {
+    overflow: hidden;
     height: 190px;
+}
+
+.card-img-top {
     object-fit: cover;
+    transition: transform .5s ease;
+    height: 190px;
 }
 
 .rating-img-card{

@@ -1,10 +1,11 @@
-import React from 'react';
-import {Card, Button} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
 import '../styles/card.css'
+
+import { Card } from 'react-bootstrap'
 import Rating from 'react-rating'
+import React from 'react';
 import star from '../images/star.png'
 import star_empty from '../images/star_empty.png'
+import { useHistory } from "react-router-dom";
 
 interface props {
     title: string;
@@ -15,11 +16,20 @@ interface props {
     onDragStart?: (e: Event) => void;
 }
 
-function SBCard({title, text, button, image, rating}:props) {
+const  SBCard = ({title, text, image, rating}:props) => {
+
+    const history = useHistory()
+    
+    const onCardClick = () => {
+        history.push(`/spot?spotName=${title}`);
+    }
+
     return(
         <div className="card-container">
-            <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={image} alt="image of spot" />
+            <Card style={{ width: '18rem' }} onClick={onCardClick}>
+            <div className="card-image-container">
+                <Card.Img variant="top" src={image} alt="image of spot" />
+            </div>
             <Card.Body>
                 <Card.Title className="no-overflow">{title}</Card.Title>
                 <Card.Text>
@@ -33,7 +43,6 @@ function SBCard({title, text, button, image, rating}:props) {
                     <br/>
                     {text}
                 </Card.Text>
-                <Link to={`/spot?spotName=${title}`} ><Button variant="primary">{button}</Button></Link>
             </Card.Body>
             </Card>
         </div>

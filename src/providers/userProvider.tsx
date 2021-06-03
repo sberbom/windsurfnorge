@@ -29,7 +29,6 @@ const UserProvider = ({children}:any) => {
     useEffect(() => {
         const fetchDbUser = async () => {
             const dbUserResponse = await getDbUser(user!.uid);
-            console.log(dbUserResponse);
             if(dbUserResponse === undefined) {
                 const dbUserCreated = await createDbUser(user!.uid, user!.displayName!);
                 setDbUser(dbUserCreated);

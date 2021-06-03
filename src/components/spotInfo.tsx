@@ -53,8 +53,8 @@ function SpotInfo({spot}: IProps) {
             updateRating(spot.id, rating, user.user!.uid!);
         }
     }
-    
-    if(!spot.about && !spot.approach && !spot.facebook) {
+
+    if(!spot.about && !spot.approach && !spot.facebook && !spot.windsensor) {
         return(
             <div className="spotInfo-container">
                 <div className="options-container">
@@ -100,7 +100,7 @@ function SpotInfo({spot}: IProps) {
             {spot.about && <p className="pre-line">{spot.about}</p>}
             {spot.approach &&
                 <> 
-                    <h2>Annokmst</h2>
+                    <h2>Adkomst</h2>
                     <p className="pre-line">{spot.approach}</p>
                 </>
             }
@@ -108,6 +108,12 @@ function SpotInfo({spot}: IProps) {
                 <>
                     <h2>Facebook</h2>
                     <a href={spot.facebook} target="_blank" rel="noopener noreferrer" >{spot.facebook}</a>
+                </>
+            }
+            {spot.windsensor &&
+                <>
+                    <h2 className="margin-top-1">Vindmåler</h2>
+                    <a href={spot.windsensor} target="_blank" rel="noopener noreferrer" >{spot.windsensor}</a>
                 </>
             }
             <div className="rating-container">

@@ -26,7 +26,7 @@ function AddSpot() {
     const [spotId, setSpotId] = useState(0);
     const [spot, setSpot] = useState<ISpot | undefined>(undefined)
     const [images, setImages] = useState<IImage[]>([])
-    //const [newImages, setNewImages] = useState([]);
+    const [windsensor, setWindsensor] = useState("")
 
     const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
@@ -57,6 +57,7 @@ function AddSpot() {
                 setAboutSpot(spot.about);
                 setApproachSpot(spot.approach);
                 setFacebookPageSpot(spot.facebook)
+                setWindsensor(spot.windsensor)
                 setLatLng([spot.lng, spot.lat])
                 const address = await getAddress(spot.lat, spot.lng)
                 setAddress(address);
@@ -130,14 +131,15 @@ function AddSpot() {
 
     const onSubmit = async () => {
         let spot: ISpot | IToDbSpot = {
-            name: spotName,
+            name: spotName.trim(),
             about: aboutSpot,
             approach: approachSpot,
             facebook: facbookPageSpot,
             lat: latLng[1],
             lng: latLng[0],
             current_user_id: user.user!.uid,
-            main_image: mainImage
+            main_image: mainImage,
+            windsensor: windsensor,
         }
         if(checkValid()){
             if(isEdit){
@@ -175,11 +177,13 @@ function AddSpot() {
                                 onAboutChange={setAboutSpot}
                                 onApproachChange={setApproachSpot}
                                 onFacebookPageChange = {setFacebookPageSpot}
+                                onWindsensorChange = {setWindsensor}
                                 address = {address}
                                 name= {spotName}
                                 about = {aboutSpot}
                                 approach = {approachSpot}
                                 facebook = {facbookPageSpot}
+                                windsensor = {windsensor}
                                 isEdit ={isEdit}
                                 mainImage = {mainImage}
                                 setMainImage = {setMainImage}

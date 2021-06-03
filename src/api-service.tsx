@@ -119,6 +119,7 @@ export const addSpot = async (spot: ISpot | IToDbSpot) => {
             //@ts-ignore
             'created_by': spot.createdby,
             'main_image': spot.main_image,
+            'windsensor': spot.windsensor,
             'token': token,
         })
     })
@@ -141,6 +142,7 @@ export const editSpot = async (spot: ISpot | IToDbSpot, uid:string) => {
             'lat': spot.lat,
             'lng': spot.lng,
             'main_image': spot.main_image,
+            'windsensor': spot.windsensor,
             'token': token,
             'current_user_id': uid,
         })

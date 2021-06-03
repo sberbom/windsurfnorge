@@ -13,6 +13,7 @@ interface props {
     approach: string;
     address: string;
     facebook: string;
+    windsensor: string;
     setImages: any;
     mainImage: any;
     images: IImage[];
@@ -24,6 +25,7 @@ interface props {
     onAboutChange: (about: string) => void;
     onApproachChange: (approach: string) => void;
     onFacebookPageChange: (facebookPage: string) => void;
+    onWindsensorChange: (windsensor: string) => void;
 }
 
 function AddSpotForm(props:props) {
@@ -40,7 +42,7 @@ function AddSpotForm(props:props) {
             </Form.Group>
 
             <Form.Group controlId="exampleForm.ControlTextarea3">
-                <Form.Label>Annkomst</Form.Label>
+                <Form.Label>Adkomst</Form.Label>
                 <Form.Control as="textarea" rows={3} value={props.approach} onChange={(event) => props.onApproachChange(event.target.value)} />
             </Form.Group>
 
@@ -52,6 +54,11 @@ function AddSpotForm(props:props) {
             <Form.Group controlId="exampleForm.ControlTextarea6">
                 <Form.Label>Facbook side</Form.Label>
                 <Form.Control as="textarea" rows={1} value={props.facebook} onChange={(event) => props.onFacebookPageChange(event.target.value)}/>
+            </Form.Group>
+            
+            <Form.Group controlId="exampleForm.ControlTextarea6">
+                <Form.Label>Link til vindmåler</Form.Label>
+                <Form.Control as="textarea" rows={1} value={props.windsensor} onChange={(event) => props.onWindsensorChange(event.target.value)}/>
             </Form.Group>
 
             <label className="form-label">Last opp bilder</label>

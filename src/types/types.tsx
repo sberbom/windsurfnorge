@@ -15,6 +15,7 @@ export interface ISpot {
     big_image: string;
     small_image: string;
     displayname: string;
+    windsensor: string;
 }
 
 export interface IToDbSpot {
@@ -26,6 +27,7 @@ export interface IToDbSpot {
     lng: number;
     current_user_id: string;
     main_image: string | undefined;
+    windsensor: string;
 }
 
 export interface IModal {

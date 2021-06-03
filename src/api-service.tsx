@@ -2,8 +2,8 @@ import { IImage, IImagePreUploade, ISpot, IToDbSpot } from './types/types';
 
 import {auth} from './firebase'
 
-//const host = 'http://localhost:3001';
-const host = 'https://windsurfnorge-server.herokuapp.com'
+const host = 'http://localhost:3001';
+//const host = 'https://windsurfnorge-server.herokuapp.com'
 
 export const getAllSpots = async () => {
     const spotResponse = await fetch(`${host}/spots`, {
@@ -119,6 +119,7 @@ export const addSpot = async (spot: ISpot | IToDbSpot) => {
             //@ts-ignore
             'created_by': spot.createdby,
             'main_image': spot.main_image,
+            'windsensor': spot.windsensor,
             'token': token,
         })
     })
@@ -141,6 +142,7 @@ export const editSpot = async (spot: ISpot | IToDbSpot) => {
             'lat': spot.lat,
             'lng': spot.lng,
             'main_image': spot.main_image,
+            'windsensor': spot.windsensor,
             'token': token,
         })
     })

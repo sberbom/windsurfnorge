@@ -1,3 +1,25 @@
 .empty {
     height: 100vh;
 }
+
+.add-spot-button {
+    text-align: center;
+    margin-bottom: 3vh;
+}
+
+.add-spot-button > * > .btn {
+    width: 50vh;
+}
+
+@media only screen and (max-width: 700px) {
+    .add-spot-button > * > .btn {
+        width: 286px;
+        padding: 0.5rem 0rem;
+        margin: 10px;
+    }
+
+    .add-spot-button {
+        padding-top: 0px;
+    }
+    
+}

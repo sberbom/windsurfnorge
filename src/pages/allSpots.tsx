@@ -1,13 +1,14 @@
 import '../styles/allSpots.css'
 
+import {Link, withRouter} from 'react-router-dom'
 import React, {useEffect, useState} from 'react';
 
+import { Button } from 'react-bootstrap';
 import CardList from '../components/cardList'
 import Header from '../components/header'
 import { ISpot } from '../types/types';
 import Sortbar from '../components/sortbar';
 import {getAllSpots} from '../api-service';
-import {withRouter} from 'react-router-dom'
 
 function AllSpots() {
     const [spots, setSpots] = useState([]);
@@ -54,6 +55,9 @@ function AllSpots() {
                 onSearchWordChange={setSearchWord}
                 onSortbyChange={setSortBy}
             />
+            <div className="add-spot-button">
+                <Link to="/addSpot"><Button className="add-spot-button  ">Legg til spot</Button></Link>
+            </div>
             {spots.length === 0 ?
                 <div className="empty"></div>
                 :

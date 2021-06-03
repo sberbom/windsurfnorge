@@ -1,9 +1,8 @@
 .sortbar-container {
-    background-color: #f7f9fa;
     display: flex;
     justify-content: space-between;
     padding: 0.1rem 5vw;
-    margin-bottom: 5vh;
+    margin-bottom: 3vh;
     padding-top: 1rem;
 }
 

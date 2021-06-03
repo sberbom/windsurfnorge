@@ -1,16 +1,18 @@
-import React,  {useState} from 'react';
+import '../styles/logIn.css';
+
 import { Button, Form, Modal } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
-import {signIn, 
-    //signInWithGoogle, 
-    sendPasswordResetEmail} from '../utils'
-import { useHistory } from "react-router-dom";
+import React,  {useState} from 'react';
+import {
+    sendPasswordResetEmail,
+    signIn
+} from '../utils'
+
+import {IModal} from '../types/types'
 // import signInWithGoogleButton from '../images/signInWithGoogle.png'
 // import continueWithFacebookButton from '../images/continuteWithFacebook.png'
 import Input from './input'
-import '../styles/logIn.css';
-import {IModal} from '../types/types'
-
+import { useHistory } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 
 const LogInModal = (props: IModal) => {
     const [email, setEmail] = useState('');
@@ -102,7 +104,7 @@ const LogInModal = (props: IModal) => {
         </Modal.Body>
         <Modal.Footer>
             <Button variant="primary" onClick={onSignIn}>Logg inn</Button>
-            <Button variant="primary" onClick={onRegistrer}>Registrer</Button>            
+            <Button variant="info" onClick={onRegistrer}>Registrer</Button>            
             <Button onClick={props.onHide}>Avbryt</Button>
         </Modal.Footer>
         </Modal>

@@ -130,7 +130,7 @@ function AddSpot() {
 
     const onSubmit = async () => {
         let spot: ISpot | IToDbSpot = {
-            name: spotName,
+            name: spotName.trim(),
             about: aboutSpot,
             approach: approachSpot,
             facebook: facbookPageSpot,

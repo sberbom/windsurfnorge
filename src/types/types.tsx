@@ -15,6 +15,7 @@ export interface ISpot {
     big_image: string;
     small_image: string;
     displayname: string;
+    uid: string;
 }
 
 export interface IToDbSpot {
@@ -33,6 +34,10 @@ export interface IModal {
     onHide: () => void;
 }
 
+export interface IDbUser {
+    uid: string;
+    displayName: string;
+}
 
 export interface IPos {
     lat: number;

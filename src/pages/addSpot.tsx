@@ -71,13 +71,13 @@ function AddSpot() {
     const history = useHistory()
 
     useEffect(() => {
-        if(user === null){
+        if(user.user === null){
             setShowLogInModal(true);
         }
         else{
             setShowLogInModal(false);
         }
-        if(user && !user.emailVerified){
+        if(user.user && !user.user!.emailVerified){
             setShowEmailVerificationModal(true);
         }
     }, [user] )
@@ -136,21 +136,21 @@ function AddSpot() {
             facebook: facbookPageSpot,
             lat: latLng[1],
             lng: latLng[0],
-            current_user_id: user!.uid,
+            current_user_id: user.user!.uid,
             main_image: mainImage
         }
         if(checkValid()){
             if(isEdit){
                 spot = {...spot, id: spotId}
-                editSpot(spot)
-                //@ts-ignore TODO
-                addImages(spot.id, user.uid)
+                editSpot(spot, user.user!.uid)
+                //@ts-ignore
+                addImages(spot.id, user.user!.uid)
             }
             else{
-                spot = {...spot, createdby: user!.uid}
+                spot = {...spot, createdby: user.user!.uid}
                 await addSpot(spot)
                 const newSpot = await getSpot(spotName)
-                addImages(newSpot.id, user!.uid)
+                addImages(newSpot.id, user.user!.uid)
             }
             history.push('/')
         }
@@ -193,7 +193,7 @@ function AddSpot() {
                     </div>
                     {/*@ts-ignore TODO*/}
                     <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
-                    <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user}/>
+                    <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user!.user!}/>
                 </>
             }
         </div>

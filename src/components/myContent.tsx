@@ -18,8 +18,8 @@ const MyContent = () => {
     
     useEffect(() => {
         const fetchData = async () => {
-            const userSpots = await getUserSpots(user!.uid)
-            const userImages = await getUserImages(user!.uid)
+            const userSpots = await getUserSpots(user.user!.uid)
+            const userImages = await getUserImages(user.user!.uid)
             if(userSpots){
                 setSpotsCratedByUser(userSpots);
             }
@@ -27,7 +27,7 @@ const MyContent = () => {
                 setUserImages(userImages)
             }
         }
-        if(user !== null) {
+        if(user.user !== null) {
             fetchData() 
         }
     }, [user])

@@ -7,6 +7,7 @@ import {Button} from 'react-bootstrap'
 import Input from './input'
 import ReAuthenticateModal from './reAuthenticateModal';
 import {UserContext} from '../providers/userProvider';
+import { updateDbDisplayName } from '../api-service';
 import { useHistory } from "react-router-dom";
 
 const MyInfo = () => {
@@ -27,10 +28,10 @@ const MyInfo = () => {
 
     useEffect(() => {
         const setUserState = () => {
-            setUsername(user!.displayName!);
-            setEmail(user!.email!)
+            setUsername(user.user!.displayName!);
+            setEmail(user.user!.email!)
         }
-        if(user !== null) {
+        if(user.user !== null) {
             setUserState();
         }
     },[user])
@@ -45,8 +46,9 @@ const MyInfo = () => {
                 return;
             }
             try{
-                if (user.displayName !== username) {
-                    updateUsername(user, username)
+                if (user.user!.displayName !== username) {
+                    updateUsername(user!.user!, username)
+                    updateDbDisplayName({uid: user!.user!.uid, displayName: username})
                 }
                 history.push("/")
             }
@@ -62,13 +64,13 @@ const MyInfo = () => {
         }
         else {
             try{
-                await reAuthenticateUser(user, password)
-                if(user.email !== email) {
-                    updateEmail(user, email)
+                await reAuthenticateUser(user.user!, password)
+                if(user.user!.email !== email) {
+                    updateEmail(user.user!, email)
                 }
                 if(newPassword !== "") {
                     if(newPassword === newPasswordRepet){
-                        updatePassword(user, newPassword)
+                        updatePassword(user.user!, newPassword)
                     }
                     else{
                         alert("Passordene må være like")

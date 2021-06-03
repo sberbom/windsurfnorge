@@ -1,9 +1,9 @@
-import { IImage, IImagePreUploade, ISpot, IToDbSpot } from './types/types';
+import { IDbUser, IImage, IImagePreUploade, ISpot, IToDbSpot } from './types/types';
 
 import {auth} from './firebase'
 
-//const host = 'http://localhost:3001';
-const host = 'https://windsurfnorge-server.herokuapp.com'
+const host = 'http://localhost:3001';
+//const host = 'https://windsurfnorge-server.herokuapp.com'
 
 export const getAllSpots = async () => {
     const spotResponse = await fetch(`${host}/spots`, {
@@ -126,7 +126,7 @@ export const addSpot = async (spot: ISpot | IToDbSpot) => {
     return returnSpot;
 }
 
-export const editSpot = async (spot: ISpot | IToDbSpot) => {
+export const editSpot = async (spot: ISpot | IToDbSpot, uid:string) => {
     const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/editSpot`, {
         method: 'post',
@@ -142,6 +142,7 @@ export const editSpot = async (spot: ISpot | IToDbSpot) => {
             'lng': spot.lng,
             'main_image': spot.main_image,
             'token': token,
+            'current_user_id': uid,
         })
     })
 }
@@ -158,15 +159,13 @@ export const deleteSpot = async (id: number) => {
     })
 }
 
-export const updateRating = async (spotid: number, rating: number, userEmail: string) => {
+export const updateRating = async (spotid: number, rating: number, uid: string) => {
     const token = await auth.currentUser!.getIdToken(true)
-    const user = await getUser(userEmail);
-    const userid = user.id
     await fetch(`${host}/rating`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            'user_id': userid,
+            'user_id': uid,
             'spot_id': spotid,
             'rating': rating,
             'token': token,
@@ -174,13 +173,13 @@ export const updateRating = async (spotid: number, rating: number, userEmail: st
     })
 }
 
-export const getUser = async (userEmail:string) => {
+export const getDbUser = async (uid:string) => {
     const token = await auth.currentUser!.getIdToken(true)
     const response = await fetch(`${host}/getUser`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            'user_email': userEmail,
+            'uid': uid,
             'token': token
         })
     })
@@ -188,32 +187,30 @@ export const getUser = async (userEmail:string) => {
     return user[0]
 }
 
-//export const addUser = async (displayName: string, userEmail: string) => {
-//    const response = await fetch(`${host}/addUser`, {
-//        method: 'post',
-//        headers: { 'Content-Type': 'application/json' },
-//        body: JSON.stringify({
-//            'user_email': userEmail,
-//            'displayName': displayName
-//        })
-//    })
-//    const user = await response.json()
-//    return user[0]
-//}
+export const createDbUser = async (uid: string, displayName: string ) => {
+    const response = await fetch(`${host}/addUser`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'uid': uid,
+            'displayName': displayName
+        })
+    })
+    const user = await response.json()
+    return user[0]
+}
 
-//export const updateUser = async (user: IUser) => {
-//    const token = await auth.currentUser!.getIdToken(true)
-//    await fetch(`${host}/updateUser`, {
-//        method: 'post',
-//        headers: { 'Content-Type': 'application/json' },
-//        body: JSON.stringify({
-//            'user': user,
-//            'token': token,
-//        })
-//    })
-//    //const user = await response.json()
-//    //return user[0]
-//}
+export const updateDbDisplayName = async (user: IDbUser) => {
+    const token = await auth.currentUser!.getIdToken(true)
+    await fetch(`${host}/updateUser`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'user': user,
+            'token': token,
+        })
+    })
+}
 
 export const getUsers = async () => {
     const response = await fetch(`${host}/getUsers`, {

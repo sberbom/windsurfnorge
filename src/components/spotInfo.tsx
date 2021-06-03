@@ -112,7 +112,7 @@ function SpotInfo({spot}: IProps) {
             }
             {spot.windsensor &&
                 <>
-                    <h2>Vindmåler</h2>
+                    <h2 className="margin-top-1">Vindmåler</h2>
                     <a href={spot.windsensor} target="_blank" rel="noopener noreferrer" >{spot.windsensor}</a>
                 </>
             }

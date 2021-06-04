@@ -1,9 +1,11 @@
+import '../styles/mypage.css'
+
 import React, {useContext} from 'react';
+
 import Header from '../components/header'
 import RegisterInfo from '../components/registerinfo'
 import {UserContext} from '../providers/userProvider';
 import { useHistory } from "react-router-dom";
-import '../styles/mypage.css'
 
 const Register = () => {
 
@@ -13,7 +15,7 @@ const Register = () => {
     document.title = `Windsurf Norge - Ny bruker`
 
 
-    if(user) {
+    if(user.user) {
         history.push("/mypage")
     }
 

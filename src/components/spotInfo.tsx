@@ -33,7 +33,7 @@ function SpotInfo({spot}: IProps) {
         if(user === null){
             setShowLogInModalDeleteSpot(true);
         }
-        else if(user && !user.emailVerified){
+        else if(user && !user.user!.emailVerified){
             setShowEmailVerificationModal(true);
         }
         else {
@@ -50,7 +50,7 @@ function SpotInfo({spot}: IProps) {
             setShowLogInModalRating(true);
         }
         else {
-            updateRating(spot.id, rating, user!.email!);
+            updateRating(spot.id, rating, user.user!.uid!);
         }
     }
 
@@ -70,15 +70,15 @@ function SpotInfo({spot}: IProps) {
                     </DropdownButton>
                 </div>
                 <p>Vi har ingen beskrivelse av denne spotten. Har du vært her? Legg gjerne inn infomasjon om spotten!</p>
-                {/**<div className="created-by-container">
+                <div className="created-by-container">
                     <p className="created-by">{`Opprettet av: ${spot.createdby !== null ? spot.displayname : "Windsurf Norge"}`}</p>
-                </div>*/}
+                </div>
                 <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
                     {/*@ts-ignore FIX*/}
                 <LogInModal show={showLogInModalDeleteSpot} onHide={() => {setShowLogInModalDeleteSpot(false); history.push('/')}}/>
                     {/*@ts-ignore FIX*/}
                 <LogInModal show={showLogInModalRating} onHide={() => {setShowLogInModalRating(false)}}/>
-                <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user}/>
+                <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user!.user!}/>
             </div>
         )
     }
@@ -125,15 +125,15 @@ function SpotInfo({spot}: IProps) {
                     onChange={onUpdateRating}
                 />
             </div>
-            {/**<div className="created-by-container">
+            <div className="created-by-container">
                 <p className="created-by">{`Opprettet av: ${spot.createdby ? spot.displayname: "Windsurf Norge"}`}</p>
-            </div>*/}
+            </div>
             <DeleteSpotModal show={showDeleteSpotModal} onHide={() => setShowDeleteSpotModal(false)} spot={spot} />
                 {/*@ts-ignore FIX*/}
             <LogInModal show={showLogInModalDeleteSpot} onHide={() => {setShowLogInModalDeleteSpot(false); history.push('/')}}/>
                 {/*@ts-ignore FIX*/}
             <LogInModal show={showLogInModalRating} onHide={() => {setShowLogInModalRating(false)}}/>
-            <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user}/>
+            <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user!.user!}/>
         </div>
     )
 }

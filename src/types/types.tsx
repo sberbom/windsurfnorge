@@ -63,4 +63,29 @@ export type UserContextState = {
     identifier: string;
     displayname: string;
 }
+
+export type WindDirectionsValues = "good" | "ok"  | "bad"
+
+export interface IWindDirections {
+    SV: WindDirectionsValues;
+    V: WindDirectionsValues;
+    NV: WindDirectionsValues;
+    N: WindDirectionsValues;
+    NØ: WindDirectionsValues;
+    Ø: WindDirectionsValues;
+    SØ: WindDirectionsValues;
+    S: WindDirectionsValues;
+}
+
+export const defaultWindDirections:IWindDirections = {
+    SV: "bad",
+    V: "bad",
+    NV: "bad",
+    N: "bad",
+    NØ: "bad",
+    Ø: "bad",
+    SØ: "bad",
+    S: "bad",
+}
+
 export {}

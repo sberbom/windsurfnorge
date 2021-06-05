@@ -1,7 +1,7 @@
 import '../styles/addSpot.css';
 import '../styles/spot.css';
 
-import {IImage, IImagePreUploade, IPos, ISpot, IToDbSpot} from '../types/types'
+import {IImage, IImagePreUploade, IPos, ISpot, IToDbSpot, IWindDirections, defaultWindDirections} from '../types/types'
 import React, { useContext, useEffect, useState } from 'react';
 import {addImage, addSpot, deleteImage, editSpot, getImage, getImages, getSpot, updateMainImage} from '../api-service'
 
@@ -27,6 +27,7 @@ function AddSpot() {
     const [spot, setSpot] = useState<ISpot | undefined>(undefined)
     const [images, setImages] = useState<IImage[]>([])
     const [windsensor, setWindsensor] = useState("")
+    const [windDirections, setWindDirections] = useState<IWindDirections>(defaultWindDirections)
 
     const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
@@ -190,6 +191,8 @@ function AddSpot() {
                                 onDeleteImage = {onDeleteImage}
                                 images = {images}
                                 setImages = {setImages}
+                                windDirections = {windDirections}
+                                onWindDirectionsChange = {setWindDirections}
                                 //newImages = {newImages}
                                 //setNewImages = {setNewImages}
                             />

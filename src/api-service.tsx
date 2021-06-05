@@ -1,9 +1,9 @@
-import { IDbUser, IImage, IImagePreUploade, ISpot, IToDbSpot } from './types/types';
+import { IDbUser, IImage, IImagePreUploade, ISpot, IToDbSpot, IWindDirections } from './types/types';
 
 import {auth} from './firebase'
 
-//const host = 'http://localhost:3001';
-const host = 'https://windsurfnorge-server.herokuapp.com'
+const host = 'http://localhost:3001';
+//const host = 'https://windsurfnorge-server.herokuapp.com'
 
 export const getAllSpots = async () => {
     const spotResponse = await fetch(`${host}/spots`, {
@@ -261,4 +261,29 @@ export const getUserImages = async (id: string) => {
     })
     const images = await response.json()
     return images
+}
+
+export const getWindDirections = async (id: string) => {
+    const response = await fetch(`${host}/getWindDirections`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'spot_id': id,
+        })
+    })
+    const windDirections = await response.json()
+    return windDirections; 
+}
+
+export const addWindDirections = async (id: string, windDirections: IWindDirections) => {
+    const token = await auth.currentUser!.getIdToken(true)
+    await fetch(`${host}/addWindDirections`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'spot_id': id,
+            'wind_directions' : windDirections,
+            'token': token
+        })
+    })
 }

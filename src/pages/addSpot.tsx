@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import {addImage, addSpot, deleteImage, editSpot, getImage, getImages, getSpot, updateMainImage} from '../api-service'
 
 import AddSpotForm from '../components/addSpotForm';
-import EmailVerificationModal from '../components/emailVerificationModal'
+//import EmailVerificationModal from '../components/emailVerificationModal'
 import Header from '../components/header';
 import LogInModal from '../components/logInModal'
 import Map from '../components/map';
@@ -34,7 +34,7 @@ function AddSpot() {
     const [mainImage, setMainImage] = useState(undefined);
 
     const [showLogInModal, setShowLogInModal] = useState(false);
-    const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
+    //const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
     const user = useContext(UserContext)
 
     const [isLoading, setIsLoading] = useState(true)
@@ -78,9 +78,9 @@ function AddSpot() {
         else{
             setShowLogInModal(false);
         }
-        if(user.user && !user.user!.emailVerified){
-            setShowEmailVerificationModal(true);
-        }
+        //if(user.user && !user.user!.emailVerified){
+        //    setShowEmailVerificationModal(true);
+        //}
     }, [user] )
 
     const dragEnd = async (pos: IPos) => {
@@ -197,7 +197,7 @@ function AddSpot() {
                     </div>
                     {/*@ts-ignore TODO*/}
                     <LogInModal show={showLogInModal} onHide={() => {setShowLogInModal(false); history.push('/')}}/>
-                    <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user!.user!}/>
+                    {/**<EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowLogInModal(false); history.push('/')}} user={user!.user!}/>*/}
                 </>
             }
         </div>

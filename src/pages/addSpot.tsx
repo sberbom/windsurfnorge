@@ -3,7 +3,7 @@ import '../styles/spot.css';
 
 import {IImage, IImagePreUploade, IPos, ISpot, IToDbSpot, IWindDirections, defaultWindDirections} from '../types/types'
 import React, { useContext, useEffect, useState } from 'react';
-import {addImage, addSpot, addWindDirections, deleteImage, editSpot, getImage, getImages, getSpot, getWindDirections, updateMainImage} from '../api-service'
+import {addImage, addSpot, addWindDirections, deleteImage, editSpot, getImage, getImages, getSpot, getWindDirections, updateMainImage, updateWindDirections} from '../api-service'
 
 import AddSpotForm from '../components/addSpotForm';
 import EmailVerificationModal from '../components/emailVerificationModal'
@@ -28,6 +28,7 @@ function AddSpot() {
     const [images, setImages] = useState<IImage[]>([])
     const [windsensor, setWindsensor] = useState("")
     const [windDirections, setWindDirections] = useState<IWindDirections>(defaultWindDirections)
+    const [windDirectionsExists, setWindDirectionsExists] = useState(false);
 
     const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
@@ -65,7 +66,10 @@ function AddSpot() {
                 setAddress(address);
                 setImages(images)
                 setMainImage(spot.main_image);
-                setWindDirections(windDirections);
+                if(windDirections) {
+                    setWindDirections(windDirections);
+                    setWindDirectionsExists(true);
+                }
             }
             setIsLoading(false)
         }
@@ -132,6 +136,27 @@ function AddSpot() {
         }
     }
 
+    const isWindDirectionsSet = (windDirections: IWindDirections) => {
+        let isChanged = false;
+        //@ts-ignore
+        Object.values(windDirections).forEach(windDirection => {
+            if(windDirection === "good" || windDirection === "ok"){
+                isChanged = true;
+            }
+        })
+        return isChanged;
+    }
+
+    const onAddWindDirections = (windDirections: IWindDirections, spotId: number) => {
+        if(isWindDirectionsSet(windDirections) && windDirectionsExists) {
+            console.log(windDirectionsExists)
+            updateWindDirections(spotId, windDirections)
+        }
+        else if(isWindDirectionsSet(windDirections)) {
+            addWindDirections(spotId, windDirections)
+        }
+    }
+
     const onSubmit = async () => {
         let spot: ISpot | IToDbSpot = {
             name: spotName.trim(),
@@ -150,15 +175,14 @@ function AddSpot() {
                 editSpot(spot, user.user!.uid)
                 //@ts-ignore
                 addImages(spot.id, user.user!.uid)
-                //@ts-ignore
-                addWindDirections(spot.id, windDirections);
+                onAddWindDirections(windDirections, spotId);
             }
             else{
                 spot = {...spot, createdby: user.user!.uid}
                 await addSpot(spot)
                 const newSpot = await getSpot(spotName)
                 addImages(newSpot.id, user.user!.uid)
-                addWindDirections(newSpot.id, windDirections);
+                onAddWindDirections(windDirections, newSpot.id);
             }
             history.push('/')
         }

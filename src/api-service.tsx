@@ -272,17 +272,44 @@ export const getWindDirections = async (id: string) => {
         })
     })
     const windDirections = await response.json()
-    return windDirections; 
+    return windDirections[0]; 
 }
 
-export const addWindDirections = async (id: string, windDirections: IWindDirections) => {
+export const addWindDirections = async (id: number, windDirections: IWindDirections) => {
     const token = await auth.currentUser!.getIdToken(true)
     await fetch(`${host}/addWindDirections`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             'spot_id': id,
-            'wind_directions' : windDirections,
+            'sv' : windDirections.sv,
+            'v' : windDirections.v,
+            'nv' : windDirections.nv,
+            'n' : windDirections.n,
+            'nø' : windDirections.nø,
+            'ø' : windDirections.ø,
+            'sø' : windDirections.sø,
+            's' : windDirections.s,
+            'token': token
+        })
+    })
+}
+
+export const updateWindDirections = async (id: number, windDirections: IWindDirections) => {
+    const token = await auth.currentUser!.getIdToken(true)
+    await fetch(`${host}/updateWindDirections`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'spot_id': id,
+            'sv' : windDirections.sv,
+            'v' : windDirections.v,
+            'nv' : windDirections.nv,
+            'n' : windDirections.n,
+            'nø' : windDirections.nø,
+            'ø' : windDirections.ø,
+            'sø' : windDirections.sø,
+            's' : windDirections.s,
             'token': token
         })
     })

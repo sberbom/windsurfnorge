@@ -17,6 +17,14 @@ export interface ISpot {
     displayname: string;
     uid: string;
     windsensor: string;
+    sv?: WindDirectionsValues;
+    v?: WindDirectionsValues;
+    nv?: WindDirectionsValues;
+    n?: WindDirectionsValues;
+    nø?: WindDirectionsValues;
+    ø?: WindDirectionsValues;
+    sø?: WindDirectionsValues;
+    s?: WindDirectionsValues;
 }
 
 export interface IToDbSpot {
@@ -67,25 +75,46 @@ export type UserContextState = {
 export type WindDirectionsValues = "good" | "ok"  | "bad"
 
 export interface IWindDirections {
-    SV: WindDirectionsValues;
-    V: WindDirectionsValues;
-    NV: WindDirectionsValues;
-    N: WindDirectionsValues;
-    NØ: WindDirectionsValues;
-    Ø: WindDirectionsValues;
-    SØ: WindDirectionsValues;
-    S: WindDirectionsValues;
+    sv: WindDirectionsValues;
+    v: WindDirectionsValues;
+    nv: WindDirectionsValues;
+    n: WindDirectionsValues;
+    nø: WindDirectionsValues;
+    ø: WindDirectionsValues;
+    sø: WindDirectionsValues;
+    s: WindDirectionsValues;
 }
 
 export const defaultWindDirections:IWindDirections = {
-    SV: "bad",
-    V: "bad",
-    NV: "bad",
-    N: "bad",
-    NØ: "bad",
-    Ø: "bad",
-    SØ: "bad",
-    S: "bad",
+    sv: "bad",
+    v: "bad",
+    nv: "bad",
+    n: "bad",
+    nø: "bad",
+    ø: "bad",
+    sø: "bad",
+    s: "bad",
 }
 
+export interface ISelectedWindDirections {
+    sv: boolean,
+    v: boolean,
+    nv: boolean,
+    n: boolean,
+    nø: boolean,
+    ø: boolean,
+    sø: boolean,
+    s: boolean
+}
+
+export const defaultSelectedWindDirections: ISelectedWindDirections = {
+    sv: false,
+    v: false,
+    nv: false,
+    n: false,
+    nø: false,
+    ø: false,
+    sø: false,
+    s: false
+}
 export {}

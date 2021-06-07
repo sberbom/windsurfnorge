@@ -12,33 +12,31 @@ interface IProps {
 
 function WindDirectionSelecter({windDirections, onWindDirectionsChange}:IProps): JSX.Element {
 
-    //Plan: on submit poster til eget table med spotID som referanse til riktig spot
-
-    const [SV, setSV] = useState(windDirections.SV);
-    const [V, setV] = useState(windDirections.V);
-    const [NV, setNV] = useState(windDirections.NV);
-    const [N, setN] = useState(windDirections.N);
-    const [NØ, setNØ] = useState(windDirections.NØ);
-    const [Ø, setØ] = useState(windDirections.Ø);
-    const [SØ, setSØ] = useState(windDirections.SØ);
-    const [S, setS] = useState(windDirections.S);
+    const [SV, setSV] = useState(windDirections.sv);
+    const [V, setV] = useState(windDirections.v);
+    const [NV, setNV] = useState(windDirections.nv);
+    const [N, setN] = useState(windDirections.n);
+    const [NØ, setNØ] = useState(windDirections.nø);
+    const [Ø, setØ] = useState(windDirections.ø);
+    const [SØ, setSØ] = useState(windDirections.sø);
+    const [S, setS] = useState(windDirections.s);
 
     useEffect(() => {
         const updateWindDirections = () => {
             const newWindDirections = {
-                SV: SV,
-                V: V,
-                NV: NV,
-                N: N,
-                NØ: NØ,
-                Ø: Ø,
-                SØ: SØ,
-                S: S
+                sv: SV,
+                v: V,
+                nv: NV,
+                n: N,
+                nø: NØ,
+                ø: Ø,
+                sø: SØ,
+                s: S
             }
             onWindDirectionsChange(newWindDirections);
         }
         updateWindDirections();
-    }, [SV, V, NV, N, NØ, Ø, SØ, S])
+    }, [SV, V, NV, N, NØ, Ø, SØ, S, onWindDirectionsChange])
 
     return(
         <div className="checkbox-container">

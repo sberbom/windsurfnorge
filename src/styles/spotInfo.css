@@ -34,3 +34,24 @@
     text-align: end;
     margin-right: 1rem;
 }
+
+.facebook-windsensor-directions {
+    display: flex;
+    flex-direction: row;
+}
+
+.facebook-windsensor {
+    min-width: 220px;
+    word-break: break-word;
+}
+
+.windDirections-container {
+    display: flex;
+    flex-direction: row;
+}
+
+@media only screen and (max-width: 700px) {
+    .facebook-windsensor-directions {
+        flex-direction: column;
+    }
+}

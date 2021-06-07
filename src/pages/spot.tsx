@@ -1,8 +1,8 @@
 import '../styles/spot.css'
 
-import { IImage, ISpot } from '../types/types';
+import { IImage, ISpot, IWindDirections } from '../types/types';
 import React, {useEffect, useState} from 'react';
-import {getImages, getSpot} from '../api-service'
+import {getImages, getSpot, getWindDirections} from '../api-service'
 
 import Header from '../components/header'
 import Map from '../components/map'
@@ -18,6 +18,7 @@ function Spot() {
     const [spot, setSpot] = useState<ISpot | undefined>(undefined)
     const [images, setImages] = useState<IImage[] | undefined>(undefined)
     const [image, setImage] = useState(undefined)
+    const [windDirections, setWindDirections] = useState<IWindDirections | undefined>(undefined); 
 
     useEffect(() => {
         const fetchSpot = async () => {
@@ -25,9 +26,11 @@ function Spot() {
             //@ts-ignore
             const spot = await getSpot(spotName);
             const images = await getImages(spot.id);
+            const windDirectionsRecived = await getWindDirections(spot.id);
             setSpot(spot);
             setImages(images);
             setImage(spot.big_image)
+            setWindDirections(windDirectionsRecived);
             // spot.images && spot.images[spot.mainImage] ? setImage(spot.images[spot.mainImage]) : setImage(null)
             document.title = `Windsurf Norge - ${spot.name}`
         }
@@ -51,7 +54,7 @@ function Spot() {
                             <Map spot={spot}/>
                         </div>
                         <div className="spot-spotInfo-container">
-                            <SpotInfo spot={spot} />
+                            <SpotInfo spot={spot} windDirections={windDirections} />
                         </div>
                     </div>
                     <Weather lat={spot.lat} lng={ spot.lng}/>

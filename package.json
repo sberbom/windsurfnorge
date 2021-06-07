@@ -27,6 +27,7 @@
     "react-image-gallery": "^1.0.8",
     "react-loading-skeleton": "^2.1.1",
     "react-mapbox-gl": "^4.8.6",
+    "react-minimal-pie-chart": "^8.2.0",
     "react-rating": "^2.0.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",

@@ -17,6 +17,14 @@ export interface ISpot {
     displayname: string;
     uid: string;
     windsensor: string;
+    sv?: WindDirectionsValues;
+    v?: WindDirectionsValues;
+    nv?: WindDirectionsValues;
+    n?: WindDirectionsValues;
+    nø?: WindDirectionsValues;
+    ø?: WindDirectionsValues;
+    sø?: WindDirectionsValues;
+    s?: WindDirectionsValues;
 }
 
 export interface IToDbSpot {
@@ -62,5 +70,51 @@ export type UserContextState = {
     id: number;
     identifier: string;
     displayname: string;
+}
+
+export type WindDirectionsValues = "good" | "ok"  | "bad"
+
+export interface IWindDirections {
+    sv: WindDirectionsValues;
+    v: WindDirectionsValues;
+    nv: WindDirectionsValues;
+    n: WindDirectionsValues;
+    nø: WindDirectionsValues;
+    ø: WindDirectionsValues;
+    sø: WindDirectionsValues;
+    s: WindDirectionsValues;
+}
+
+export const defaultWindDirections:IWindDirections = {
+    sv: "bad",
+    v: "bad",
+    nv: "bad",
+    n: "bad",
+    nø: "bad",
+    ø: "bad",
+    sø: "bad",
+    s: "bad",
+}
+
+export interface ISelectedWindDirections {
+    sv: boolean,
+    v: boolean,
+    nv: boolean,
+    n: boolean,
+    nø: boolean,
+    ø: boolean,
+    sø: boolean,
+    s: boolean
+}
+
+export const defaultSelectedWindDirections: ISelectedWindDirections = {
+    sv: false,
+    v: false,
+    nv: false,
+    n: false,
+    nø: false,
+    ø: false,
+    sø: false,
+    s: false
 }
 export {}

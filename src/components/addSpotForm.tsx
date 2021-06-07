@@ -1,11 +1,12 @@
 import '../styles/addSpotForm.css';
 
 import { Button, Form } from 'react-bootstrap';
+import { IImage, IWindDirections } from '../types/types';
 
-import { IImage } from '../types/types';
 import ImageSelector from './imageSelector';
 import ImageUploade from './imageUploade'
 import React from 'react';
+import WindDirectionSelecter from './windDirectionSelecter';
 
 interface props {
     name: string;
@@ -17,6 +18,7 @@ interface props {
     setImages: any;
     mainImage: any;
     images: IImage[];
+    windDirections: IWindDirections
     isEdit: boolean;
     setMainImage: any;
     onDeleteImage: any;
@@ -26,6 +28,7 @@ interface props {
     onApproachChange: (approach: string) => void;
     onFacebookPageChange: (facebookPage: string) => void;
     onWindsensorChange: (windsensor: string) => void;
+    onWindDirectionsChange: (windDirections: IWindDirections) => void;
 }
 
 function AddSpotForm(props:props) {
@@ -45,6 +48,9 @@ function AddSpotForm(props:props) {
                 <Form.Label>Adkomst</Form.Label>
                 <Form.Control as="textarea" rows={3} value={props.approach} onChange={(event) => props.onApproachChange(event.target.value)} />
             </Form.Group>
+
+            <label className="form-label">Beste vindrentinger:</label>
+            <WindDirectionSelecter onWindDirectionsChange={props.onWindDirectionsChange} windDirections={props.windDirections}/> 
 
             <Form.Group controlId="exampleForm.ControlTextarea4">
                 <Form.Label>Addresse</Form.Label>

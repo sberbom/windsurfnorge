@@ -1,14 +1,15 @@
 import '../styles/spotInfo.css'
 
 import {Dropdown, DropdownButton} from 'react-bootstrap'
+import {ISpot, IWindDirections} from '../types/types';
 import React, { useContext, useState } from 'react';
 
 import DeleteSpotModal from './deleteSpotModal'
 //import EmailVerificationModal from './emailVerificationModal'
-import {ISpot} from '../types/types';
 import LogInModal from './logInModal'
 import Rating from 'react-rating'
 import {UserContext} from '../providers/userProvider';
+import WindDirecitonsDisplay from './windDirectionsDisplay';
 import star from '../images/star.png'
 import star_empty from '../images/star_empty.png'
 import {updateRating} from '../api-service'
@@ -16,10 +17,11 @@ import { useHistory } from "react-router-dom";
 
 interface IProps {
     spot: ISpot;
+    windDirections?: IWindDirections;
 }
 
 
-function SpotInfo({spot}: IProps) {
+function SpotInfo({spot, windDirections}: IProps) {
 
     const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
     const [showLogInModalDeleteSpot, setShowLogInModalDeleteSpot] = useState(false);
@@ -104,17 +106,30 @@ function SpotInfo({spot}: IProps) {
                     <p className="pre-line">{spot.approach}</p>
                 </>
             }
-            {spot.facebook &&
-                <>
-                    <h2>Facebook</h2>
-                    <a href={spot.facebook} target="_blank" rel="noopener noreferrer" >{spot.facebook}</a>
-                </>
-            }
-            {spot.windsensor &&
-                <>
-                    <h2 className="margin-top-1">Vindmåler</h2>
-                    <a href={spot.windsensor} target="_blank" rel="noopener noreferrer" >{spot.windsensor}</a>
-                </>
+            {spot.facebook || spot.windsensor ?
+                <div className="facebook-windsensor-directions">
+                    <div className="facebook-windsensor">
+                        {spot.facebook &&
+                            <div> 
+                                <h2>Facebook</h2>
+                                <a href={spot.facebook} target="_blank" rel="noopener noreferrer" >{spot.facebook}</a>
+                            </div>
+                        }
+                        {spot.windsensor &&
+                            <div >
+                                <h2 className="margin-top-1">Vindmåler</h2>
+                                <a href={spot.windsensor} target="_blank" rel="noopener noreferrer" >{spot.windsensor}</a>
+                            </div>
+                        }
+                    </div>
+                    <div className="windDirections-container">
+                        {windDirections && <WindDirecitonsDisplay windDirections={windDirections} />}
+                    </div>
+                </div>
+                :
+                <div className="windDirections-container">
+                    {windDirections && <WindDirecitonsDisplay windDirections={windDirections} />}
+                </div>
             }
             <div className="rating-container">
                 <Rating

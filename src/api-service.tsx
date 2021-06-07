@@ -1,4 +1,4 @@
-import { IDbUser, IImage, IImagePreUploade, ISpot, IToDbSpot } from './types/types';
+import { IDbUser, IImage, IImagePreUploade, ISpot, IToDbSpot, IWindDirections } from './types/types';
 
 import {auth} from './firebase'
 
@@ -261,4 +261,56 @@ export const getUserImages = async (id: string) => {
     })
     const images = await response.json()
     return images
+}
+
+export const getWindDirections = async (id: string) => {
+    const response = await fetch(`${host}/getWindDirections`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'spot_id': id,
+        })
+    })
+    const windDirections = await response.json()
+    return windDirections[0]; 
+}
+
+export const addWindDirections = async (id: number, windDirections: IWindDirections) => {
+    const token = await auth.currentUser!.getIdToken(true)
+    await fetch(`${host}/addWindDirections`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'spot_id': id,
+            'sv' : windDirections.sv,
+            'v' : windDirections.v,
+            'nv' : windDirections.nv,
+            'n' : windDirections.n,
+            'nø' : windDirections.nø,
+            'ø' : windDirections.ø,
+            'sø' : windDirections.sø,
+            's' : windDirections.s,
+            'token': token
+        })
+    })
+}
+
+export const updateWindDirections = async (id: number, windDirections: IWindDirections) => {
+    const token = await auth.currentUser!.getIdToken(true)
+    await fetch(`${host}/updateWindDirections`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'spot_id': id,
+            'sv' : windDirections.sv,
+            'v' : windDirections.v,
+            'nv' : windDirections.nv,
+            'n' : windDirections.n,
+            'nø' : windDirections.nø,
+            'ø' : windDirections.ø,
+            'sø' : windDirections.sø,
+            's' : windDirections.s,
+            'token': token
+        })
+    })
 }

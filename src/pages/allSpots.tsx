@@ -1,12 +1,12 @@
 import '../styles/allSpots.css'
 
+import { ISelectedWindDirections, ISpot, defaultSelectedWindDirections } from '../types/types';
 import {Link, withRouter} from 'react-router-dom'
 import React, {useEffect, useState} from 'react';
 
 import { Button } from 'react-bootstrap';
 import CardList from '../components/cardList'
 import Header from '../components/header'
-import { ISpot } from '../types/types';
 import Sortbar from '../components/sortbar';
 import {getAllSpots} from '../api-service';
 
@@ -14,6 +14,7 @@ function AllSpots() {
     const [spots, setSpots] = useState([]);
     const [sortBy, setSortBy] = useState("Alphabetical")
     const [searchWord, setSearchWord] = useState("");
+    const [selectedWindDirections, setSelectedWindDirections] = useState<ISelectedWindDirections>(defaultSelectedWindDirections);
 
     document.title = `Windsurf Norge - Steder å windsurfe`
 
@@ -46,6 +47,82 @@ function AllSpots() {
         return spots
     }
 
+    const onSelectedWindDirectionsChange = (windDirection: string) => {
+        let newSelectedWindDirections = selectedWindDirections
+        switch(windDirection){
+            case "sv":
+                newSelectedWindDirections = {...selectedWindDirections, sv: !selectedWindDirections.sv}
+                break;
+            case "v":
+                newSelectedWindDirections = {...selectedWindDirections, v: !selectedWindDirections.v}
+                break;
+            case "nv":
+                newSelectedWindDirections = {...selectedWindDirections, nv: !selectedWindDirections.nv}
+                break;
+            case "n":
+                newSelectedWindDirections = {...selectedWindDirections, n: !selectedWindDirections.n}
+                break; 
+            case "nø":
+                newSelectedWindDirections = {...selectedWindDirections, nø: !selectedWindDirections.nø}
+                break; 
+            case "ø":
+                newSelectedWindDirections = {...selectedWindDirections, ø: !selectedWindDirections.ø}
+                break; 
+            case "sø":
+                newSelectedWindDirections = {...selectedWindDirections, sø: !selectedWindDirections.sø}
+                break; 
+            case "s":
+                newSelectedWindDirections = {...selectedWindDirections, s: !selectedWindDirections.s}
+                break;
+            default:
+                break;
+        }
+        setSelectedWindDirections(newSelectedWindDirections);
+    }
+
+    const windDirectionFilter = (spots: ISpot[]) => {
+        let SVSpots: ISpot[] = [];
+        let VSpots: ISpot[] = [];
+        let NVSpots: ISpot[] = [];
+        let NSpots: ISpot[] = [];
+        let NØSpots: ISpot[] = [];
+        let ØSpots: ISpot[] = [];
+        let SØSpots: ISpot[] = [];
+        let SSpots: ISpot[] = [];
+
+        if(selectedWindDirections.sv) {
+            SVSpots = spots.filter((spot: ISpot) => spot.sv === "good" || spot.sv ==="ok")
+        }
+        if(selectedWindDirections.v) {
+            VSpots = spots.filter((spot: ISpot) => spot.v === "good" || spot.v ==="ok")
+        }
+        if(selectedWindDirections.nv) {
+            NVSpots = spots.filter((spot: ISpot) => spot.nv === "good" || spot.nv ==="ok")
+        } 
+        if(selectedWindDirections.n) {
+            NSpots = spots.filter((spot: ISpot) => spot.n === "good" || spot.n ==="ok")
+        } 
+        if(selectedWindDirections.nø) {
+            NØSpots = spots.filter((spot: ISpot) => spot.nø === "good" || spot.nø ==="ok")
+        } 
+        if(selectedWindDirections.ø) {
+            ØSpots = spots.filter((spot: ISpot) => spot.ø === "good" || spot.ø ==="ok")
+        } 
+        if(selectedWindDirections.sø) {
+            SØSpots = spots.filter((spot: ISpot) => spot.sø === "good" || spot.sø ==="ok")
+        } 
+        if(selectedWindDirections.s) {
+            SSpots = spots.filter((spot: ISpot) => spot.s === "good" || spot.s ==="ok")
+        }
+        if(!selectedWindDirections.sv && !selectedWindDirections.v && !selectedWindDirections.nv && !selectedWindDirections.n && 
+            !selectedWindDirections.nø && !selectedWindDirections.ø && !selectedWindDirections.sø && !selectedWindDirections.s) {
+                return spots;
+            }
+        const returnSpots: ISpot[] = []
+        //@ts-ignore
+        return [...new Set(returnSpots.concat(SVSpots, VSpots, NVSpots, NSpots, NØSpots, ØSpots, SØSpots, SSpots))];
+    }
+
     return(
         <div className="allSpots-container">
             <Header
@@ -54,6 +131,8 @@ function AllSpots() {
             <Sortbar
                 onSearchWordChange={setSearchWord}
                 onSortbyChange={setSortBy}
+                onSelectedWindDirectionsChange={onSelectedWindDirectionsChange}
+                selectedWindDirections={selectedWindDirections}
             />
             <div className="add-spot-button">
                 <Link to="/addSpot"><Button className="add-spot-button  ">Legg til spot</Button></Link>
@@ -62,7 +141,7 @@ function AllSpots() {
                 <div className="empty"></div>
                 :
                 <CardList 
-                    spots={sort(spots.filter((spot:ISpot) => spot.name.toLowerCase().includes(searchWord.toLowerCase())), sortBy)}
+                    spots={windDirectionFilter(sort(spots.filter((spot:ISpot) => spot.name.toLowerCase().includes(searchWord.toLowerCase())), sortBy))}
                 />
             }
         </div>

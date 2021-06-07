@@ -26,6 +26,8 @@
     text-shadow: 1px 1px black;
     font-size: 3.875rem;
     font-weight: 600;
+    width: 100%;
+    word-break: break-word;
 }
 
 .header-info > button {
@@ -40,5 +42,9 @@
 
     .header-info{
         padding-top: 35vh;
+    }
+
+    .header-info > h1 {
+        font-size: 13vw;
     }
 }

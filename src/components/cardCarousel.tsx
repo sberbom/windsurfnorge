@@ -1,10 +1,11 @@
-import React from 'react';
-import AliceCarousel from 'react-alice-carousel';
-import Card from './card'
 import 'react-alice-carousel/lib/alice-carousel.css';
 import '../styles/cardCarousel.css'
-import Skeleton from 'react-loading-skeleton';
+
+import AliceCarousel from 'react-alice-carousel';
+import Card from './card'
 import {ISpot} from '../types/types'
+import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 interface props {
     spots: ISpot[];
@@ -44,7 +45,7 @@ const CardCarousel = ({spots}:props) => {
 
     const responsive = {
         0: { items: 1 },
-        770: { items: 2 },
+        750: { items: 2 },
         1150: { items: 3 },
         1530: {items: 4}
     };

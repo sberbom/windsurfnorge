@@ -1,9 +1,9 @@
 import '../styles/addSpot.css';
 import '../styles/spot.css';
 
-import {IImage, IImagePreUploade, IPos, ISpot, IToDbSpot} from '../types/types'
+import {IImage, IImagePreUploade, IPos, ISpot, IToDbSpot, IWindDirections, defaultWindDirections} from '../types/types'
 import React, { useContext, useEffect, useState } from 'react';
-import {addImage, addSpot, deleteImage, editSpot, getImage, getImages, getSpot, updateMainImage} from '../api-service'
+import {addImage, addSpot, addWindDirections, deleteImage, editSpot, getImage, getImages, getSpot, getWindDirections, updateMainImage, updateWindDirections} from '../api-service'
 
 import AddSpotForm from '../components/addSpotForm';
 //import EmailVerificationModal from '../components/emailVerificationModal'
@@ -27,6 +27,8 @@ function AddSpot() {
     const [spot, setSpot] = useState<ISpot | undefined>(undefined)
     const [images, setImages] = useState<IImage[]>([])
     const [windsensor, setWindsensor] = useState("")
+    const [windDirections, setWindDirections] = useState<IWindDirections>(defaultWindDirections)
+    const [windDirectionsExists, setWindDirectionsExists] = useState(false);
 
     const [latLng, setLatLng] = useState(mapCenter);
     const [address, setAddress] = useState('Dra markøren på kartet for å velge addresse')
@@ -51,6 +53,7 @@ function AddSpot() {
                 //@ts-ignore TODO
                 const spot = await getSpot(spotName);
                 const images = await getImages(spot.id)
+                const windDirections = await getWindDirections(spot.id);
                 setSpot(spot);
                 setSpotId(spot.id)
                 setSpotName(spot.name);
@@ -63,6 +66,10 @@ function AddSpot() {
                 setAddress(address);
                 setImages(images)
                 setMainImage(spot.main_image);
+                if(windDirections) {
+                    setWindDirections(windDirections);
+                    setWindDirectionsExists(true);
+                }
             }
             setIsLoading(false)
         }
@@ -129,6 +136,27 @@ function AddSpot() {
         }
     }
 
+    const isWindDirectionsSet = (windDirections: IWindDirections) => {
+        let isChanged = false;
+        //@ts-ignore
+        Object.values(windDirections).forEach(windDirection => {
+            if(windDirection === "good" || windDirection === "ok"){
+                isChanged = true;
+            }
+        })
+        return isChanged;
+    }
+
+    const onAddWindDirections = (windDirections: IWindDirections, spotId: number) => {
+        if(isWindDirectionsSet(windDirections) && windDirectionsExists) {
+            console.log(windDirectionsExists)
+            updateWindDirections(spotId, windDirections)
+        }
+        else if(isWindDirectionsSet(windDirections)) {
+            addWindDirections(spotId, windDirections)
+        }
+    }
+
     const onSubmit = async () => {
         let spot: ISpot | IToDbSpot = {
             name: spotName.trim(),
@@ -147,12 +175,14 @@ function AddSpot() {
                 editSpot(spot, user.user!.uid)
                 //@ts-ignore
                 addImages(spot.id, user.user!.uid)
+                onAddWindDirections(windDirections, spotId);
             }
             else{
                 spot = {...spot, createdby: user.user!.uid}
                 await addSpot(spot)
                 const newSpot = await getSpot(spotName)
                 addImages(newSpot.id, user.user!.uid)
+                onAddWindDirections(windDirections, newSpot.id);
             }
             history.push('/')
         }
@@ -190,6 +220,8 @@ function AddSpot() {
                                 onDeleteImage = {onDeleteImage}
                                 images = {images}
                                 setImages = {setImages}
+                                windDirections = {windDirections}
+                                onWindDirectionsChange = {setWindDirections}
                                 //newImages = {newImages}
                                 //setNewImages = {setNewImages}
                             />

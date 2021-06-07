@@ -5,7 +5,7 @@ import {ISpot, IWindDirections} from '../types/types';
 import React, { useContext, useState } from 'react';
 
 import DeleteSpotModal from './deleteSpotModal'
-import EmailVerificationModal from './emailVerificationModal'
+//import EmailVerificationModal from './emailVerificationModal'
 import LogInModal from './logInModal'
 import Rating from 'react-rating'
 import {UserContext} from '../providers/userProvider';
@@ -26,7 +26,7 @@ function SpotInfo({spot, windDirections}: IProps) {
     const [showDeleteSpotModal, setShowDeleteSpotModal] = useState(false);
     const [showLogInModalDeleteSpot, setShowLogInModalDeleteSpot] = useState(false);
     const [showLogInModalRating, setShowLogInModalRating] = useState(false);
-    const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
+    //const [showEmailVerificationModal, setShowEmailVerificationModal] = useState(false);
     const user = useContext(UserContext)
 
     const history = useHistory()
@@ -35,9 +35,9 @@ function SpotInfo({spot, windDirections}: IProps) {
         if(user === null){
             setShowLogInModalDeleteSpot(true);
         }
-        else if(user && !user.user!.emailVerified){
-            setShowEmailVerificationModal(true);
-        }
+        //else if(user && !user.user!.emailVerified){
+        //    setShowEmailVerificationModal(true);
+        //}
         else {
             setShowDeleteSpotModal(true);
         }
@@ -80,7 +80,7 @@ function SpotInfo({spot, windDirections}: IProps) {
                 <LogInModal show={showLogInModalDeleteSpot} onHide={() => {setShowLogInModalDeleteSpot(false); history.push('/')}}/>
                     {/*@ts-ignore FIX*/}
                 <LogInModal show={showLogInModalRating} onHide={() => {setShowLogInModalRating(false)}}/>
-                <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user!.user!}/>
+                {/*<EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user!.user!}/>*/}
             </div>
         )
     }
@@ -148,7 +148,7 @@ function SpotInfo({spot, windDirections}: IProps) {
             <LogInModal show={showLogInModalDeleteSpot} onHide={() => {setShowLogInModalDeleteSpot(false); history.push('/')}}/>
                 {/*@ts-ignore FIX*/}
             <LogInModal show={showLogInModalRating} onHide={() => {setShowLogInModalRating(false)}}/>
-            <EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user!.user!}/>
+            {/**<EmailVerificationModal show={showEmailVerificationModal} onHide={() => {setShowEmailVerificationModal(false); history.push('/')}} user={user!.user!}/>*/}
         </div>
     )
 }

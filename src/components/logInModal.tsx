@@ -4,13 +4,15 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import React,  {useState} from 'react';
 import {
     sendPasswordResetEmail,
-    signIn
+    signIn,
+    signInWithFacebook,
+    signInWithGoogle
 } from '../utils'
 
 import {IModal} from '../types/types'
-// import signInWithGoogleButton from '../images/signInWithGoogle.png'
-// import continueWithFacebookButton from '../images/continuteWithFacebook.png'
 import Input from './input'
+import continueWithFacebookButton from '../images/continuteWithFacebook.png'
+import signInWithGoogleButton from '../images/signInWithGoogle.png'
 import { useHistory } from "react-router-dom";
 import { withRouter } from 'react-router-dom';
 
@@ -37,26 +39,25 @@ const LogInModal = (props: IModal) => {
         } 
     }
 
-    //const onSignInWithGoogle = async () => {
-    //   try{
-    //       props.onHide();
-    //       const res = await signInWithGoogle();
-    //       console.log(res);
-    //       // history.push('/')
-    //   }catch(error) {
-    //       console.error(error)
-    //   } 
-    //}
+    const onSignInWithGoogle = async () => {
+       try{
+           props.onHide();
+           await signInWithGoogle();
+           history.push('/')
+       }catch(error) {
+           console.error(error)
+       } 
+    }
 
-    // const onSignInWithFacebook = async () => {
-    //     try{
-    //         props.onHide();
-    //         await signInWithFacebook();
-    //         history.push('/')
-    //     }catch(error) {
-    //         console.error(error)
-    //     } 
-    // }
+    const onSignInWithFacebook = async () => {
+        try{
+            props.onHide();
+            await signInWithFacebook();
+            history.push('/')
+        }catch(error) {
+            console.error(error)
+        } 
+    }
 
     const onRegistrer = () => {
         props.onHide();
@@ -95,10 +96,10 @@ const LogInModal = (props: IModal) => {
                     </>
                 }
 
-                {/*<div className='externalLogInContainer'>
+                <div className='externalLogInContainer'>
                     <img src={signInWithGoogleButton} alt='sign in with google' onClick={onSignInWithGoogle} className='logInImg'/>
                     <img src={continueWithFacebookButton} alt='continue with facebook' onClick={onSignInWithFacebook} className='logInImg'/>
-                </div>*/}
+                </div>
                 
             </Form>
         </Modal.Body>

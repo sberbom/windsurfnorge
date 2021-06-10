@@ -1,5 +1,6 @@
+import {auth, facebookAuthProvider, googleAuthProvider} from './firebase'
+
 import Geocode from "react-geocode";
-import {auth} from './firebase'
 import firebase from 'firebase/app'
 import { googleKey } from './keys';
 
@@ -26,36 +27,21 @@ export const signIn = async (email: string, password: string) => {
     }
 }
 
-//export const signInWithGoogle = async () => {
-//    try{
-//        const user = await auth.signInWithPopup(googleAuthProvider);
-//        const users = await getUsers()
-//        //@ts-ignore
-//        const userEmail = user.additionalUserInfo.profile.email
-//        //@ts-ignore
-//        const displayName = user.additionalUserInfo.profile.name
-//        let newUser = true;
-//        users.forEach((dbUser: IUser) => {
-//            if(dbUser.identifier === userEmail){
-//                newUser = false
-//            } 
-//        })
-//        if(newUser){
-//            await addUser(displayName, userEmail)
-//        }
-//    }catch(error) {
-//        console.error('kunne ikke logg inn med google', error)
-//    }
-//}
+export const signInWithGoogle = async () => {
+    try{
+        await auth.signInWithPopup(googleAuthProvider);
+    }catch(error) {
+        console.error('kunne ikke logg inn med google', error)
+    }
+}
 
-// export const signInWithFacebook = async () => {
-//     try{
-//         const user = await auth.signInWithPopup(facebookAuthProvider);
-//         console.log(user)
-//     }catch(error){
-//         console.error('kunne ikke logge inn med facebook', error)
-//     }
-// }
+ export const signInWithFacebook = async () => {
+     try{
+        await auth.signInWithPopup(facebookAuthProvider);
+     }catch(error){
+         console.error('kunne ikke logge inn med facebook', error)
+     }
+ }
 
 export const signOut = async () => {
     try {

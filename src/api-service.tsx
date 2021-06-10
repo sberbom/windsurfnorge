@@ -189,7 +189,7 @@ export const getDbUser = async (uid:string) => {
     return user[0]
 }
 
-export const createDbUser = async (uid: string, displayName: string ) => {
+export const createDbUser = async (uid: string, displayName: string | null ) => {
     const response = await fetch(`${host}/addUser`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },

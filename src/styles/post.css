@@ -1,0 +1,16 @@
+.italic {
+    font-style: italic;
+}
+
+.post-username {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.post-tittel:hover {
+    cursor: pointer;
+}
+
+.format {
+    white-space: pre-wrap;
+}

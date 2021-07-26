@@ -46,7 +46,7 @@ export interface IModal {
 
 export interface IDbUser {
     uid: string;
-    displayName: string;
+    displayname: string;
 }
 
 export interface IPos {
@@ -117,4 +117,25 @@ export const defaultSelectedWindDirections: ISelectedWindDirections = {
     sø: false,
     s: false
 }
+
+export interface IPost {
+    post: string,
+    post_title: string,
+    date: Date,
+    displayname: string,
+    id: number,
+}
+
+export interface IPostComment {
+    post: string,
+    date: Date,
+    displayname: string,
+}
+
+export interface IPostCommentDb {
+    post: string,
+    date: Date,
+    userId: string,
+}
+
 export {}

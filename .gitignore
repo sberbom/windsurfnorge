@@ -29,3 +29,4 @@ api.js
 keys.js
 
 .eslintcache
+.firebase

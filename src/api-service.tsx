@@ -2,8 +2,8 @@ import { IDbUser, IImage, IImagePreUploade, ISpot, IToDbSpot, IWindDirections } 
 
 import {auth} from './firebase'
 
-//const host = 'http://localhost:3001';
-const host = 'https://windsurfnorge-server.herokuapp.com'
+const host = 'http://localhost:3001';
+//const host = 'https://windsurfnorge-server.herokuapp.com'
 
 export const getAllSpots = async () => {
     const spotResponse = await fetch(`${host}/spots`, {
@@ -314,3 +314,55 @@ export const updateWindDirections = async (id: number, windDirections: IWindDire
         })
     })
 }
+
+export const getPosts = async () => {
+    const response = await fetch(`${host}/getPosts`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    const posts = await response.json()
+    return posts; 
+}
+
+export const getPostsComments = async (id: number) => {
+    const response = await fetch(`${host}/getPostComments`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'postId': id,
+        })
+ 
+    })
+    const postsComments = await response.json()
+    return postsComments; 
+}
+
+export const addPost = async (post: string, postTitle: string, userId: string) => {
+    const token = await auth.currentUser!.getIdToken(true)
+    await fetch(`${host}/createPost`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            "post": post,
+            "post_title" : postTitle,
+            "user_id" : userId,
+            "token" : token
+        })
+    })
+
+}
+
+export const addPostComment = async (post: string, forumpostId: number, userId: string) => {
+    const token = await auth.currentUser!.getIdToken(true)
+    await fetch(`${host}/createResponse`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            "post": post,
+            "forumpost_id" : forumpostId,
+            "user_id" : userId,
+            "token" : token
+        })
+    })
+
+} 

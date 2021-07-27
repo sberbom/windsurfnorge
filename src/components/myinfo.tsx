@@ -48,7 +48,7 @@ const MyInfo = () => {
             try{
                 if (user.user!.displayName !== username) {
                     updateUsername(user!.user!, username)
-                    updateDbDisplayName({uid: user!.user!.uid, displayName: username})
+                    updateDbDisplayName({uid: user!.user!.uid, displayname: username})
                 }
                 history.push("/")
             }

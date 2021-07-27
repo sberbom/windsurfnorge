@@ -1,0 +1,30 @@
+.posts-container {
+    background-color: #fff;
+    width: 800px;
+    margin: auto;
+    padding: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+}
+
+
+.post-button {
+    margin: 1rem 0;
+}
+
+.post-button-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-items: flex-start;
+}
+
+
+@media only screen and (max-width: 800px) {
+    .posts-container {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}

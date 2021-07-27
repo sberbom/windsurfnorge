@@ -68,6 +68,7 @@ const SBNavbar = () =>  {
                         <Link to="/map" className="nav-link" style={{color: "white"}} onClick={onLinkClick}>Kart</Link>
                         <Link to="/allSpots" className="nav-link" style={{color: "white"}} onClick={onLinkClick}>Steder å windsurfe</Link>
                         <Link to="/addSpot" className="nav-link" style={{color: "white"}} onClick={onLinkClick}>Legg til spot</Link>
+                        <Link to="/forum" className="nav-link" style={{color: "white"}} onClick={onLinkClick}>Forum</Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className='justify-content-end'>

@@ -26,3 +26,5 @@ yarn-error.log*
 api.js
 
 keys.js
+
+.eslintcache

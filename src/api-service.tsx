@@ -2,8 +2,7 @@ import { IDbUser, IImage, IImagePreUploade, ISpot, IToDbSpot, IWindDirections } 
 
 import {auth} from './firebase'
 
-//const host = 'http://localhost:3001';
-const host = 'https://windsurfnorge-server.herokuapp.com'
+const host = window.location.href.includes("localhost") ? 'http://localhost:3001' : 'https://windsurfnorge-server.herokuapp.com';
 
 export const getAllSpots = async () => {
     const spotResponse = await fetch(`${host}/spots`, {

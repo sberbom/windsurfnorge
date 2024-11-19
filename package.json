@@ -12,7 +12,7 @@
     "@types/react-dom": "^17.0.5",
     "bootstrap": "^4.5.0",
     "browser-image-compression": "^1.0.13",
-    "firebase": "^8.2.1",
+    "firebase": "^10.9.0",
     "google-maps-react": "^2.0.6",
     "gulp-responsive": "^3.0.1",
     "mapbox-gl": "^1.12.0",
